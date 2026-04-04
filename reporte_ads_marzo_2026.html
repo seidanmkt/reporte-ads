@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Reporte de Ads — Marzo 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root{--fb:#1877F2;--fb-light:#E7F0FD;--tt:#010101;--tt-light:#F0F0F0;--green:#16a34a;--yellow:#d97706;--red:#dc2626;--bg:#F8FAFC;--card:#fff;--border:#E2E8F0;--text:#1E293B;--muted:#64748B;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+.header{background:linear-gradient(135deg,#0F172A 0%,#1E3A5F 60%,#1877F2 100%);color:white;padding:40px 40px 30px;position:relative;overflow:hidden;}
+.header::after{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;background:rgba(255,255,255,.05);border-radius:50%;}
+.header h1{font-size:28px;font-weight:700;letter-spacing:-.5px;}
+.header .subtitle{color:rgba(255,255,255,.7);margin-top:6px;font-size:15px;}
+.header .meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap;}
+.header .meta-item{display:flex;flex-direction:column;}
+.header .meta-item span:first-child{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);}
+.header .meta-item span:last-child{font-size:15px;font-weight:600;}
+.platform-pills{display:flex;gap:10px;margin-top:16px;}
+.pill{padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;}
+.pill-fb{background:rgba(24,119,242,.3);border:1px solid rgba(24,119,242,.5);}
+.pill-tt{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);}
+.content{max-width:1400px;margin:0 auto;padding:30px 24px;}
+.section-title{font-size:18px;font-weight:700;margin:36px 0 16px;display:flex;align-items:center;gap:10px;border-left:4px solid var(--fb);padding-left:12px;}
+.section-title.tt-title{border-color:#333;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-card.total::before{background:linear-gradient(90deg,#1877F2,#000);}
+.kpi-card.cpa::before{background:linear-gradient(90deg,#16a34a,#0ea5e9);}
+.kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:600;}
+.kpi-val{font-size:30px;font-weight:800;margin:8px 0 4px;letter-spacing:-1px;}
+.kpi-sub{font-size:12px;color:var(--muted);}
+.kpi-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:28px;opacity:.15;}
+.plat-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.plat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
+.plat-card.fb-card{border-top:4px solid var(--fb);}.plat-card.tt-card{border-top:4px solid #111;}
+.plat-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.plat-logo{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:white;}
+.plat-logo.fb{background:var(--fb);}.plat-logo.tt{background:#111;}
+.plat-name{font-size:16px;font-weight:700;}
+.plat-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.pm{text-align:center;background:var(--bg);border-radius:8px;padding:12px;}
+.pm-label{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;}
+.pm-val{font-size:20px;font-weight:700;margin-top:4px;}
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.chart-card.wide{grid-column:span 2;}
+.chart-title{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+.chart-wrap{position:relative;height:280px;}.chart-wrap.tall{height:400px;}
+.prod-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+th{background:#F1F5F9;padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;border-bottom:1px solid var(--border);}
+td{padding:10px 14px;border-bottom:1px solid #F1F5F9;}
+tr:last-child td{border-bottom:none;}tr:hover td{background:#FAFBFF;}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-family:'Courier New',monospace;font-size:13px;}
+.cpa-green{color:var(--green);font-weight:700;}.cpa-yellow{color:var(--yellow);font-weight:700;}
+.cpa-red{color:var(--red);font-weight:700;}.cpa-na{color:var(--muted);font-style:italic;}
+.bar-cell{display:flex;align-items:center;gap:8px;}
+.bar-fill{height:8px;background:linear-gradient(90deg,#1877F2,#7C3AED);border-radius:4px;min-width:3px;}
+.fb-bar{background:var(--fb);}.tt-bar{background:#555;}
+.bar-cell span{font-size:11px;color:var(--muted);}
+.account-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;}
+.account-header{background:#F8FAFC;padding:16px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.account-header h3{font-size:15px;font-weight:700;flex:1;}
+.plat-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;white-space:nowrap;}
+.fb-badge{background:var(--fb-light);color:var(--fb);}.tt-badge{background:var(--tt-light);color:#333;border:1px solid #ddd;}
+.account-kpis{display:flex;gap:20px;}
+.akpi{display:flex;flex-direction:column;align-items:flex-end;}
+.akpi-label{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;}
+.akpi-val{font-size:15px;font-weight:700;}
+.table-wrap{overflow-x:auto;}
+.camp-table th{background:#F8FAFC;padding:9px 14px;font-size:11px;}
+.camp-table td{padding:9px 14px;font-size:13px;}
+.camp-table .total-row td{background:#F1F5F9;border-top:2px solid var(--border);}
+.legend{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+.footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px;}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.charts-grid{grid-template-columns:1fr;}.chart-card.wide{grid-column:span 1;}.plat-compare{grid-template-columns:1fr;}}
+</style></head><body>
+<div class="header">
+  <h1>📊 Reporte de Rendimiento Publicitario</h1>
+  <div class="subtitle">Resumen ejecutivo mensual · Todas las plataformas y cuentas</div>
+  <div class="meta">
+    <div class="meta-item"><span>Período</span><span>Marzo 2026</span></div>
+    <div class="meta-item"><span>Inversión Total</span><span>$12,764.03 USD</span></div>
+    <div class="meta-item"><span>Cuentas Activas</span><span>15 cuentas</span></div>
+    <div class="meta-item"><span>Generado</span><span>Abril 2026</span></div>
+  </div>
+  <div class="platform-pills">
+    <span class="pill pill-fb">🔵 Facebook &amp; Instagram Ads</span>
+    <span class="pill pill-tt">⚫ TikTok Ads</span>
+  </div>
+</div>
+<div class="content">
+  <div class="section-title">🎯 Resumen Ejecutivo — Global</div>
+  <div class="kpi-grid">
+    <div class="kpi-card total"><div class="kpi-label">Inversión Total</div><div class="kpi-val">$12,764</div><div class="kpi-sub">USD — Marzo 2026</div><div class="kpi-icon">💰</div></div>
+    <div class="kpi-card total"><div class="kpi-label">Total Compras</div><div class="kpi-val">3,183</div><div class="kpi-sub">Conversiones totales</div><div class="kpi-icon">🛒</div></div>
+    <div class="kpi-card cpa"><div class="kpi-label">CPA Global</div><div class="kpi-val">$4.01</div><div class="kpi-sub">Costo por compra</div><div class="kpi-icon">🎯</div></div>
+    <div class="kpi-card total"><div class="kpi-label">Productos Activos</div><div class="kpi-val">19</div><div class="kpi-sub">Con conversiones en el mes</div><div class="kpi-icon">📦</div></div>
+  </div>
+  <div class="section-title">📱 Comparativa por Plataforma</div>
+  <div class="plat-compare"><div class="plat-card fb-card"><div class="plat-header"><div class="plat-logo fb">f</div><div><div class="plat-name">Facebook Ads</div><div style="font-size:12px;color:var(--muted);">69.9% del presupuesto total</div></div></div><div class="plat-metrics"><div class="pm"><div class="pm-label">Inversión</div><div class="pm-val">$8,917</div></div><div class="pm"><div class="pm-label">Compras</div><div class="pm-val">2,321</div></div><div class="pm"><div class="pm-label">CPA</div><div class="pm-val">$3.84</div></div></div></div><div class="plat-card tt-card"><div class="plat-header"><div class="plat-logo tt">♪</div><div><div class="plat-name">TikTok Ads</div><div style="font-size:12px;color:var(--muted);">30.1% del presupuesto total</div></div></div><div class="plat-metrics"><div class="pm"><div class="pm-label">Inversión</div><div class="pm-val">$3,847</div></div><div class="pm"><div class="pm-label">Compras</div><div class="pm-val">862</div></div><div class="pm"><div class="pm-label">CPA</div><div class="pm-val">$4.46</div></div></div></div></div>
+  <div class="section-title">📈 Análisis Visual</div>
+  <div class="charts-grid">
+    <div class="chart-card"><div class="chart-title">Distribución de Inversión por Plataforma</div><div class="chart-wrap"><canvas id="platPie"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">CPA por Plataforma</div><div class="chart-wrap"><canvas id="platCpa"></canvas></div></div>
+    <div class="chart-card wide"><div class="chart-title">Top 12 Productos — Inversión y Compras</div><div class="chart-wrap tall"><canvas id="prodBar"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">CPA por Producto — Verde ≤$4 · Amarillo ≤$7 · Rojo >$7</div><div class="chart-wrap tall"><canvas id="prodCpa"></canvas></div></div>
+    <div class="chart-card"><div class="chart-title">Inversión por Cuenta Publicitaria</div><div class="chart-wrap tall"><canvas id="accBar"></canvas></div></div>
+  </div>
+  <div class="section-title">📦 CPA por Producto — Todos los Canales</div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>CPA ≤ $4.00 — Excelente</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--yellow)"></span>CPA $4.01 – $7.00 — Aceptable</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>CPA > $7.00 — Revisar</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--muted)"></span>Sin compras en el período</span>
+  </div>
+  <div class="prod-table-wrap"><table>
+    <thead><tr><th>Producto</th><th>Inversión Total</th><th>Compras</th><th>CPA</th><th>% del Gasto Total</th></tr></thead>
+    <tbody><tr><td><strong>Tijera Marine</strong></td><td class='num'>$3,262.53</td><td class='num'>745</td><td class='num cpa-yellow'>$4.38</td><td><div class='bar-cell'><div class='bar-fill' style='width:25.6%'></div><span>25.6%</span></div></td></tr><tr><td><strong>Ahorrador</strong></td><td class='num'>$2,861.24</td><td class='num'>830</td><td class='num cpa-green'>$3.45</td><td><div class='bar-cell'><div class='bar-fill' style='width:22.4%'></div><span>22.4%</span></div></td></tr><tr><td><strong>Cuchillo Mongol</strong></td><td class='num'>$2,070.89</td><td class='num'>509</td><td class='num cpa-yellow'>$4.07</td><td><div class='bar-cell'><div class='bar-fill' style='width:16.2%'></div><span>16.2%</span></div></td></tr><tr><td><strong>Cámara Guardian</strong></td><td class='num'>$855.74</td><td class='num'>246</td><td class='num cpa-green'>$3.48</td><td><div class='bar-cell'><div class='bar-fill' style='width:6.7%'></div><span>6.7%</span></div></td></tr><tr><td><strong>Cámara Triple IA / Solar IA</strong></td><td class='num'>$801.76</td><td class='num'>230</td><td class='num cpa-green'>$3.49</td><td><div class='bar-cell'><div class='bar-fill' style='width:6.3%'></div><span>6.3%</span></div></td></tr><tr><td><strong>Llave de Impacto</strong></td><td class='num'>$607.76</td><td class='num'>137</td><td class='num cpa-yellow'>$4.44</td><td><div class='bar-cell'><div class='bar-fill' style='width:4.8%'></div><span>4.8%</span></div></td></tr><tr><td><strong>Cámara Kratos</strong></td><td class='num'>$412.64</td><td class='num'>103</td><td class='num cpa-yellow'>$4.01</td><td><div class='bar-cell'><div class='bar-fill' style='width:3.2%'></div><span>3.2%</span></div></td></tr><tr><td><strong>Pack Impacto</strong></td><td class='num'>$338.87</td><td class='num'>63</td><td class='num cpa-yellow'>$5.38</td><td><div class='bar-cell'><div class='bar-fill' style='width:2.7%'></div><span>2.7%</span></div></td></tr><tr><td><strong>Dash Cam / Kraken</strong></td><td class='num'>$323.81</td><td class='num'>119</td><td class='num cpa-green'>$2.72</td><td><div class='bar-cell'><div class='bar-fill' style='width:2.5%'></div><span>2.5%</span></div></td></tr><tr><td><strong>Micro Studio</strong></td><td class='num'>$288.29</td><td class='num'>61</td><td class='num cpa-yellow'>$4.73</td><td><div class='bar-cell'><div class='bar-fill' style='width:2.3%'></div><span>2.3%</span></div></td></tr><tr><td><strong>Pistola / Paintpro</strong></td><td class='num'>$239.08</td><td class='num'>53</td><td class='num cpa-yellow'>$4.51</td><td><div class='bar-cell'><div class='bar-fill' style='width:1.9%'></div><span>1.9%</span></div></td></tr><tr><td><strong>Pastoral / Solar</strong></td><td class='num'>$228.84</td><td class='num'>25</td><td class='num cpa-red'>$9.15</td><td><div class='bar-cell'><div class='bar-fill' style='width:1.8%'></div><span>1.8%</span></div></td></tr><tr><td><strong>Pack Cocina</strong></td><td class='num'>$112.89</td><td class='num'>15</td><td class='num cpa-red'>$7.53</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.9%'></div><span>0.9%</span></div></td></tr><tr><td><strong>Set Luxury</strong></td><td class='num'>$79.41</td><td class='num'>10</td><td class='num cpa-red'>$7.94</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.6%'></div><span>0.6%</span></div></td></tr><tr><td><strong>Vision Pro</strong></td><td class='num'>$76.97</td><td class='num'>5</td><td class='num cpa-red'>$15.39</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.6%'></div><span>0.6%</span></div></td></tr><tr><td><strong>Cámara Cerberus</strong></td><td class='num'>$75.01</td><td class='num'>24</td><td class='num cpa-green'>$3.13</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.6%'></div><span>0.6%</span></div></td></tr><tr><td><strong>Arrancador Pro</strong></td><td class='num'>$41.27</td><td class='num'>1</td><td class='num cpa-red'>$41.27</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.3%'></div><span>0.3%</span></div></td></tr><tr><td><strong>Tijera Eléctrica</strong></td><td class='num'>$22.08</td><td class='num'>2</td><td class='num cpa-red'>$11.04</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.2%'></div><span>0.2%</span></div></td></tr><tr><td><strong>Cámara Pulpo</strong></td><td class='num'>$22.03</td><td class='num'>5</td><td class='num cpa-yellow'>$4.41</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.2%'></div><span>0.2%</span></div></td></tr><tr><td><strong>Brasier Posture</strong></td><td class='num'>$15.56</td><td class='num'>0</td><td class='num cpa-na'>—</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.1%'></div><span>0.1%</span></div></td></tr><tr><td><strong>Micro QY99</strong></td><td class='num'>$11.57</td><td class='num'>0</td><td class='num cpa-na'>—</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.1%'></div><span>0.1%</span></div></td></tr><tr><td><strong>Game Stick</strong></td><td class='num'>$8.28</td><td class='num'>0</td><td class='num cpa-na'>—</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.1%'></div><span>0.1%</span></div></td></tr><tr><td><strong>Retargeting / Re-engagement</strong></td><td class='num'>$7.50</td><td class='num'>0</td><td class='num cpa-na'>—</td><td><div class='bar-cell'><div class='bar-fill' style='width:0.1%'></div><span>0.1%</span></div></td></tr></tbody>
+  </table></div>
+  <div class="section-title">🏢 Resumen por Cuenta Publicitaria</div>
+  <div class="prod-table-wrap"><table>
+    <thead><tr><th>Cuenta</th><th>Plataforma</th><th>Inversión</th><th>Compras</th><th>CPA</th><th>Volumen Relativo</th></tr></thead>
+    <tbody><tr><td>🔵 <strong>seidanpublicidad</strong></td><td>Facebook</td><td class='num'>$2,620.28</td><td class='num'>641</td><td class='num cpa-yellow'>$4.09</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:100.0%'></div></div></td></tr><tr><td>🔵 <strong>CT2</strong></td><td>Facebook</td><td class='num'>$2,426.90</td><td class='num'>683</td><td class='num cpa-green'>$3.55</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:92.6%'></div></div></td></tr><tr><td>⚫ <strong>Seiko Publicidad</strong></td><td>TikTok</td><td class='num'>$1,866.08</td><td class='num'>429</td><td class='num cpa-yellow'>$4.35</td><td><div class='bar-cell'><div class='bar-fill tt-bar' style='width:71.2%'></div></div></td></tr><tr><td>⚫ <strong>PUBLI2TEC</strong></td><td>TikTok</td><td class='num'>$1,644.42</td><td class='num'>376</td><td class='num cpa-yellow'>$4.37</td><td><div class='bar-cell'><div class='bar-fill tt-bar' style='width:62.8%'></div></div></td></tr><tr><td>🔵 <strong>T3cnostore</strong></td><td>Facebook</td><td class='num'>$1,141.10</td><td class='num'>377</td><td class='num cpa-green'>$3.03</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:43.5%'></div></div></td></tr><tr><td>🔵 <strong>CT4</strong></td><td>Facebook</td><td class='num'>$1,078.16</td><td class='num'>277</td><td class='num cpa-green'>$3.89</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:41.1%'></div></div></td></tr><tr><td>🔵 <strong>ANUNCIOS FB e IG</strong></td><td>Facebook</td><td class='num'>$384.86</td><td class='num'>74</td><td class='num cpa-yellow'>$5.20</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:14.7%'></div></div></td></tr><tr><td>⚫ <strong>PUBLISEIDAN</strong></td><td>TikTok</td><td class='num'>$336.59</td><td class='num'>57</td><td class='num cpa-yellow'>$5.91</td><td><div class='bar-cell'><div class='bar-fill tt-bar' style='width:12.8%'></div></div></td></tr><tr><td>🔵 <strong>CT5</strong></td><td>Facebook</td><td class='num'>$271.05</td><td class='num'>46</td><td class='num cpa-yellow'>$5.89</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:10.3%'></div></div></td></tr><tr><td>🔵 <strong>TC2</strong></td><td>Facebook</td><td class='num'>$215.65</td><td class='num'>54</td><td class='num cpa-green'>$3.99</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:8.2%'></div></div></td></tr><tr><td>🔵 <strong>CT7</strong></td><td>Facebook</td><td class='num'>$193.67</td><td class='num'>58</td><td class='num cpa-green'>$3.34</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:7.4%'></div></div></td></tr><tr><td>🔵 <strong>TC3</strong></td><td>Facebook</td><td class='num'>$173.59</td><td class='num'>26</td><td class='num cpa-yellow'>$6.68</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:6.6%'></div></div></td></tr><tr><td>🔵 <strong>SEIKO 2</strong></td><td>Facebook</td><td class='num'>$165.54</td><td class='num'>29</td><td class='num cpa-yellow'>$5.71</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:6.3%'></div></div></td></tr><tr><td>🔵 <strong>CT8</strong></td><td>Facebook</td><td class='num'>$141.57</td><td class='num'>23</td><td class='num cpa-yellow'>$6.16</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:5.4%'></div></div></td></tr><tr><td>🔵 <strong>CT6</strong></td><td>Facebook</td><td class='num'>$104.57</td><td class='num'>33</td><td class='num cpa-green'>$3.17</td><td><div class='bar-cell'><div class='bar-fill fb-bar' style='width:4.0%'></div></div></td></tr></tbody>
+  </table></div>
+  <div class="section-title">🔵 Detalle de Campañas — Facebook &amp; Instagram Ads</div>
+  <div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>ANUNCIOS FB e IG</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$384.86</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">74</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$5.20</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>TESTEO IMG AHORRADOR 11-03-JULIO</td><td>Ahorrador</td><td class='num'>$136.78</td><td class='num'>39</td><td class='num'>$3.51</td></tr>
+<tr><td>TESTEO TIJERA MARINE 03-03-JULIO</td><td>Tijera Marine</td><td class='num'>$94.73</td><td class='num'>16</td><td class='num'>$5.92</td></tr>
+<tr><td>TESTEO SET LUXURY 04-03-JULIO</td><td>Set Luxury</td><td class='num'>$47.06</td><td class='num'>6</td><td class='num'>$7.84</td></tr>
+<tr><td>TESTEO IMG AHORRADOR 14-03-JULIO</td><td>Ahorrador</td><td class='num'>$31.62</td><td class='num'>6</td><td class='num'>$5.27</td></tr>
+<tr><td>TESTEO CUCHILLO MONGOL 03-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$31.38</td><td class='num'>4</td><td class='num'>$7.84</td></tr>
+<tr><td>TESTEO SET LUXURY 04-02-JULIO</td><td>Set Luxury</td><td class='num'>$17.87</td><td class='num'>2</td><td class='num'>$8.94</td></tr>
+<tr><td>CAMP TIJERA MARINE 12-03-JULIO</td><td>Tijera Marine</td><td class='num'>$13.94</td><td class='num'>1</td><td class='num'>$13.94</td></tr>
+<tr><td>TESTEO BRASIER POSTURE 07-03-JULIO</td><td>Brasier Posture</td><td class='num'>$11.48</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$384.86</strong></td><td class='num'><strong>74</strong></td><td class='num'><strong>$5.20</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>SEIKO 2</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$165.54</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">29</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$5.71</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP DASH KRAKEN 07-01-JULIO</td><td>Dash Cam / Kraken</td><td class='num'>$83.87</td><td class='num'>13</td><td class='num'>$6.45</td></tr>
+<tr><td>CAMP AHORRADOR 14-03-JULIO</td><td>Ahorrador</td><td class='num'>$37.50</td><td class='num'>10</td><td class='num'>$3.75</td></tr>
+<tr><td>CAMP DASH KRAKEN 13-03-JULIO</td><td>Dash Cam / Kraken</td><td class='num'>$20.78</td><td class='num'>3</td><td class='num'>$6.93</td></tr>
+<tr><td>CAMP AHORRADOR 17-03-JULIO</td><td>Ahorrador</td><td class='num'>$13.39</td><td class='num'>3</td><td class='num'>$4.46</td></tr>
+<tr><td>CAMP AHORRADOR 18-03-JULIO</td><td>Ahorrador</td><td class='num'>$10.00</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$165.54</strong></td><td class='num'><strong>29</strong></td><td class='num'><strong>$5.71</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>T3cnostore</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$1,141.10</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">377</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$3.03</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>TESTEO CAMARA GUARDIAN 25/03-JULIO</td><td>Cámara Guardian</td><td class='num'>$393.06</td><td class='num'>142</td><td class='num'>$2.77</td></tr>
+<tr><td>TESTEO CAMARA SOLAR IA 26/03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$296.55</td><td class='num'>91</td><td class='num'>$3.26</td></tr>
+<tr><td>TESTEO TIJERA MILITAR 06-03-JULIO</td><td>Tijera Marine</td><td class='num'>$263.04</td><td class='num'>64</td><td class='num'>$4.11</td></tr>
+<tr><td>Dash Cam/ Testeo / 13-3</td><td>Dash Cam / Kraken</td><td class='num'>$83.77</td><td class='num'>56</td><td class='num'>$1.50</td></tr>
+<tr><td>Dash Cam/ Testeo / 14-3</td><td>Dash Cam / Kraken</td><td class='num'>$30.30</td><td class='num'>14</td><td class='num'>$2.16</td></tr>
+<tr><td>CAMP CERBERU 27-03-JULIO</td><td>Cámara Cerberus</td><td class='num'>$29.45</td><td class='num'>7</td><td class='num'>$4.21</td></tr>
+<tr><td>CAMP PACK IMPACTO 26-03-JULIO</td><td>Pack Impacto</td><td class='num'>$20.58</td><td class='num'>2</td><td class='num'>$10.29</td></tr>
+<tr><td>TESTEO MONGOL 06-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$16.49</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP AHORRADOR 12-03-JULIO</td><td>Ahorrador</td><td class='num'>$7.86</td><td class='num'>1</td><td class='num'>$7.86</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$1141.10</strong></td><td class='num'><strong>377</strong></td><td class='num'><strong>$3.03</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>TC2</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$215.65</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">54</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$3.99</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP AHORRADOR 20-03-JULIO</td><td>Ahorrador</td><td class='num'>$175.41</td><td class='num'>53</td><td class='num'>$3.31</td></tr>
+<tr><td>CAMP CUCHILLO MONGOL 13-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$13.91</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP GUARDIAN 31-03-JULIO</td><td>Cámara Guardian</td><td class='num'>$7.32</td><td class='num'>1</td><td class='num'>$7.32</td></tr>
+<tr><td>CAMP PACK TIJERA 14-03-JULIO</td><td>Tijera Marine</td><td class='num'>$7.27</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP CAMARA IA 28-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$6.30</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP CUCHILLO MONGOL 14-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$5.44</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$215.65</strong></td><td class='num'><strong>54</strong></td><td class='num'><strong>$3.99</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>TC3</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$173.59</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">26</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$6.68</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP PACK MONGOL 13-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$74.89</td><td class='num'>18</td><td class='num'>$4.16</td></tr>
+<tr><td>CAMP CAMARA IA 28-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$21.42</td><td class='num'>3</td><td class='num'>$7.14</td></tr>
+<tr><td>TESTEO PACK TIJERA 14-03-JULIO</td><td>Tijera Marine</td><td class='num'>$10.53</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 18-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$10.32</td><td class='num'>2</td><td class='num'>$5.16</td></tr>
+<tr><td>CAMP AHORRADOR IMG 17-03-JULIO</td><td>Ahorrador</td><td class='num'>$10.02</td><td class='num'>1</td><td class='num'>$10.02</td></tr>
+<tr><td>CAMP PACK MONGOL 17-03</td><td>Cuchillo Mongol</td><td class='num'>$9.24</td><td class='num'>1</td><td class='num'>$9.24</td></tr>
+<tr><td>CAMP PACK MONGOL PLUS 14-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$8.76</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 25-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$8.61</td><td class='num'>1</td><td class='num'>$8.61</td></tr>
+<tr><td>CAMP PACK MONGOL 18-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$7.45</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 20-03</td><td>Cuchillo Mongol</td><td class='num'>$6.35</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 20-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$6.00</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$173.59</strong></td><td class='num'><strong>26</strong></td><td class='num'><strong>$6.68</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>CT2</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$2,426.90</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">683</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$3.55</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP CUCHILLO MONGOL 03-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$476.66</td><td class='num'>149</td><td class='num'>$3.20</td></tr>
+<tr><td>TESTEO IMG AHORRADOR 31-01-JULIO</td><td>Ahorrador</td><td class='num'>$384.96</td><td class='num'>147</td><td class='num'>$2.62</td></tr>
+<tr><td>TESTEO TIJERA MARINE 27-01-JULIO</td><td>Tijera Marine</td><td class='num'>$302.50</td><td class='num'>87</td><td class='num'>$3.48</td></tr>
+<tr><td>TESTEO NEW IMG AHORRADOR 12-02-JULIO</td><td>Ahorrador</td><td class='num'>$215.46</td><td class='num'>94</td><td class='num'>$2.29</td></tr>
+<tr><td>CAMP LLAVE DE IMPACTO 20-03-JULIO</td><td>Llave de Impacto</td><td class='num'>$133.05</td><td class='num'>32</td><td class='num'>$4.16</td></tr>
+<tr><td>CAMP CUCHILLO MONGOL 03-03-JULIO - Copia 2</td><td>Cuchillo Mongol</td><td class='num'>$123.32</td><td class='num'>31</td><td class='num'>$3.98</td></tr>
+<tr><td>TESTEO NEW TIJERA MARINE 03-03-JULIO</td><td>Tijera Marine</td><td class='num'>$103.36</td><td class='num'>17</td><td class='num'>$6.08</td></tr>
+<tr><td>CAMP CUCHILLO MONGOL 03-03-JULIO - Copia</td><td>Cuchillo Mongol</td><td class='num'>$102.05</td><td class='num'>34</td><td class='num'>$3.00</td></tr>
+<tr><td>CAMP ABO TIJERA MARINE 09-03-julio</td><td>Tijera Marine</td><td class='num'>$101.74</td><td class='num'>21</td><td class='num'>$4.84</td></tr>
+<tr><td>TESTEO PACK IMPACTO 26-03-JULIO</td><td>Pack Impacto</td><td class='num'>$96.23</td><td class='num'>24</td><td class='num'>$4.01</td></tr>
+<tr><td>TESTEO NEW VIDEOS TIJERA 05-03-JULIO</td><td>Tijera Marine</td><td class='num'>$51.67</td><td class='num'>5</td><td class='num'>$10.33</td></tr>
+<tr><td>TESTEO TIJERA MARINE 27-02-JULIO</td><td>Tijera Marine</td><td class='num'>$43.38</td><td class='num'>10</td><td class='num'>$4.34</td></tr>
+<tr><td>TESTEO CUCHILLO NORDICO 04-11-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$37.88</td><td class='num'>7</td><td class='num'>$5.41</td></tr>
+<tr><td>CAMP IMG AHORRADOR 12-02-JULIO</td><td>Ahorrador</td><td class='num'>$27.10</td><td class='num'>4</td><td class='num'>$6.78</td></tr>
+<tr><td>TESTEO TIJERA MARINE 18-03-JULIO</td><td>Tijera Marine</td><td class='num'>$21.77</td><td class='num'>4</td><td class='num'>$5.44</td></tr>
+<tr><td>TESTEO TIJERA MARINE 25-03-JULIO</td><td>Tijera Marine</td><td class='num'>$19.83</td><td class='num'>2</td><td class='num'>$9.91</td></tr>
+<tr><td>TESTEO PACK IMPACTO 30-03-JULIO</td><td>Pack Impacto</td><td class='num'>$18.38</td><td class='num'>3</td><td class='num'>$6.13</td></tr>
+<tr><td>CAMP CAMARA IA 31-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$18.01</td><td class='num'>2</td><td class='num'>$9.01</td></tr>
+<tr><td>CAMP CUCHILLO MONGOL 18-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$17.64</td><td class='num'>2</td><td class='num'>$8.82</td></tr>
+<tr><td>TESTEO IMG AHORRADOR 11-08-JULIO</td><td>Ahorrador</td><td class='num'>$15.92</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CBO/ Tijeras / winner/ 9-3</td><td>Tijera Marine</td><td class='num'>$14.71</td><td class='num'>1</td><td class='num'>$14.71</td></tr>
+<tr><td>CAMP ARRANCADOR PRO 17-03-JULIO</td><td>Arrancador Pro</td><td class='num'>$14.68</td><td class='num'>1</td><td class='num'>$14.68</td></tr>
+<tr><td>TESTEO IMG PACK MONGOL 11-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$14.01</td><td class='num'>1</td><td class='num'>$14.01</td></tr>
+<tr><td>CAMP LLAVE DE IMPACTO 20-03-JULIO - Copia</td><td>Llave de Impacto</td><td class='num'>$13.57</td><td class='num'>2</td><td class='num'>$6.79</td></tr>
+<tr><td>CAMP COCINA ELEXTRICA 18-03-JULIO</td><td>Pack Cocina</td><td class='num'>$13.44</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP TIJERAS IMG 13-03-JULIO</td><td>Tijera Marine</td><td class='num'>$11.68</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>TESTEO TIJERA ELECTRICA 10-03-JULIO</td><td>Tijera Eléctrica</td><td class='num'>$10.55</td><td class='num'>1</td><td class='num'>$10.55</td></tr>
+<tr><td>CAMP PASTORAL SOLAR 20-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$9.56</td><td class='num'>1</td><td class='num'>$9.56</td></tr>
+<tr><td>Madgicx - Acquisition Re-Engagement Campaign - Master Campaign - Sales-2026-03-11</td><td>Retargeting / Re-engagement</td><td class='num'>$7.50</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>TESTEO NEW VIDEOS AHORRADOR 05-12-JULIO</td><td>Ahorrador</td><td class='num'>$6.29</td><td class='num'>1</td><td class='num'>$6.29</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$2426.90</strong></td><td class='num'><strong>683</strong></td><td class='num'><strong>$3.55</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>CT4</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$1,078.16</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">277</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$3.89</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP AHORRADOR 13-03-JULIO</td><td>Ahorrador</td><td class='num'>$424.18</td><td class='num'>138</td><td class='num'>$3.07</td></tr>
+<tr><td>CAMP AHORRADOR 13-03-JULIO - Copia</td><td>Ahorrador</td><td class='num'>$310.19</td><td class='num'>79</td><td class='num'>$3.93</td></tr>
+<tr><td>CAMP LLAVE IMPACTO 24-03-JULIO</td><td>Llave de Impacto</td><td class='num'>$146.28</td><td class='num'>43</td><td class='num'>$3.40</td></tr>
+<tr><td>CAMP CAMARA IA 28-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$29.84</td><td class='num'>3</td><td class='num'>$9.95</td></tr>
+<tr><td>OPT ABO AHORRADOR 18-03-3JULIO</td><td>Ahorrador</td><td class='num'>$28.87</td><td class='num'>6</td><td class='num'>$4.81</td></tr>
+<tr><td>TESTEO TIJERA MILITAR 13-03-JULIO</td><td>Tijera Marine</td><td class='num'>$26.86</td><td class='num'>4</td><td class='num'>$6.71</td></tr>
+<tr><td>CAMP IMG AHORRADOR 14-03-JULIO</td><td>Ahorrador</td><td class='num'>$16.32</td><td class='num'>2</td><td class='num'>$8.16</td></tr>
+<tr><td>CAMP CAMARA GUARDIAN 31-03-JULIO</td><td>Cámara Guardian</td><td class='num'>$12.52</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP LLAVE IMPACTO 30-03-JULIO</td><td>Llave de Impacto</td><td class='num'>$11.83</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 14-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$11.32</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>TESTEO TIJERA MILITAR 25-03</td><td>Tijera Marine</td><td class='num'>$9.53</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP AHORRADOR 17-03-JULIO</td><td>Ahorrador</td><td class='num'>$8.73</td><td class='num'>1</td><td class='num'>$8.73</td></tr>
+<tr><td>CAMP PACK MONGOL 17-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$8.52</td><td class='num'>1</td><td class='num'>$8.52</td></tr>
+<tr><td>CAMP PACK MONGOL 25-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$8.03</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP CAMARA IA 30-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$7.83</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK CUCHILLO 24-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$7.34</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP AHORRADOR 20-03-JULIO</td><td>Ahorrador</td><td class='num'>$5.71</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK CUCHILLO 20-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$4.11</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 18-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$0.15</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$1078.16</strong></td><td class='num'><strong>277</strong></td><td class='num'><strong>$3.89</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>CT5</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$271.05</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">46</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$5.89</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP TOTALTOOLS 30-03-JULIO</td><td>Pack Impacto</td><td class='num'>$57.50</td><td class='num'>16</td><td class='num'>$3.59</td></tr>
+<tr><td>CAMP PACK COCINA 14-03-JULIO</td><td>Pack Cocina</td><td class='num'>$47.65</td><td class='num'>9</td><td class='num'>$5.29</td></tr>
+<tr><td>CAMP TOTALTOOLS 28-03-JULIO</td><td>Pack Impacto</td><td class='num'>$31.55</td><td class='num'>4</td><td class='num'>$7.89</td></tr>
+<tr><td>TESTEO ABO IMG AHORRADOR 12-03-JULIO</td><td>Ahorrador</td><td class='num'>$27.12</td><td class='num'>4</td><td class='num'>$6.78</td></tr>
+<tr><td>CAMP PACK COCINA 13-03-JULIO</td><td>Pack Cocina</td><td class='num'>$14.59</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK COCINA 24-03-JULIO</td><td>Pack Cocina</td><td class='num'>$12.51</td><td class='num'>1</td><td class='num'>$12.51</td></tr>
+<tr><td>CAMP AHORRADOR IMG 18-03-JULIO</td><td>Ahorrador</td><td class='num'>$11.10</td><td class='num'>3</td><td class='num'>$3.70</td></tr>
+<tr><td>CAMP PACK COCINA 25-03-JULIO</td><td>Pack Cocina</td><td class='num'>$10.75</td><td class='num'>3</td><td class='num'>$3.58</td></tr>
+<tr><td>CAMP AHORRADOR 20-03-JULIO</td><td>Ahorrador</td><td class='num'>$10.28</td><td class='num'>1</td><td class='num'>$10.28</td></tr>
+<tr><td>CAMP PACK MONGOL 24-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$10.18</td><td class='num'>1</td><td class='num'>$10.18</td></tr>
+<tr><td>CAMP PACK CUCHILLO 18-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$9.23</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP AHORRADOR 14-03-JULIO</td><td>Ahorrador</td><td class='num'>$8.54</td><td class='num'>2</td><td class='num'>$4.27</td></tr>
+<tr><td>CAMP AHORRADOR 13-03-JULIO</td><td>Ahorrador</td><td class='num'>$8.29</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP AHORRADOR 17-03-JULIO</td><td>Ahorrador</td><td class='num'>$6.70</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 20-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$5.06</td><td class='num'>2</td><td class='num'>$2.53</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$271.05</strong></td><td class='num'><strong>46</strong></td><td class='num'><strong>$5.89</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>CT6</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$104.57</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">33</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$3.17</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP AHORRADOR 20-03-JULIO - Copia</td><td>Ahorrador</td><td class='num'>$96.42</td><td class='num'>31</td><td class='num'>$3.11</td></tr>
+<tr><td>CAMP PACK COCINA 24-03-JULIO</td><td>Pack Cocina</td><td class='num'>$8.15</td><td class='num'>2</td><td class='num'>$4.08</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$104.57</strong></td><td class='num'><strong>33</strong></td><td class='num'><strong>$3.17</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>CT7</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$193.67</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">58</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$3.34</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP AHORRADOR 20-03-JULIO</td><td>Ahorrador</td><td class='num'>$185.18</td><td class='num'>56</td><td class='num'>$3.31</td></tr>
+<tr><td>CAMP PACK MONGOL 24-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$8.49</td><td class='num'>2</td><td class='num'>$4.25</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$193.67</strong></td><td class='num'><strong>58</strong></td><td class='num'><strong>$3.34</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>CT8</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$141.57</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">23</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$6.16</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP PACK TIJERA 24-03-JULIO</td><td>Tijera Marine</td><td class='num'>$72.31</td><td class='num'>15</td><td class='num'>$4.82</td></tr>
+<tr><td>CAMP PACK MONGOL 24-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$46.10</td><td class='num'>6</td><td class='num'>$7.68</td></tr>
+<tr><td>CAMP PACK TOTALTOOLS 28-03-JULIO</td><td>Pack Impacto</td><td class='num'>$9.10</td><td class='num'>1</td><td class='num'>$9.10</td></tr>
+<tr><td>CAMP PACK TOTALTOOLS 30-03-JULIO</td><td>Pack Impacto</td><td class='num'>$6.16</td><td class='num'>1</td><td class='num'>$6.16</td></tr>
+<tr><td>CAMP PACK MONGOL 20-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$4.20</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK MONGOL 20-03-JULIO - Copia</td><td>Cuchillo Mongol</td><td class='num'>$3.70</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$141.57</strong></td><td class='num'><strong>23</strong></td><td class='num'><strong>$6.16</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge fb-badge">Facebook</span><h3>seidanpublicidad</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$2,620.28</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">641</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$4.09</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP CBO TIJERA 07-03-JULIO</td><td>Tijera Marine</td><td class='num'>$658.11</td><td class='num'>174</td><td class='num'>$3.78</td></tr>
+<tr><td>TESTEO MONGOL 06-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$547.66</td><td class='num'>166</td><td class='num'>$3.30</td></tr>
+<tr><td>TESTEO TIJERA MARINE 03-03-JULIO</td><td>Tijera Marine</td><td class='num'>$488.57</td><td class='num'>128</td><td class='num'>$3.82</td></tr>
+<tr><td>CAMP ABO TIJERA 07-03-JULIO</td><td>Tijera Marine</td><td class='num'>$265.63</td><td class='num'>61</td><td class='num'>$4.35</td></tr>
+<tr><td>TESTEO CUCHILLO MONGOL</td><td>Cuchillo Mongol</td><td class='num'>$146.26</td><td class='num'>24</td><td class='num'>$6.09</td></tr>
+<tr><td>TESTEO PISTOLA DE PINTURA 05-02-JULIO</td><td>Pistola / Paintpro</td><td class='num'>$102.84</td><td class='num'>24</td><td class='num'>$4.29</td></tr>
+<tr><td>TESTEO VISION PRO 26-02-JULIO</td><td>Vision Pro</td><td class='num'>$76.97</td><td class='num'>5</td><td class='num'>$15.39</td></tr>
+<tr><td>CAMP CBO PISTOLA PINTURA 24-02-JULIO</td><td>Pistola / Paintpro</td><td class='num'>$75.84</td><td class='num'>20</td><td class='num'>$3.79</td></tr>
+<tr><td>OPT/ CBO/Videos winner Tijera/ 9-3</td><td>Tijera Marine</td><td class='num'>$59.22</td><td class='num'>12</td><td class='num'>$4.93</td></tr>
+<tr><td>TESTEO MONGOL 06-03-JULIO - Copia</td><td>Cuchillo Mongol</td><td class='num'>$41.64</td><td class='num'>12</td><td class='num'>$3.47</td></tr>
+<tr><td>TESTEO NEW TIJERA 05-03-JULIO</td><td>Tijera Marine</td><td class='num'>$40.42</td><td class='num'>7</td><td class='num'>$5.77</td></tr>
+<tr><td>TESTEO AHORRADOR / 11-12 - Copia</td><td>Ahorrador</td><td class='num'>$28.16</td><td class='num'>4</td><td class='num'>$7.04</td></tr>
+<tr><td>TESTEO ABO AHORRADOR IMG 11-03-JULIO</td><td>Ahorrador</td><td class='num'>$21.21</td><td class='num'>2</td><td class='num'>$10.61</td></tr>
+<tr><td>TESTEO AHORRADOR / 11-12</td><td>Ahorrador</td><td class='num'>$20.80</td><td class='num'>1</td><td class='num'>$20.80</td></tr>
+<tr><td>CAMP LLAVE IMPACTO 20-3-JULIO</td><td>Llave de Impacto</td><td class='num'>$12.46</td><td class='num'>1</td><td class='num'>$12.46</td></tr>
+<tr><td>CAMP AHORRADOR IMG 13-03-JULIO</td><td>Ahorrador</td><td class='num'>$11.96</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP IMG TIJERA 13-03-JULIO</td><td>Tijera Marine</td><td class='num'>$10.89</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP ARRANCADOR PRO 17-03-JULIO</td><td>Arrancador Pro</td><td class='num'>$5.84</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PASTORAL SOLAR 20-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$5.80</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$2620.28</strong></td><td class='num'><strong>641</strong></td><td class='num'><strong>$4.09</strong></td></tr></tbody></table></div></div>
+  <div class="section-title tt-title">⚫ Detalle de Campañas — TikTok Ads</div>
+  <div class="account-card"><div class="account-header"><span class="plat-badge tt-badge">TikTok</span><h3>PUBLI2TEC</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$1,644.42</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">376</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$4.37</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP CAMARA GUARDIAN 24-03-JULIO</td><td>Cámara Guardian</td><td class='num'>$343.07</td><td class='num'>92</td><td class='num'>$3.73</td></tr>
+<tr><td>TESTEO MICRO STUDIO 12-03-JULIO</td><td>Micro Studio</td><td class='num'>$288.29</td><td class='num'>61</td><td class='num'>$4.73</td></tr>
+<tr><td>CAMP CAMARA TRIPLE IA 27-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$211.74</td><td class='num'>66</td><td class='num'>$3.21</td></tr>
+<tr><td>CAMP LLAVE DE IMPACTO 22-03-JULIO</td><td>Llave de Impacto</td><td class='num'>$140.71</td><td class='num'>23</td><td class='num'>$6.12</td></tr>
+<tr><td>CAMP PASTORAL SOLAR 20-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$112.13</td><td class='num'>14</td><td class='num'>$8.01</td></tr>
+<tr><td>CAMP CAMARA TRIPLE IA 30-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$111.74</td><td class='num'>39</td><td class='num'>$2.86</td></tr>
+<tr><td>CAMP DASH CAM 13-03-JULIO</td><td>Dash Cam / Kraken</td><td class='num'>$105.09</td><td class='num'>33</td><td class='num'>$3.19</td></tr>
+<tr><td>CAMP AHORRADOR 12-03-JULIO</td><td>Ahorrador</td><td class='num'>$53.54</td><td class='num'>8</td><td class='num'>$6.69</td></tr>
+<tr><td>CAMP CAMARA GUARDIAN 31-03-JULIO</td><td>Cámara Guardian</td><td class='num'>$45.00</td><td class='num'>5</td><td class='num'>$9.00</td></tr>
+<tr><td>CAMP CAMARA GUARDIAN 28-03-JULIO</td><td>Cámara Guardian</td><td class='num'>$40.16</td><td class='num'>4</td><td class='num'>$10.04</td></tr>
+<tr><td>TESTEO PULVERIZADOR PAINTPRO 23-02-JULIO</td><td>Pistola / Paintpro</td><td class='num'>$39.84</td><td class='num'>6</td><td class='num'>$6.64</td></tr>
+<tr><td>CAMP CAMARA CERBERUS 27-03-JULIO</td><td>Cámara Cerberus</td><td class='num'>$25.95</td><td class='num'>12</td><td class='num'>$2.16</td></tr>
+<tr><td>Copia  TESTEO PULVERIZADOR PAINTPRO 23-02-JULIO</td><td>Pistola / Paintpro</td><td class='num'>$20.56</td><td class='num'>3</td><td class='num'>$6.85</td></tr>
+<tr><td>CAMP LLAVE DE IMPACTO 20-03-JULIO</td><td>Llave de Impacto</td><td class='num'>$19.06</td><td class='num'>3</td><td class='num'>$6.35</td></tr>
+<tr><td>TESTEO NEW TIJERA 05-03-JULIO</td><td>Tijera Marine</td><td class='num'>$16.84</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP CAMARA GUARDIAN 18-03-JULIO</td><td>Cámara Guardian</td><td class='num'>$14.61</td><td class='num'>2</td><td class='num'>$7.31</td></tr>
+<tr><td>TESTEO TRIANGULO SOLAR 06-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$12.53</td><td class='num'>1</td><td class='num'>$12.53</td></tr>
+<tr><td>CAMP ESTACION SOLAR 31-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$9.96</td><td class='num'>1</td><td class='num'>$9.96</td></tr>
+<tr><td>CAMP PACK IMPACTO 26-03-JULIO</td><td>Pack Impacto</td><td class='num'>$9.46</td><td class='num'>2</td><td class='num'>$4.73</td></tr>
+<tr><td>CAMP PACK IMPACTO 28-03-JULIO</td><td>Pack Impacto</td><td class='num'>$8.46</td><td class='num'>1</td><td class='num'>$8.46</td></tr>
+<tr><td>CAMP GAME STICK 31-03-JULIO</td><td>Game Stick</td><td class='num'>$8.28</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP ARRANCADOR 17-03-JULIO</td><td>Arrancador Pro</td><td class='num'>$7.41</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$1644.42</strong></td><td class='num'><strong>376</strong></td><td class='num'><strong>$4.37</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge tt-badge">TikTok</span><h3>PUBLISEIDAN</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$336.59</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">57</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$5.91</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>CAMP LLAVE IMPACTOR 20-03-JULIO</td><td>Llave de Impacto</td><td class='num'>$130.80</td><td class='num'>33</td><td class='num'>$3.96</td></tr>
+<tr><td>CAMP PASTORAL SOLAR 20-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$71.03</td><td class='num'>8</td><td class='num'>$8.88</td></tr>
+<tr><td>TESTEO PACK MONG0L 14/3</td><td>Cuchillo Mongol</td><td class='num'>$28.26</td><td class='num'>4</td><td class='num'>$7.06</td></tr>
+<tr><td>TESTEO CAMARA CERBERUS 27-03-JULIO</td><td>Cámara Cerberus</td><td class='num'>$19.62</td><td class='num'>5</td><td class='num'>$3.92</td></tr>
+<tr><td>TESTEO CAMARA IA 28-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$19.24</td><td class='num'>3</td><td class='num'>$6.41</td></tr>
+<tr><td>TESTEO TIJERA MARINE 03-03-JULIO</td><td>Tijera Marine</td><td class='num'>$12.21</td><td class='num'>1</td><td class='num'>$12.21</td></tr>
+<tr><td>CAMP PACK TOTALTOOLS 28-03-JULIO</td><td>Pack Impacto</td><td class='num'>$9.81</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP PACK IMAPCTO 27-03-JULIO</td><td>Pack Impacto</td><td class='num'>$9.68</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP CAMARA TRIPLE IA 30-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$8.92</td><td class='num'>2</td><td class='num'>$4.46</td></tr>
+<tr><td>CAMP ESTACION SOLAR 31-03-JULIO</td><td>Pastoral / Solar</td><td class='num'>$7.84</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMPa ARRANCADOR 17-03-JULIO</td><td>Arrancador Pro</td><td class='num'>$7.56</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP ARRANCADOR 17-03-JULIO</td><td>Arrancador Pro</td><td class='num'>$5.77</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP MICRO QY99 28-03-JULIO</td><td>Micro QY99</td><td class='num'>$4.52</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>TESTEO PACK MONG0L 13/3</td><td>Cuchillo Mongol</td><td class='num'>$1.33</td><td class='num'>1</td><td class='num'>$1.33</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$336.59</strong></td><td class='num'><strong>57</strong></td><td class='num'><strong>$5.91</strong></td></tr></tbody></table></div></div>
+<div class="account-card"><div class="account-header"><span class="plat-badge tt-badge">TikTok</span><h3>Seiko Publicidad</h3><div class="account-kpis"><span class="akpi"><span class="akpi-label">Inversión</span><span class="akpi-val">$1,866.08</span></span><span class="akpi"><span class="akpi-label">Compras</span><span class="akpi-val">429</span></span><span class="akpi"><span class="akpi-label">CPA</span><span class="akpi-val">$4.35</span></span></div></div><div class="table-wrap"><table class="camp-table"><thead><tr><th>Campaña</th><th>Producto</th><th>Inversión</th><th>Compras</th><th>CPA</th></tr></thead><tbody><tr><td>TESTEO CAM KRATOS 25-03-JULIO</td><td>Cámara Kratos</td><td class='num'>$412.64</td><td class='num'>103</td><td class='num'>$4.01</td></tr>
+<tr><td>CAMP AHORRADOR 11-03-JULIO</td><td>Ahorrador</td><td class='num'>$223.49</td><td class='num'>62</td><td class='num'>$3.60</td></tr>
+<tr><td>TESTEO NEW TIJERA 05-03-JULIO</td><td>Tijera Marine</td><td class='num'>$171.17</td><td class='num'>39</td><td class='num'>$4.39</td></tr>
+<tr><td>TESTEO TIJERA MARINE 25-03-JULIO</td><td>Tijera Marine</td><td class='num'>$163.55</td><td class='num'>38</td><td class='num'>$4.30</td></tr>
+<tr><td>CAMP AHORRADOR 14-02-JULIO</td><td>Ahorrador</td><td class='num'>$129.70</td><td class='num'>34</td><td class='num'>$3.81</td></tr>
+<tr><td>CAMP MONGOL 08-01-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$121.40</td><td class='num'>25</td><td class='num'>$4.86</td></tr>
+<tr><td>CAMP AHORRADOR 14-03-JULIO</td><td>Ahorrador</td><td class='num'>$103.01</td><td class='num'>29</td><td class='num'>$3.55</td></tr>
+<tr><td>TESTEO TIJERA MARINE 03-03-JULIO</td><td>Tijera Marine</td><td class='num'>$99.25</td><td class='num'>13</td><td class='num'>$7.63</td></tr>
+<tr><td>TESTEO TIJERA MARINE 27-01-JULIO</td><td>Tijera Marine</td><td class='num'>$92.88</td><td class='num'>22</td><td class='num'>$4.22</td></tr>
+<tr><td>CAMP CAMARA IA 31-03-JULIO</td><td>Cámara Triple IA / Solar IA</td><td class='num'>$70.17</td><td class='num'>21</td><td class='num'>$3.34</td></tr>
+<tr><td>TESTEO NEW MONGOL 06-03-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$50.79</td><td class='num'>11</td><td class='num'>$4.62</td></tr>
+<tr><td>CAMP PACK IMAPCTO 26-03-JULIO</td><td>Pack Impacto</td><td class='num'>$50.40</td><td class='num'>8</td><td class='num'>$6.30</td></tr>
+<tr><td>CAMP AHORRADOR 13-03-JULIO</td><td>Ahorrador</td><td class='num'>$33.17</td><td class='num'>8</td><td class='num'>$4.15</td></tr>
+<tr><td>CAMP CAMARA PULPO 27-03-JULIO</td><td>Cámara Pulpo</td><td class='num'>$22.03</td><td class='num'>5</td><td class='num'>$4.41</td></tr>
+<tr><td>CAMP MONGOL 13-02-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$15.89</td><td class='num'>2</td><td class='num'>$7.95</td></tr>
+<tr><td>Copy 1 of TESTEO TIJERA MARINE 4-3</td><td>Tijera Marine</td><td class='num'>$14.94</td><td class='num'>3</td><td class='num'>$4.98</td></tr>
+<tr><td>TESTEO SET LUXURY 04-03-JULIO</td><td>Set Luxury</td><td class='num'>$14.48</td><td class='num'>2</td><td class='num'>$7.24</td></tr>
+<tr><td>CAMP MONGOL 07-11-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$13.40</td><td class='num'>1</td><td class='num'>$13.40</td></tr>
+<tr><td>Copia 1 de CAMP PACK IMAPCTO 26-03-JULIO</td><td>Pack Impacto</td><td class='num'>$11.56</td><td class='num'>1</td><td class='num'>$11.56</td></tr>
+<tr><td>TESTEO TIJERA ELECTRICA 11-03-JULIO</td><td>Tijera Eléctrica</td><td class='num'>$11.53</td><td class='num'>1</td><td class='num'>$11.53</td></tr>
+<tr><td>TESTEO PACK ARES 19-02-JULIO</td><td>Cuchillo Mongol</td><td class='num'>$7.44</td><td class='num'>1</td><td class='num'>$7.44</td></tr>
+<tr><td>CAMP MICRO QY99 28-03-JULIO</td><td>Micro QY99</td><td class='num'>$7.05</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP AHORRADOR NEW 12-03-JULIO</td><td>Ahorrador</td><td class='num'>$6.52</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>CAMP COCINA ELECTRICA 18-03-JULIO</td><td>Pack Cocina</td><td class='num'>$5.80</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>Copia TESTEO NEW AHORRADOR 14-01-JULIO</td><td>Ahorrador</td><td class='num'>$5.07</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>Copia CAMP AHORRADOR 14-02-JULIO</td><td>Ahorrador</td><td class='num'>$4.67</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr><td>TESTEO POSTURE 360 07-03-JULIO</td><td>Brasier Posture</td><td class='num'>$4.08</td><td class='num'>—</td><td class='num'>—</td></tr>
+<tr class='total-row'><td colspan='2'><strong>TOTAL</strong></td><td class='num'><strong>$1866.08</strong></td><td class='num'><strong>429</strong></td><td class='num'><strong>$4.35</strong></td></tr></tbody></table></div></div>
+</div>
+<div class="footer">Reporte generado para la Gerencia · Período: 1 de Marzo 2026 – 31 de Marzo 2026 · Todos los valores en USD</div>
+<script>
+const PLAT_L=["Facebook", "TikTok"];
+const PLAT_G=[8916.94, 3847.09];
+const PLAT_C=[3.84, 4.46];
+const PROD_L=["Tijera Marine", "Ahorrador", "Cuchillo Mongol", "C\u00e1mara Guardian", "C\u00e1mara Triple IA / Solar IA", "Llave de Impacto", "C\u00e1mara Kratos", "Pack Impacto", "Dash Cam / Kraken", "Micro Studio", "Pistola / Paintpro", "Pastoral / Solar"];
+const PROD_G=[3262.53, 2861.24, 2070.89, 855.74, 801.76, 607.76, 412.64, 338.87, 323.81, 288.29, 239.08, 228.84];
+const PROD_V=[745, 830, 509, 246, 230, 137, 103, 63, 119, 61, 53, 25];
+const PROD_C=[4.38, 3.45, 4.07, 3.48, 3.49, 4.44, 4.01, 5.38, 2.72, 4.73, 4.51, 9.15];
+const ACC_L=["seidanpublicidad", "CT2", "Seiko Publicidad", "PUBLI2TEC", "T3cnostore", "CT4", "ANUNCIOS FB e IG", "PUBLISEIDAN", "CT5", "TC2", "CT7", "TC3"];
+const ACC_G=[2620.28, 2426.9, 1866.08, 1644.42, 1141.1, 1078.16, 384.86, 336.59, 271.05, 215.65, 193.67, 173.59];
+const ACC_C=["#1877F2", "#1877F2", "#333", "#333", "#1877F2", "#1877F2", "#1877F2", "#333", "#1877F2", "#1877F2", "#1877F2", "#1877F2"];
+
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+Chart.defaults.color = '#64748B';
+
+new Chart(document.getElementById('platPie'), {
+  type: 'doughnut',
+  data: { labels: PLAT_L, datasets: [{ data: PLAT_G, backgroundColor: ['#1877F2','#1a1a1a'], borderWidth: 0, hoverOffset: 8 }] },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: (c) => ' $' + c.raw.toLocaleString('en-US', { minimumFractionDigits: 2 }) } } } }
+});
+
+new Chart(document.getElementById('platCpa'), {
+  type: 'bar',
+  data: { labels: PLAT_L, datasets: [{ label: 'CPA (USD)', data: PLAT_C, backgroundColor: ['#1877F2','#1a1a1a'], borderRadius: 8, borderSkipped: false }] },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ' $' + c.raw.toFixed(2) } } },
+    scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v.toFixed(2) } }, x: { grid: { display: false } } } }
+});
+
+new Chart(document.getElementById('prodBar'), {
+  type: 'bar',
+  data: { labels: PROD_L, datasets: [
+    { label: 'Inversión (USD)', data: PROD_G, backgroundColor: 'rgba(24,119,242,0.8)', yAxisID: 'y', borderRadius: 4 },
+    { label: 'Compras', data: PROD_V, backgroundColor: 'rgba(124,58,237,0.8)', yAxisID: 'y1', borderRadius: 4 }
+  ]},
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'top' } },
+    scales: { x: { grid: { display: false } },
+      y:  { type: 'linear', position: 'left',  ticks: { callback: v => '$' + v.toLocaleString() } },
+      y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } } }
+});
+
+new Chart(document.getElementById('prodCpa'), {
+  type: 'bar',
+  data: { labels: PROD_L, datasets: [{ label: 'CPA (USD)', data: PROD_C,
+    backgroundColor: PROD_C.map(v => v === 0 ? '#cbd5e1' : v <= 4 ? 'rgba(22,163,74,0.8)' : v <= 7 ? 'rgba(217,119,6,0.8)' : 'rgba(220,38,38,0.8)'),
+    borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.raw === 0 ? ' Sin compras' : ' CPA: $' + c.raw.toFixed(2) } } },
+    scales: { x: { ticks: { callback: v => '$' + v.toFixed(2) } }, y: { grid: { display: false } } } }
+});
+
+new Chart(document.getElementById('accBar'), {
+  type: 'bar',
+  data: { labels: ACC_L, datasets: [{ label: 'Inversión (USD)', data: ACC_G, backgroundColor: ACC_C, borderRadius: 4 }] },
+  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ' $' + c.raw.toLocaleString('en-US', { minimumFractionDigits: 2 }) } } },
+    scales: { x: { ticks: { callback: v => '$' + v.toLocaleString() } }, y: { grid: { display: false }, ticks: { font: { size: 11 } } } } }
+});
+
+</script>
+</body>
+</html>
