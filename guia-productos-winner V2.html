@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía — Productos Winner</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#fff;--bg2:#f7f6f3;--bg3:#f0efe9;
+  --t1:#1a1a18;--t2:#5a5a55;--t3:#9a9990;
+  --bd:rgba(0,0,0,.1);--bd2:rgba(0,0,0,.18);
+  --blue:#1e6fc2;--blue-bg:#e8f1fb;--blue-t:#1a5ba8;
+  --green:#1a8a5e;--green-bg:#e4f5ec;--green-t:#136646;
+  --amber:#b86c10;--amber-bg:#fdf0dc;--amber-t:#9a570c;
+  --pink:#b03870;--pink-bg:#fce9f2;--pink-t:#8f2a5a;
+  --r:10px;--rs:6px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1c1c1a;--bg2:#242422;--bg3:#2c2c28;
+    --t1:#eeeee8;--t2:#9a9990;--t3:#6a6a60;
+    --bd:rgba(255,255,255,.1);--bd2:rgba(255,255,255,.18);
+    --blue-bg:#0e2d52;--blue-t:#7ab3e8;
+    --green-bg:#0a2e1e;--green-t:#6acca0;
+    --amber-bg:#2e1e08;--amber-t:#e8a84a;
+    --pink-bg:#2e0e1e;--pink-t:#e88ab8;
+  }
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:var(--bg3);color:var(--t1);line-height:1.6;
+  min-height:100vh;padding:1rem .75rem 4rem;
+}
+
+.wrap{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+
+/* NAV */
+.nav{
+  background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--r);
+  padding:.65rem 1rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;
+  position:sticky;top:.75rem;z-index:100;
+}
+.nav-lbl{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-right:.2rem}
+.nav a{
+  font-size:12px;padding:4px 10px;border-radius:99px;
+  border:0.5px solid var(--bd2);color:var(--t2);text-decoration:none;
+  transition:all .15s;white-space:nowrap;
+}
+.nav a:hover{background:var(--bg2)}
+
+/* HEADER */
+.hdr{
+  background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--r);
+  padding:clamp(1.25rem,4vw,2rem) clamp(1.25rem,4vw,2rem);
+  position:relative;overflow:hidden;
+}
+.hdr::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue) 0%,var(--pink) 50%,var(--amber) 100%);
+}
+.badge{
+  display:inline-block;font-size:11px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;padding:3px 10px;border-radius:99px;
+  background:var(--blue-bg);color:var(--blue-t);margin-bottom:.6rem;
+}
+.hdr h1{font-size:clamp(18px,5vw,26px);font-weight:700;margin-bottom:.4rem}
+.hdr p{font-size:14px;color:var(--t2);line-height:1.7;max-width:540px}
+.hdr-meta{display:flex;gap:.6rem 1.1rem;margin-top:1rem;flex-wrap:wrap}
+.mi{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--t3)}
+.md{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+/* SECTIONS */
+.sec{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--r);padding:clamp(1.1rem,3vw,1.6rem)}
+.sh{display:flex;align-items:center;gap:10px;padding-bottom:.85rem;margin-bottom:1rem;border-bottom:0.5px solid var(--bd)}
+.sn{width:26px;height:26px;border-radius:50%;background:var(--bg2);border:0.5px solid var(--bd);font-size:12px;font-weight:600;color:var(--t2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:600;color:var(--t1)}
+.ss{font-size:12px;color:var(--t3)}
+.note{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:1rem;padding:.65rem .85rem;background:var(--bg2);border-radius:var(--rs);border-left:2.5px solid var(--blue)}
+
+/* CRITERIOS */
+.cg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:520px){.cg{grid-template-columns:repeat(4,1fr)}}
+.cc{border:0.5px solid var(--bd);border-radius:var(--r);padding:.85rem;cursor:pointer;transition:border-color .15s;background:var(--bg);-webkit-tap-highlight-color:transparent}
+.cc:hover{border-color:var(--bd2)}
+.cc.active{border:1.5px solid var(--blue)}
+.ci{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:.5rem}
+.cn{font-size:12px;font-weight:600;color:var(--t1);margin-bottom:2px}
+.cd{font-size:11px;color:var(--t2);line-height:1.45}
+.cx{display:none;margin-top:.6rem;padding:.55rem .75rem;background:var(--blue-bg);border-radius:var(--rs);font-size:12px;color:var(--blue-t);line-height:1.6}
+.cc.active .cx{display:block}
+.ch{font-size:11px;color:var(--t3);text-align:center;margin-top:.6rem}
+
+/* TABS */
+.tabs{display:flex;gap:5px;margin-bottom:.85rem;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-size:12px;font-weight:500;padding:5px 11px;border-radius:99px;border:0.5px solid var(--bd2);background:transparent;color:var(--t2);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.tab:hover{background:var(--bg2)}
+.tab.active{background:var(--blue-bg);color:var(--blue-t);border-color:transparent}
+
+/* PLATAFORMAS */
+.pg{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:420px){.pg{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:680px){.pg{grid-template-columns:repeat(3,1fr)}}
+.pc{border:0.5px solid var(--bd);border-radius:var(--r);padding:.8rem .9rem;background:var(--bg);display:none}
+.pc.on{display:block}
+.pt{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.pd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.pn{font-size:13px;font-weight:600;color:var(--t1)}
+.pcat{font-size:11px;color:var(--t3);margin-bottom:5px}
+.pp{font-size:12px;color:var(--t2);line-height:1.55}
+.np{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:var(--green-bg);color:var(--green-t);margin-left:auto;white-space:nowrap}
+
+/* PROCESO */
+.flow{display:flex;flex-direction:column}
+.fs{display:flex;gap:13px}
+.fl{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.fn{width:27px;height:27px;border-radius:50%;background:var(--blue-bg);color:var(--blue-t);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fline{width:1px;flex:1;min-height:14px;background:var(--bd);margin:3px 0}
+.fb{padding-bottom:1.1rem;flex:1;padding-top:3px}
+.ft{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:3px}
+.fd{font-size:12px;color:var(--t2);line-height:1.6}
+.ftags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.ftag{font-size:11px;padding:2px 7px;border-radius:var(--rs);border:0.5px solid var(--bd2);color:var(--t3)}
+
+/* CALCULADORA */
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:400px){.cg2{grid-template-columns:1fr}}
+.cf label{display:block;font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.cf input{width:100%;padding:9px 11px;border:0.5px solid var(--bd2);border-radius:var(--rs);background:var(--bg);color:var(--t1);font-size:15px;font-family:inherit;outline:none;transition:border-color .15s;-webkit-appearance:none}
+.cf input:focus{border-color:var(--blue)}
+.cr{margin-top:.85rem;padding:.85rem 1rem;border-radius:var(--r);border:0.5px solid var(--bd);background:var(--bg2);display:flex;gap:.9rem;flex-wrap:wrap}
+.cs{flex:1;min-width:75px}
+.csl{font-size:11px;color:var(--t3);margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em}
+.csv{font-size:20px;font-weight:700;color:var(--t1)}
+.vd{margin-top:.65rem;padding:.55rem .85rem;border-radius:var(--rs);font-size:13px;font-weight:500}
+.vd.ok{background:var(--green-bg);color:var(--green-t)}
+.vd.warn{background:var(--amber-bg);color:var(--amber-t)}
+.vd.bad{background:var(--pink-bg);color:var(--pink-t)}
+
+/* CHECKLIST */
+.ckgrid{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:520px){.ckgrid{grid-template-columns:repeat(2,1fr)}}
+.cki{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--t2);line-height:1.5;padding:.6rem .35rem;border-bottom:0.5px solid var(--bd);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cki:active{background:var(--bg2);border-radius:var(--rs)}
+.ck{width:17px;height:17px;border:0.5px solid var(--bd2);border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;background:var(--bg)}
+.ck.done{background:var(--blue);border-color:var(--blue)}
+.ck.done::after{content:'';width:9px;height:5.5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:block}
+.ckl.done{text-decoration:line-through;opacity:.45}
+.pw{display:flex;align-items:center;gap:10px;margin-top:.85rem}
+.pl{font-size:12px;color:var(--t2);white-space:nowrap}
+.pt2{flex:1;height:5px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.pf{height:100%;background:var(--blue);border-radius:99px;transition:width .3s ease}
+
+/* TIPS */
+.tg{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:420px){.tg{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:680px){.tg{grid-template-columns:repeat(3,1fr)}}
+.tc{border:0.5px solid var(--bd);border-radius:var(--r);padding:.85rem .9rem;background:var(--bg)}
+.th{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.ti{font-size:15px}
+.tn{font-size:13px;font-weight:600;color:var(--t1)}
+.tb{font-size:12px;color:var(--t2);line-height:1.6}
+
+.footer{text-align:center;font-size:12px;color:var(--t3);padding-top:.25rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <span class="nav-lbl">Ir a</span>
+    <a href="#crit">Criterios</a>
+    <a href="#plat">Plataformas</a>
+    <a href="#proc">Proceso</a>
+    <a href="#calc">Calculadora</a>
+    <a href="#chk">Checklist</a>
+    <a href="#tips">Tips</a>
+  </nav>
+
+  <header class="hdr">
+    <div class="badge">Guía Operativa</div>
+    <h1>Búsqueda de Productos Winner</h1>
+    <p>Manual de incorporación para investigación de productos en ecommerce. Sigue cada sección en orden para identificar, validar y seleccionar candidatos con alto potencial.</p>
+    <div class="hdr-meta">
+      <div class="mi"><div class="md"></div>4 criterios de selección</div>
+      <div class="mi"><div class="md" style="background:var(--green)"></div>13 plataformas</div>
+      <div class="mi"><div class="md" style="background:var(--amber)"></div>6 pasos de validación</div>
+      <div class="mi"><div class="md" style="background:var(--pink)"></div>Calculadora + Checklist</div>
+    </div>
+  </header>
+
+  <!-- 1 -->
+  <section class="sec" id="crit">
+    <div class="sh"><div class="sn">1</div><div><div class="st">Criterios de selección</div><div class="ss">Evaluación inicial de candidatos</div></div></div>
+    <div class="note">Un producto es candidato a testear si cumple <strong>al menos 3 de estos 4 criterios</strong>. Toca cada tarjeta para ver cómo evaluarlo.</div>
+    <div class="cg">
+      <div class="cc" onclick="toggleCrit(this)">
+        <div class="ci" style="background:var(--blue-bg)">🔧</div>
+        <div class="cn">Resuelve un problema</div>
+        <div class="cd">Existe una necesidad real y específica</div>
+        <div class="cx">¿La gente ya busca una solución? Busca frases como "cómo evitar que..." en Google y TikTok. Si hay volumen, hay demanda real detrás.</div>
+      </div>
+      <div class="cc" onclick="toggleCrit(this)">
+        <div class="ci" style="background:var(--green-bg)">📈</div>
+        <div class="cn">Innovador o en tendencia</div>
+        <div class="cd">Tracción reciente o diferente a lo existente</div>
+        <div class="cx">Valida en Google Trends que la curva sube. En TikTok filtra por "Este mes". Más de 5M de vistas = señal fuerte de tendencia activa.</div>
+      </div>
+      <div class="cc" onclick="toggleCrit(this)">
+        <div class="ci" style="background:var(--amber-bg)">⚡</div>
+        <div class="cn">Solución inmediata</div>
+        <div class="cd">El beneficio se percibe casi al instante</div>
+        <div class="cx">El cliente debe entender el beneficio en menos de 5 segundos viendo el producto en video. Sin "wow effect" claro, la conversión va a sufrir.</div>
+      </div>
+      <div class="cc" onclick="toggleCrit(this)">
+        <div class="ci" style="background:var(--pink-bg)">🎯</div>
+        <div class="cn">Ataca dolores del día a día</div>
+        <div class="cd">El problema ocurre con frecuencia alta</div>
+        <div class="cx">Dolores recurrentes = mayor recomendación y recompra. Ejemplos: espalda, organización, productividad, cuidado personal. Evita necesidades esporádicas.</div>
+      </div>
+    </div>
+    <div class="ch">↑ Toca cada criterio para ver cómo evaluarlo</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec" id="plat">
+    <div class="sh"><div class="sn">2</div><div><div class="st">Plataformas de investigación</div><div class="ss">Fuentes para detectar y validar</div></div></div>
+    <div class="tabs">
+      <button class="tab active" onclick="fp('todas',this)">Todas</button>
+      <button class="tab" onclick="fp('spy',this)">Espionaje</button>
+      <button class="tab" onclick="fp('prov',this)">Proveedores</button>
+      <button class="tab" onclick="fp('trend',this)">Tendencias</button>
+      <button class="tab" onclick="fp('sug',this)">Sugeridas ✦</button>
+    </div>
+    <div class="pg" id="pg">
+      <div class="pc on" data-c="spy"><div class="pt"><div class="pd" style="background:#378ADD"></div><span class="pn">Meta Ad Library</span></div><div class="pcat">Espionaje de anuncios</div><div class="pp">Filtra por país y fecha. Anuncios activos más de 30 días = señal de que convierte. Analiza copy, formato y comentarios del público.</div></div>
+      <div class="pc on" data-c="spy"><div class="pt"><div class="pd" style="background:#378ADD"></div><span class="pn">Minea</span></div><div class="pcat">Espionaje de anuncios</div><div class="pp">Cubre Facebook, TikTok y Pinterest. Ordena por likes o fecha reciente. Guarda en colecciones para comparar candidatos.</div></div>
+      <div class="pc on" data-c="spy"><div class="pt"><div class="pd" style="background:#378ADD"></div><span class="pn">TikTok Creative Center</span></div><div class="pcat">Espionaje de anuncios</div><div class="pp">Sección "Top Ads". Filtra por industria y región. Ver creativos con mayor CTR. Gratis con datos en tiempo real.</div></div>
+      <div class="pc on" data-c="spy sug"><div class="pt"><div class="pd" style="background:#378ADD"></div><span class="pn">AdSpy / Dropispy</span><span class="np">Sugerida</span></div><div class="pcat">Espionaje de anuncios</div><div class="pp">Alternativas a Minea con filtros por tienda Shopify. Dropispy tiene plan gratuito. Útil para cruzar datos entre herramientas.</div></div>
+      <div class="pc on" data-c="prov"><div class="pt"><div class="pd" style="background:#1D9E75"></div><span class="pn">AliExpress</span></div><div class="pcat">Proveedor / Validación</div><div class="pp">Filtra por más de 100 pedidos y reseñas con foto. Ordena por "Más vendidos". Muchas reseñas orgánicas = demanda probada.</div></div>
+      <div class="pc on" data-c="prov"><div class="pt"><div class="pd" style="background:#1D9E75"></div><span class="pn">Alibaba</span></div><div class="pcat">Proveedor / Mayorista</div><div class="pp">Para escalar o marca propia. Pide muestra antes del pedido grande. Verifica Trade Assurance y nivel del proveedor.</div></div>
+      <div class="pc on" data-c="prov sug"><div class="pt"><div class="pd" style="background:#1D9E75"></div><span class="pn">CJDropshipping</span><span class="np">Sugerida</span></div><div class="pcat">Proveedor con fulfillment</div><div class="pp">Mejores tiempos de envío que AliExpress. Integra con Shopify y WooCommerce. Procesado en menos de 3 días en muchos productos.</div></div>
+      <div class="pc on" data-c="trend"><div class="pt"><div class="pd" style="background:#EF9F27"></div><span class="pn">TikTok orgánico</span></div><div class="pcat">Tendencias</div><div class="pp">Busca el producto + #tiktokmademebuyit. Comentarios "¿dónde lo compro?" = señal de intención de compra activa.</div></div>
+      <div class="pc on" data-c="trend"><div class="pt"><div class="pd" style="background:#EF9F27"></div><span class="pn">Google Imagen</span></div><div class="pcat">Búsqueda visual</div><div class="pp">Sube captura de un producto para encontrar el nombre exacto. Útil para localizar proveedores sin saber cómo se llama el producto.</div></div>
+      <div class="pc on" data-c="trend sug"><div class="pt"><div class="pd" style="background:#D4537E"></div><span class="pn">Google Trends</span><span class="np">Sugerida</span></div><div class="pcat">Tendencias</div><div class="pp">Compara hasta 5 términos. Curva subiendo 3+ meses = ventana de oportunidad. Úsalo antes del test para evitar productos en caída.</div></div>
+      <div class="pc on" data-c="sug"><div class="pt"><div class="pd" style="background:#D4537E"></div><span class="pn">Amazon Best Sellers</span><span class="np">Sugerida</span></div><div class="pcat">Validación de demanda</div><div class="pp">Top 100 de categoría = demanda real. Lee reseñas de 1-2 estrellas: ahí están los dolores no resueltos y las oportunidades de diferenciación.</div></div>
+      <div class="pc on" data-c="trend sug"><div class="pt"><div class="pd" style="background:#D4537E"></div><span class="pn">Pinterest Trends</span><span class="np">Sugerida</span></div><div class="pcat">Tendencias futuras</div><div class="pp">Anticipa tendencias 2-6 meses antes. Excelente para lifestyle, hogar y belleza. Búsquedas pico = demanda real en 3-4 meses.</div></div>
+      <div class="pc on" data-c="sug"><div class="pt"><div class="pd" style="background:#D4537E"></div><span class="pn">Reddit</span><span class="np">Sugerida</span></div><div class="pcat">Inteligencia de consumidor</div><div class="pp">Subreddits del nicho (r/BuyItForLife, etc.). Posts de "¿qué recomiendan para X?" revelan dolores reales sin filtros de marketing.</div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec" id="proc">
+    <div class="sh"><div class="sn">3</div><div><div class="st">Proceso de validación</div><div class="ss">Sigue este orden para cada candidato</div></div></div>
+    <div class="flow">
+      <div class="fs"><div class="fl"><div class="fn">1</div><div class="fline"></div></div><div class="fb"><div class="ft">Detectar candidatos</div><div class="fd">Recolecta mínimo 5 productos antes de filtrar. No te enamores del primero — comparar candidatos es clave para decidir bien.</div><div class="ftags"><span class="ftag">Minea</span><span class="ftag">TikTok</span><span class="ftag">Meta Ads</span><span class="ftag">Amazon</span></div></div></div>
+      <div class="fs"><div class="fl"><div class="fn">2</div><div class="fline"></div></div><div class="fb"><div class="ft">Aplicar los 4 criterios</div><div class="fd">Puntúa cada candidato de 1 a 4. Solo pasan los que cumplan 3 o más. Los que cumplan los 4 son prioridad máxima.</div><div class="ftags"><span class="ftag">Sección 1 de esta guía</span></div></div></div>
+      <div class="fs"><div class="fl"><div class="fn">3</div><div class="fline"></div></div><div class="fb"><div class="ft">Validar tendencia y demanda</div><div class="fd">Google Trends + volumen de búsqueda. Confirma que no está en caída. Revisa estacionalidad que pueda afectar el test.</div><div class="ftags"><span class="ftag">Google Trends</span><span class="ftag">Pinterest</span><span class="ftag">Amazon BSR</span></div></div></div>
+      <div class="fs"><div class="fl"><div class="fn">4</div><div class="fline"></div></div><div class="fb"><div class="ft">Revisar competencia y precio</div><div class="fd">¿Cuántos anuncios activos hay y qué ángulos usan? ¿Hay espacio para entrar con margen mínimo de 3x el costo?</div><div class="ftags"><span class="ftag">Meta Ads Library</span><span class="ftag">AliExpress</span><span class="ftag">Calculadora abajo</span></div></div></div>
+      <div class="fs"><div class="fl"><div class="fn">5</div><div class="fline"></div></div><div class="fb"><div class="ft">Verificar proveedor y logística</div><div class="fd">¿Más de 50 reseñas positivas? ¿Envío menor a 15 días? ¿Acepta muestra? Sin proveedor confiable no hay producto winner viable.</div><div class="ftags"><span class="ftag">AliExpress</span><span class="ftag">Alibaba</span><span class="ftag">CJDropshipping</span></div></div></div>
+      <div class="fs"><div class="fl"><div class="fn">6</div></div><div class="fb"><div class="ft">Aprobar para test</div><div class="fd">Máximo 2-3 productos en test simultáneamente. Completa el checklist antes de presentarlo al equipo. Define presupuesto, KPIs y fecha de corte.</div><div class="ftags"><span class="ftag">Decisión de equipo</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec" id="calc">
+    <div class="sh"><div class="sn">4</div><div><div class="st">Calculadora de margen</div><div class="ss">Regla mínima: precio de venta = 3× el costo</div></div></div>
+    <div class="cg2">
+      <div class="cf"><label>Costo del producto (USD)</label><input type="number" id="cost" placeholder="Ej: 8" inputmode="decimal" oninput="calc()"></div>
+      <div class="cf"><label>Precio de venta (USD)</label><input type="number" id="price" placeholder="Ej: 29.99" inputmode="decimal" oninput="calc()"></div>
+      <div class="cf"><label>Costo de envío (USD)</label><input type="number" id="ship" placeholder="Ej: 4" inputmode="decimal" oninput="calc()"></div>
+      <div class="cf"><label>Costo de ads estimado (USD)</label><input type="number" id="ads" placeholder="Ej: 8" inputmode="decimal" oninput="calc()"></div>
+    </div>
+    <div class="cr" id="cr" style="display:none">
+      <div class="cs"><div class="csl">Ganancia neta</div><div class="csv" id="rp">—</div></div>
+      <div class="cs"><div class="csl">Margen neto</div><div class="csv" id="rm">—</div></div>
+      <div class="cs"><div class="csl">Multiplicador</div><div class="csv" id="rx">—</div></div>
+    </div>
+    <div class="vd" id="vd" style="display:none"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec" id="chk">
+    <div class="sh"><div class="sn">5</div><div><div class="st">Checklist antes de proponer</div><div class="ss">Marca cada punto antes de presentar al equipo</div></div></div>
+    <div class="ckgrid" id="ckg"></div>
+    <div class="pw"><span class="pl" id="pl">0 / 10</span><div class="pt2"><div class="pf" id="pf" style="width:0%"></div></div></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec" id="tips">
+    <div class="sh"><div class="sn">6</div><div><div class="st">Tips adicionales</div><div class="ss">Buenas prácticas para afinar la investigación</div></div></div>
+    <div class="tg">
+      <div class="tc"><div class="th"><span class="ti">🧠</span><span class="tn">Lee los comentarios</span></div><div class="tb">Los comentarios de anuncios de competidores son la fuente más honesta de objeciones y dolores reales. Úsalos para mejorar el copy.</div></div>
+      <div class="tc"><div class="th"><span class="ti">📦</span><span class="tn">Pide muestra siempre</span></div><div class="tb">Antes de cualquier pedido grande, solicita muestra. La calidad real muchas veces difiere de las fotos del listado del proveedor.</div></div>
+      <div class="tc"><div class="th"><span class="ti">🔁</span><span class="tn">Testea el ángulo, no solo el producto</span></div><div class="tb">Un mismo producto puede fallar con un ángulo y explotar con otro. Prueba diferentes beneficios antes de descartar un candidato.</div></div>
+      <div class="tc"><div class="th"><span class="ti">📊</span><span class="tn">Define KPIs antes del test</span></div><div class="tb">Establece antes de lanzar: CTR mínimo, ROAS objetivo y presupuesto máximo de prueba. Sin criterios claros no sabrás cuándo cortar.</div></div>
+      <div class="tc"><div class="th"><span class="ti">🚫</span><span class="tn">Evita la saturación</span></div><div class="tb">Si el producto ya tiene cientos de reseñas y el precio cayó en todos los marketplaces, el ciclo ya pasó. Encuéntralo antes de ese punto.</div></div>
+      <div class="tc"><div class="th"><span class="ti">📝</span><span class="tn">Lleva un registro</span></div><div class="tb">Mantén una hoja con todos los candidatos evaluados, su puntuación y motivo de aprobación o descarte. El historial te afina el ojo.</div></div>
+    </div>
+  </section>
+
+  <div class="footer">Guía de productos winner · Uso interno de equipo · Actualiza según evolucione el proceso</div>
+
+</div>
+<script>
+function toggleCrit(el){const w=el.classList.contains('active');document.querySelectorAll('.cc').forEach(c=>c.classList.remove('active'));if(!w)el.classList.add('active')}
+
+function fp(cat,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  document.querySelectorAll('.pc').forEach(c=>{const cs=c.dataset.c||'';c.classList.toggle('on',cat==='todas'||cs.includes(cat))});
+}
+
+function calc(){
+  const cost=parseFloat(document.getElementById('cost').value)||0;
+  const price=parseFloat(document.getElementById('price').value)||0;
+  const ship=parseFloat(document.getElementById('ship').value)||0;
+  const ads=parseFloat(document.getElementById('ads').value)||0;
+  if(!cost||!price){document.getElementById('cr').style.display='none';document.getElementById('vd').style.display='none';return}
+  const profit=price-(cost+ship+ads);
+  const mg=((profit/price)*100).toFixed(1);
+  const mx=(price/cost).toFixed(2);
+  document.getElementById('rp').textContent='$'+profit.toFixed(2);
+  document.getElementById('rm').textContent=mg+'%';
+  document.getElementById('rx').textContent=mx+'x';
+  document.getElementById('cr').style.display='flex';
+  const v=document.getElementById('vd');v.style.display='block';
+  const m=parseFloat(mx);
+  if(m>=3){v.className='vd ok';v.textContent='✓ Multiplicador '+mx+'x — cumple la regla mínima de 3x. Viable para testear.'}
+  else if(m>=2){v.className='vd warn';v.textContent='⚠ Multiplicador '+mx+'x — por debajo del mínimo. Negocia el costo o ajusta el precio de venta.'}
+  else{v.className='vd bad';v.textContent='✕ Multiplicador '+mx+'x — no es viable con estos números. Descarta o busca otro proveedor.'}
+}
+
+const items=['Cumple 3 o más de los 4 criterios de selección','La tendencia no está en caída (Google Trends)','Hay anuncios activos de competidores con más de 30 días corriendo','Existe demanda real: Amazon, TikTok o volumen de búsqueda','El margen es mínimo 3x el costo del producto','El proveedor tiene más de 50 reseñas positivas','El tiempo de envío es aceptable para el mercado objetivo','El producto se puede explicar en video en menos de 30 segundos','No tiene restricción legal o de importación en el destino','Hay un ángulo de diferenciación claro vs la competencia activa'];
+const st=new Array(items.length).fill(false);
+const g=document.getElementById('ckg');
+items.forEach((t,i)=>{const d=document.createElement('div');d.className='cki';d.onclick=()=>tc(i);d.innerHTML=`<div class="ck" id="ck${i}"></div><span class="ckl" id="cl${i}">${t}</span>`;g.appendChild(d)});
+function tc(i){st[i]=!st[i];document.getElementById('ck'+i).classList.toggle('done',st[i]);document.getElementById('cl'+i).classList.toggle('done',st[i]);const d=st.filter(Boolean).length;document.getElementById('pl').textContent=d+' / '+items.length;document.getElementById('pf').style.width=(d/items.length*100)+'%'}
+</script>
+</body>
+</html>
