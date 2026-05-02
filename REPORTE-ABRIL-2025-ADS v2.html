@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Ejecutivo — Pauta Digital Abril 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #f5f4f0;
+  --surface:  #ffffff;
+  --surface2: #f8f7f4;
+  --surface3: #f0efe9;
+  --bd:       rgba(0,0,0,0.09);
+  --bd2:      rgba(0,0,0,0.05);
+  --tx:       #1a1a1a;
+  --tx2:      #555555;
+  --tx3:      #999999;
+  --accent:   #1a3a5c;
+  --accent-lt:#2c5f94;
+  --accent-bg:rgba(26,58,92,0.06);
+  --accent-bd:rgba(26,58,92,0.18);
+  --fb:       #1877f2;
+  --fb-bg:    rgba(24,119,242,0.07);
+  --fb-bd:    rgba(24,119,242,0.2);
+  --tt:       #cc0024;
+  --tt-bg:    rgba(204,0,36,0.07);
+  --tt-bd:    rgba(204,0,36,0.2);
+  --green:    #1a7f4b;
+  --grn-bg:   rgba(26,127,75,0.08);
+  --yellow:   #8a5e00;
+  --yel-bg:   rgba(138,94,0,0.08);
+  --red:      #c0392b;
+  --red-bg:   rgba(192,57,43,0.08);
+  --seiko:    #5b3fa8;
+  --seidan:   #1a7f4b;
+  --t3cno:    #b84c0a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:0 auto;padding:0 32px 100px}
+
+/* ── COVER ── */
+.cover{background:var(--accent);padding:56px 48px 52px;border-radius:16px;margin:32px 0 56px;display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.cover-l{flex:1;min-width:260px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:rgba(255,255,255,0.4)}
+h1{font-family:'Playfair Display',serif;font-size:clamp(32px,4.5vw,50px);font-weight:700;line-height:1.08;letter-spacing:-.01em;color:#ffffff}
+h1 em{font-style:normal;color:#f0c96a}
+.cover-sub{margin-top:12px;font-size:13px;color:rgba(255,255,255,0.55);font-weight:300;letter-spacing:.01em}
+.cover-r{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start;min-width:280px}
+.meta-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px}
+.meta-box .mk{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:5px}
+.meta-box .mv{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:#ffffff}
+.meta-box .mv.big{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#f0c96a}
+
+/* ── SECTION HEADER ── */
+.section{margin-bottom:64px}
+.sec-hd{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.sec-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:.12em;padding:3px 10px;border:1px solid var(--accent-bd);border-radius:3px;background:var(--accent-bg);white-space:nowrap;flex-shrink:0}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,24px);font-weight:600;color:var(--tx);white-space:nowrap}
+.sec-rule{flex:1;height:1px;background:var(--bd);min-width:20px}
+.sec-sub{font-size:12px;color:var(--tx3);font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;margin-top:-16px;margin-bottom:20px;padding-left:2px}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:36px}
+.kpi-item{background:var(--surface);padding:22px 20px;position:relative}
+.kpi-item.hi::after{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;border-radius:2px;background:var(--accent)}
+.kpi-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);margin-bottom:9px}
+.kpi-val{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,34px);font-weight:700;line-height:1;color:var(--tx)}
+.kpi-val.acc{color:var(--accent)} .kpi-val.grn{color:var(--green)} .kpi-val.blu{color:var(--fb)} .kpi-val.red{color:var(--tt)}
+.kpi-note{font-size:11px;color:var(--tx3);margin-top:5px;font-weight:300}
+
+/* ── PLATFORM DIVIDER ── */
+.pd{display:flex;align-items:center;gap:14px;margin:4px 0 24px}
+.pd-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;padding:4px 12px;border-radius:3px;font-weight:500}
+.pd-lbl.fb{background:var(--fb-bg);color:var(--fb);border:1px solid var(--fb-bd)}
+.pd-lbl.tt{background:var(--tt-bg);color:var(--tt);border:1px solid var(--tt-bd)}
+.pd hr{flex:1;border:none;border-top:1px solid var(--bd)}
+
+/* ── ACCOUNT CARDS ── */
+.acct-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:20px}
+.acct-card{background:var(--surface);border:1px solid var(--bd);border-radius:10px;padding:18px 20px}
+.acct-card.fb-c{border-top:2px solid var(--fb)} .acct-card.tt-c{border-top:2px solid var(--tt)}
+.acct-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.acct-name{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--tx)}
+.pb{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500;letter-spacing:.06em}
+.pb.fb{background:var(--fb-bg);color:var(--fb);border:1px solid var(--fb-bd)}
+.pb.tt{background:var(--tt-bg);color:var(--tt);border:1px solid var(--tt-bd)}
+.acct-stats{display:flex;gap:8px}
+.as{flex:1}
+.as-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--tx3);margin-bottom:3px;letter-spacing:.1em;text-transform:uppercase}
+.as-val{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;color:var(--tx)}
+.acct-bar{height:2px;border-radius:2px;margin-top:12px;background:var(--bd)}
+.bar-inner{height:2px;border-radius:2px}
+.bar-seiko{background:var(--seiko)} .bar-seidan{background:var(--seidan)} .bar-t3cno{background:var(--t3cno)}
+
+/* ── DATA TABLE ── */
+.tw{background:var(--surface);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:12px}
+.sx{overflow-x:auto}
+.dt{width:100%;border-collapse:collapse;min-width:560px}
+.dt thead th{background:var(--surface2);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);padding:12px 18px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+.dt thead th.r{text-align:right}
+.dt tbody td{padding:10px 18px;border-bottom:1px solid var(--bd2);vertical-align:middle;font-size:13px;color:var(--tx)}
+.dt tbody tr:last-child td{border-bottom:none}
+.dt tbody tr:hover td{background:var(--surface2)}
+.dt tbody td.r{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500}
+.dt tbody td.cn{max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dt tfoot td{padding:12px 18px;border-top:1px solid var(--bd);background:var(--surface3);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--accent)}
+.dt tfoot td.r{text-align:right}
+
+/* ── BADGES ── */
+.b{display:inline-block;padding:2px 8px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;white-space:nowrap}
+.bg{background:var(--grn-bg);color:var(--green);border:1px solid rgba(26,127,75,.2)}
+.by{background:var(--yel-bg);color:var(--yellow);border:1px solid rgba(138,94,0,.2)}
+.br{background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.bfb{background:var(--fb-bg);color:var(--fb);border:1px solid var(--fb-bd)}
+.btt{background:var(--tt-bg);color:var(--tt);border:1px solid var(--tt-bd)}
+
+/* ── BRAND PILLS ── */
+.bp{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.06em;padding:2px 8px;border-radius:3px}
+.bp-seiko{background:rgba(91,63,168,.08);color:var(--seiko);border:1px solid rgba(91,63,168,.18)}
+.bp-seidan{background:rgba(26,127,75,.08);color:var(--seidan);border:1px solid rgba(26,127,75,.18)}
+.bp-t3cno{background:rgba(184,76,10,.08);color:var(--t3cno);border:1px solid rgba(184,76,10,.18)}
+
+/* ── COMPARE ── */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+@media(max-width:600px){.cmp{grid-template-columns:1fr}}
+.cc{background:var(--surface);border:1px solid var(--bd);border-radius:12px;padding:22px 24px}
+.cc.fb-c{border-left:3px solid var(--fb)} .cc.tt-c{border-left:3px solid var(--tt)}
+.cc-ttl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;margin-bottom:18px}
+.cc-ttl.fb{color:var(--fb)} .cc-ttl.tt{color:var(--tt)}
+.cc-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--bd2)}
+.cc-row:last-child{border-bottom:none}
+.cc-k{font-size:12px;color:var(--tx2);font-weight:300}
+.cc-v{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--tx)}
+
+/* ── PRODUCT TABLE ── */
+.ptw{background:var(--surface);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+
+/* thead lives outside the accordion rows so it never moves */
+.pt-head{width:100%;border-collapse:collapse}
+.pt-head th{background:var(--surface2);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);padding:12px 18px;text-align:left;border-bottom:1px solid var(--bd)}
+.pt-head th.r{text-align:right}
+
+/* body accordion */
+.pt-body{width:100%;border-collapse:collapse}
+.pr{cursor:pointer}
+.pr td{padding:0}
+.pi{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr 20px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--bd2);transition:background .15s;gap:8px}
+.pr:hover .pi{background:var(--surface2)}
+.pr.open .pi{background:var(--accent-bg);border-bottom-color:var(--bd)}
+.pcn{font-size:13px;font-weight:500;color:var(--tx);display:flex;align-items:center;gap:10px}
+.pico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:var(--surface3)}
+.pnum{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--tx)}
+.ppct{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--tx3)}
+.chv{color:var(--tx3);font-size:10px;transition:transform .2s;text-align:right;font-family:'IBM Plex Mono',monospace}
+.pr.open .chv{transform:rotate(90deg);color:var(--accent)}
+.pdr{display:none}
+.pdr.open{display:table-row}
+.pdr>td{background:rgba(26,58,92,0.025);border-bottom:1px solid var(--bd);padding:0}
+.pdi{padding:4px 18px 18px 54px}
+.dsub{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);margin:12px 0 8px}
+.dtbl{width:100%;border-collapse:collapse}
+.dtbl th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);padding:5px 8px 5px 0;text-align:left;border-bottom:1px solid var(--bd);font-weight:400}
+.dtbl th.r{text-align:right}
+.dtbl td{padding:8px 8px 8px 0;border-bottom:1px solid var(--bd2);font-size:12px;color:var(--tx2)}
+.dtbl tr:last-child td{border-bottom:none}
+.dtbl td.r{text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--tx);font-size:12px}
+.davg td{color:var(--accent)!important;border-top:1px solid var(--accent-bd)!important;font-weight:500!important;padding-top:10px!important}
+.davg td.r{color:var(--accent-lt)!important}
+.tr-total .pi{background:var(--accent-bg)!important;cursor:default;border-top:1px solid var(--accent-bd)}
+.tr-total .pcn{color:var(--accent);font-weight:600}
+.tr-total .pnum{color:var(--accent)}
+
+/* ── INSIGHTS ── */
+.ins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ic{background:var(--surface);border:1px solid var(--bd);border-radius:10px;padding:20px 22px}
+.ic.pos{border-left:3px solid var(--green)} .ic.wrn{border-left:3px solid #c07700}
+.ic.neu{border-left:3px solid var(--fb)}   .ic.acc{border-left:3px solid var(--seiko)}
+.ic-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.ic-ttl{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:7px}
+.ic-body{font-size:12px;color:var(--tx2);line-height:1.7;font-weight:300}
+.ic-body strong{color:var(--tx);font-weight:500}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--bd);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.ft-l{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--tx3);letter-spacing:.1em}
+.ft-r{display:flex;gap:8px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:780px){.pi{grid-template-columns:2fr 1fr 1fr 18px} .pi .hm{display:none}}
+@media(max-width:480px){.page{padding:0 16px 80px} .pi{grid-template-columns:1.6fr 1fr 18px} .pi .hs{display:none} .kpi-strip{grid-template-columns:1fr 1fr}}
+@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cover,.kpi-strip,.acct-grid,.tw,.ptw,.ins-grid{animation:fi .4s ease both}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ COVER ══ -->
+<header class="cover">
+  <div class="cover-l">
+    <div class="eyebrow">Informe Ejecutivo · Pauta Digital</div>
+    <h1>Rendimiento<br>de Medios <em>Abril</em> 2025</h1>
+    <p class="cover-sub">Consolidado de cuentas publicitarias — Facebook Ads &amp; TikTok Ads<br>3 marcas · 5 cuentas · 217 campanas analizadas</p>
+  </div>
+  <div class="cover-r">
+    <div class="meta-box">
+      <div class="mk">Inversion Total</div>
+      <div class="mv big">$14,541</div>
+    </div>
+    <div class="meta-box">
+      <div class="mk">Total Conversiones</div>
+      <div class="mv big">4,180</div>
+    </div>
+    <div class="meta-box">
+      <div class="mk">CPC Promedio Global</div>
+      <div class="mv">$3.48 USD</div>
+    </div>
+    <div class="meta-box">
+      <div class="mk">Marcas / Plataformas</div>
+      <div class="mv">SEIKO · SEIDAN · T3CNO</div>
+    </div>
+    <div class="meta-box">
+      <div class="mk">Facebook CPC</div>
+      <div class="mv" style="color:#60a0e8">$3.08 · 2,364 conv.</div>
+    </div>
+    <div class="meta-box">
+      <div class="mk">TikTok CPC</div>
+      <div class="mv" style="color:#f07090">$3.99 · 1,816 conv.</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ 01 · INDICADORES GLOBALES ══ -->
+<section class="section">
+  <div class="sec-hd">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Indicadores Globales</h2>
+    <span class="sec-rule"></span>
+  </div>
+  <div class="kpi-strip">
+    <div class="kpi-item hi"><div class="kpi-lbl">Inversion Total</div><div class="kpi-val acc">$14,541</div><div class="kpi-note">USD · todas las cuentas</div></div>
+    <div class="kpi-item"><div class="kpi-lbl">Total Conversiones</div><div class="kpi-val">4,180</div><div class="kpi-note">compras confirmadas</div></div>
+    <div class="kpi-item"><div class="kpi-lbl">CPC Promedio</div><div class="kpi-val grn">$3.48</div><div class="kpi-note">promedio consolidado</div></div>
+    <div class="kpi-item"><div class="kpi-lbl">Facebook CPC</div><div class="kpi-val blu">$3.08</div><div class="kpi-note">2,364 conversiones</div></div>
+    <div class="kpi-item"><div class="kpi-lbl">TikTok CPC</div><div class="kpi-val red">$3.99</div><div class="kpi-note">1,816 conversiones</div></div>
+  </div>
+</section>
+
+<!-- ══ 02 · DESGLOSE POR PLATAFORMA ══ -->
+<section class="section">
+  <div class="sec-hd">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">Desglose por Plataforma</h2>
+    <span class="sec-rule"></span>
+  </div>
+
+  <!-- FACEBOOK -->
+  <div class="pd"><span class="pd-lbl fb">Facebook Ads</span><hr></div>
+  <div class="acct-grid">
+    <div class="acct-card fb-c">
+      <div class="acct-top"><span class="acct-name">SEIDAN</span><span class="pb fb">Facebook</span></div>
+      <div class="acct-stats">
+        <div class="as"><div class="as-lbl">Invertido</div><div class="as-val" style="color:var(--seidan)">$4,306.54</div></div>
+        <div class="as"><div class="as-lbl">Compras</div><div class="as-val">1,593</div></div>
+        <div class="as"><div class="as-lbl">CPC</div><div class="as-val" style="color:var(--green)">$2.70</div></div>
+      </div>
+      <div class="acct-bar"><div class="bar-inner bar-seidan" style="width:59%"></div></div>
+    </div>
+    <div class="acct-card fb-c">
+      <div class="acct-top"><span class="acct-name">T3CNO</span><span class="pb fb">Facebook</span></div>
+      <div class="acct-stats">
+        <div class="as"><div class="as-lbl">Invertido</div><div class="as-val" style="color:var(--t3cno)">$2,976.49</div></div>
+        <div class="as"><div class="as-lbl">Compras</div><div class="as-val">771</div></div>
+        <div class="as"><div class="as-lbl">CPC</div><div class="as-val" style="color:var(--yellow)">$3.86</div></div>
+      </div>
+      <div class="acct-bar"><div class="bar-inner bar-t3cno" style="width:41%"></div></div>
+    </div>
+  </div>
+  <div class="tw"><div class="sx"><table class="dt">
+    <thead><tr><th>Campana</th><th>Marca</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr></thead>
+    <tbody>
+      <tr><td class="cn">CAMP ABO AHORRADOR DELUXE 07-02</td><td><span class="bp bp-seidan">SEIDAN</span></td><td class="r">$969.28</td><td class="r">488</td><td class="r"><span class="b bg">$1.99</span></td></tr>
+      <tr><td class="cn">TESTEO NEW VIDEOS AHORRADOR DELUXE 02-02</td><td><span class="bp bp-seidan">SEIDAN</span></td><td class="r">$495.25</td><td class="r">232</td><td class="r"><span class="b bg">$2.13</span></td></tr>
+      <tr><td class="cn">TESTEO CAMARA GUARDIAN 25/03</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$623.36</td><td class="r">137</td><td class="r"><span class="b by">$4.55</span></td></tr>
+      <tr><td class="cn">TESTEO CAMARA SOLAR IA 14/04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$491.56</td><td class="r">140</td><td class="r"><span class="b bg">$3.51</span></td></tr>
+      <tr><td class="cn">CAMP AHORRADOR 109 16-04 Copia</td><td><span class="bp bp-seidan">SEIDAN</span></td><td class="r">$235.54</td><td class="r">121</td><td class="r"><span class="b bg">$1.95</span></td></tr>
+      <tr><td class="cn">CAMP NEW VIDEOS AHORRADOR DELUXE 16-04</td><td><span class="bp bp-seidan">SEIDAN</span></td><td class="r">$193.16</td><td class="r">103</td><td class="r"><span class="b bg">$1.88</span></td></tr>
+      <tr><td class="cn">CAMP DASHCAM KRAKEN WIFI 28-04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$201.86</td><td class="r">70</td><td class="r"><span class="b bg">$2.88</span></td></tr>
+      <tr><td class="cn">CAMP CBO TIJERA 07-03</td><td><span class="bp bp-seidan">SEIDAN</span></td><td class="r">$185.47</td><td class="r">54</td><td class="r"><span class="b by">$3.43</span></td></tr>
+      <tr><td class="cn">CAMP AHORRADOR 20-03 Copia 2</td><td><span class="bp bp-seidan">SEIDAN</span></td><td class="r">$158.42</td><td class="r">73</td><td class="r"><span class="b bg">$2.17</span></td></tr>
+      <tr><td class="cn">CAMP GPS SMART TAG 10-04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$152.42</td><td class="r">57</td><td class="r"><span class="b bg">$2.67</span></td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">Total Facebook Ads — top 10 campanas</td><td class="r">$7,283.03</td><td class="r">2,364</td><td class="r"><span class="b bg">$3.08</span></td></tr></tfoot>
+  </table></div></div>
+
+  <!-- TIKTOK -->
+  <div class="pd" style="margin-top:48px"><span class="pd-lbl tt">TikTok Ads</span><hr></div>
+  <div class="acct-grid">
+    <div class="acct-card tt-c">
+      <div class="acct-top"><span class="acct-name">SEIKO</span><span class="pb tt">TikTok</span></div>
+      <div class="acct-stats">
+        <div class="as"><div class="as-lbl">Invertido</div><div class="as-val" style="color:var(--seiko)">$3,084.97</div></div>
+        <div class="as"><div class="as-lbl">Compras</div><div class="as-val">943</div></div>
+        <div class="as"><div class="as-lbl">CPC</div><div class="as-val" style="color:var(--green)">$3.27</div></div>
+      </div>
+      <div class="acct-bar"><div class="bar-inner bar-seiko" style="width:43%"></div></div>
+    </div>
+    <div class="acct-card tt-c">
+      <div class="acct-top"><span class="acct-name">T3CNO</span><span class="pb tt">TikTok</span></div>
+      <div class="acct-stats">
+        <div class="as"><div class="as-lbl">Invertido</div><div class="as-val" style="color:var(--t3cno)">$4,025.54</div></div>
+        <div class="as"><div class="as-lbl">Compras</div><div class="as-val">849</div></div>
+        <div class="as"><div class="as-lbl">CPC</div><div class="as-val" style="color:var(--yellow)">$4.74</div></div>
+      </div>
+      <div class="acct-bar"><div class="bar-inner bar-t3cno" style="width:56%"></div></div>
+    </div>
+    <div class="acct-card tt-c">
+      <div class="acct-top"><span class="acct-name">SEIDAN</span><span class="pb tt">TikTok</span></div>
+      <div class="acct-stats">
+        <div class="as"><div class="as-lbl">Invertido</div><div class="as-val" style="color:var(--seidan)">$147.70</div></div>
+        <div class="as"><div class="as-lbl">Compras</div><div class="as-val">24</div></div>
+        <div class="as"><div class="as-lbl">CPC</div><div class="as-val" style="color:var(--red)">$6.15</div></div>
+      </div>
+      <div class="acct-bar"><div class="bar-inner bar-seidan" style="width:2%"></div></div>
+    </div>
+  </div>
+  <div class="tw"><div class="sx"><table class="dt">
+    <thead><tr><th>Campana</th><th>Marca</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr></thead>
+    <tbody>
+      <tr><td class="cn">CAMP CAMARA GUARDIAN 17-04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$853.15</td><td class="r">142</td><td class="r"><span class="b br">$6.01</span></td></tr>
+      <tr><td class="cn">CAMP NEW AHORRADOR 16-04</td><td><span class="bp bp-seiko">SEIKO</span></td><td class="r">$451.52</td><td class="r">182</td><td class="r"><span class="b bg">$2.48</span></td></tr>
+      <tr><td class="cn">CAMP CAMARA SOLAR IA 14-04</td><td><span class="bp bp-seiko">SEIKO</span></td><td class="r">$320.33</td><td class="r">72</td><td class="r"><span class="b by">$4.45</span></td></tr>
+      <tr><td class="cn">CAMP MICRO STUDIO 06-04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$306.37</td><td class="r">71</td><td class="r"><span class="b by">$4.32</span></td></tr>
+      <tr><td class="cn">CAMP CAMARA GUARDIAN 24-03</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$284.43</td><td class="r">45</td><td class="r"><span class="b br">$6.32</span></td></tr>
+      <tr><td class="cn">CAMP GPS TAG 10-04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$283.89</td><td class="r">84</td><td class="r"><span class="b bg">$3.38</span></td></tr>
+      <tr><td class="cn">CAMP CAMARA SOLAR IA 30-03</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$282.80</td><td class="r">72</td><td class="r"><span class="b by">$3.93</span></td></tr>
+      <tr><td class="cn">CAMP CUCHI JAPONES MANUAL 18-04</td><td><span class="bp bp-seiko">SEIKO</span></td><td class="r">$239.00</td><td class="r">114</td><td class="r"><span class="b bg">$2.10</span></td></tr>
+      <tr><td class="cn">CAM MANUAL AHORADOR 109 16-04</td><td><span class="bp bp-seiko">SEIKO</span></td><td class="r">$226.90</td><td class="r">113</td><td class="r"><span class="b bg">$2.01</span></td></tr>
+      <tr><td class="cn">CAMP CAMARA CERBERUS 28-04</td><td><span class="bp bp-t3cno">T3CNO</span></td><td class="r">$252.55</td><td class="r">58</td><td class="r"><span class="b by">$4.35</span></td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">Total TikTok Ads — top 10 campanas</td><td class="r">$7,258.21</td><td class="r">1,816</td><td class="r"><span class="b by">$3.99</span></td></tr></tfoot>
+  </table></div></div>
+
+  <!-- COMPARATIVA -->
+  <div class="cmp">
+    <div class="cc fb-c">
+      <div class="cc-ttl fb">Facebook Ads — Resumen</div>
+      <div class="cc-row"><span class="cc-k">Inversion total</span><span class="cc-v" style="color:var(--fb)">$7,283.03</span></div>
+      <div class="cc-row"><span class="cc-k">Conversiones</span><span class="cc-v">2,364</span></div>
+      <div class="cc-row"><span class="cc-k">Costo por compra</span><span class="cc-v" style="color:var(--green)">$3.08</span></div>
+      <div class="cc-row"><span class="cc-k">Participacion en inversion</span><span class="cc-v">50.1%</span></div>
+      <div class="cc-row"><span class="cc-k">Cuentas activas</span><span class="cc-v">2</span></div>
+    </div>
+    <div class="cc tt-c">
+      <div class="cc-ttl tt">TikTok Ads — Resumen</div>
+      <div class="cc-row"><span class="cc-k">Inversion total</span><span class="cc-v" style="color:var(--tt)">$7,258.21</span></div>
+      <div class="cc-row"><span class="cc-k">Conversiones</span><span class="cc-v">1,816</span></div>
+      <div class="cc-row"><span class="cc-k">Costo por compra</span><span class="cc-v" style="color:var(--yellow)">$3.99</span></div>
+      <div class="cc-row"><span class="cc-k">Participacion en inversion</span><span class="cc-v">49.9%</span></div>
+      <div class="cc-row"><span class="cc-k">Cuentas activas</span><span class="cc-v">3</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 · ANALISIS POR LINEA DE PRODUCTO ══ -->
+<section class="section">
+  <div class="sec-hd">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Analisis por Linea de Producto</h2>
+    <span class="sec-rule"></span>
+  </div>
+  <p class="sec-sub">21 productos identificados · clasificacion corregida y validada · haga clic en una fila para expandir el desglose</p>
+
+  <div class="ptw">
+    <!-- HEADER separado del tbody para que no se desplace -->
+    <table class="pt-head">
+      <thead><tr>
+        <th style="width:40%">Producto</th>
+        <th class="r hs" style="width:14%">Inversion</th>
+        <th class="r hm" style="width:11%">Compras</th>
+        <th class="r" style="width:14%">CPC Prom.</th>
+        <th class="r hm" style="width:11%">% Gasto</th>
+        <th style="width:10%"></th>
+      </tr></thead>
+    </table>
+
+    <!-- BODY con filas acordeon -->
+    <table class="pt-body">
+      <tbody>
+
+<!-- AHORRADOR -->
+<tr class="pr" onclick="tp('d0',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#9889;</div>Ahorrador</div>
+  <div class="pnum hs">$4,134.56</div><div class="pnum hm">1,774</div>
+  <div class="pnum"><span class="b bg">$2.33</span></div>
+  <div class="ppct hm">28.4%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d0"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT2 / seidanpublicidad)</td><td><span class="b bfb">Facebook</span></td><td class="r">$2,571.15</td><td class="r">1,207</td><td class="r"><span class="b bg">$2.13</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$1,544.56</td><td class="r">564</td><td class="r"><span class="b bg">$2.74</span></td></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$13.48</td><td class="r">2</td><td class="r"><span class="b br">$6.74</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$5.37</td><td class="r">1</td><td class="r"><span class="b br">$5.37</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$4,134.56</td><td class="r">1,774</td><td class="r"><span class="b bg">$2.33</span></td></tr>
+</table></div></td></tr>
+
+<!-- CAMARA GUARDIAN -->
+<tr class="pr" onclick="tp('d1',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128247;</div>Camara Guardian</div>
+  <div class="pnum hs">$2,574.51</div><div class="pnum hm">469</div>
+  <div class="pnum"><span class="b br">$5.49</span></div>
+  <div class="ppct hm">17.7%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d1"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (PUBLI2T3C) — incl. 4G, v2, Kratos</td><td><span class="b btt">TikTok</span></td><td class="r">$1,558.93</td><td class="r">267</td><td class="r"><span class="b br">$5.84</span></td></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$827.34</td><td class="r">172</td><td class="r"><span class="b by">$4.81</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD — incl. Kratos Cam</td><td><span class="b btt">TikTok</span></td><td class="r">$188.24</td><td class="r">30</td><td class="r"><span class="b br">$6.27</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$2,574.51</td><td class="r">469</td><td class="r"><span class="b br">$5.49</span></td></tr>
+</table></div></td></tr>
+
+<!-- CAMARA SOLAR IA -->
+<tr class="pr" onclick="tp('d2',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#9728;&#65039;</div>Camara Solar IA</div>
+  <div class="pnum hs">$1,454.15</div><div class="pnum hm">380</div>
+  <div class="pnum"><span class="b by">$3.83</span></div>
+  <div class="ppct hm">10.0%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d2"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$712.40</td><td class="r">199</td><td class="r"><span class="b bg">$3.58</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$370.91</td><td class="r">88</td><td class="r"><span class="b by">$4.21</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$370.84</td><td class="r">93</td><td class="r"><span class="b by">$3.99</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$1,454.15</td><td class="r">380</td><td class="r"><span class="b by">$3.83</span></td></tr>
+</table></div></td></tr>
+
+<!-- CUCHILLO JAPONES -->
+<tr class="pr" onclick="tp('d3',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128298;</div>Cuchillo Japones</div>
+  <div class="pnum hs">$1,028.94</div><div class="pnum hm">317</div>
+  <div class="pnum"><span class="b bg">$3.25</span></div>
+  <div class="ppct hm">7.1%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d3"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$534.74</td><td class="r">187</td><td class="r"><span class="b bg">$2.86</span></td></tr>
+<tr><td>SEIDAN (CT2 / CTs)</td><td><span class="b bfb">Facebook</span></td><td class="r">$474.58</td><td class="r">125</td><td class="r"><span class="b by">$3.80</span></td></tr>
+<tr><td>SEIDAN (PUBLISEIDAN)</td><td><span class="b btt">TikTok</span></td><td class="r">$19.62</td><td class="r">5</td><td class="r"><span class="b by">$3.92</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$1,028.94</td><td class="r">317</td><td class="r"><span class="b bg">$3.25</span></td></tr>
+</table></div></td></tr>
+
+<!-- GPS TAG -->
+<tr class="pr" onclick="tp('d4',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128205;</div>GPS Smart Tag</div>
+  <div class="pnum hs">$837.34</div><div class="pnum hm">246</div>
+  <div class="pnum"><span class="b bg">$3.40</span></div>
+  <div class="ppct hm">5.8%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d4"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$506.63</td><td class="r">145</td><td class="r"><span class="b bg">$3.49</span></td></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$172.54</td><td class="r">62</td><td class="r"><span class="b bg">$2.78</span></td></tr>
+<tr><td>SEIDAN (seidanpublicidad)</td><td><span class="b bfb">Facebook</span></td><td class="r">$144.72</td><td class="r">37</td><td class="r"><span class="b by">$3.91</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$13.45</td><td class="r">2</td><td class="r"><span class="b br">$6.72</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$837.34</td><td class="r">246</td><td class="r"><span class="b bg">$3.40</span></td></tr>
+</table></div></td></tr>
+
+<!-- DASH CAM SIN WIFI -->
+<tr class="pr" onclick="tp('d5',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128663;</div>Dash Cam (sin WIFI)</div>
+  <div class="pnum hs">$738.87</div><div class="pnum hm">223</div>
+  <div class="pnum"><span class="b bg">$3.31</span></div>
+  <div class="ppct hm">5.1%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d5"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$547.86</td><td class="r">160</td><td class="r"><span class="b bg">$3.42</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$191.01</td><td class="r">63</td><td class="r"><span class="b bg">$3.03</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$738.87</td><td class="r">223</td><td class="r"><span class="b bg">$3.31</span></td></tr>
+</table></div></td></tr>
+
+<!-- DASH CAM WIFI -->
+<tr class="pr" onclick="tp('d6',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128246;</div>Dash Cam WIFI</div>
+  <div class="pnum hs">$610.28</div><div class="pnum hm">140</div>
+  <div class="pnum"><span class="b by">$4.36</span></div>
+  <div class="ppct hm">4.2%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d6"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (T3cnostore / TC2 / TC3)</td><td><span class="b bfb">Facebook</span></td><td class="r">$385.57</td><td class="r">103</td><td class="r"><span class="b bg">$3.74</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$224.71</td><td class="r">37</td><td class="r"><span class="b br">$6.07</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$610.28</td><td class="r">140</td><td class="r"><span class="b by">$4.36</span></td></tr>
+</table></div></td></tr>
+
+<!-- CAMARA CERBERUS -->
+<tr class="pr" onclick="tp('d7',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#127909;</div>Camara Cerberus</div>
+  <div class="pnum hs">$403.82</div><div class="pnum hm">103</div>
+  <div class="pnum"><span class="b by">$3.92</span></div>
+  <div class="ppct hm">2.8%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d7"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$341.33</td><td class="r">77</td><td class="r"><span class="b by">$4.43</span></td></tr>
+<tr><td>T3CNO (TC2)</td><td><span class="b bfb">Facebook</span></td><td class="r">$62.49</td><td class="r">26</td><td class="r"><span class="b bg">$2.40</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$403.82</td><td class="r">103</td><td class="r"><span class="b by">$3.92</span></td></tr>
+</table></div></td></tr>
+
+<!-- TIJERA -->
+<tr class="pr" onclick="tp('d8',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#9986;&#65039;</div>Tijera</div>
+  <div class="pnum hs">$380.95</div><div class="pnum hm">86</div>
+  <div class="pnum"><span class="b by">$4.43</span></div>
+  <div class="ppct hm">2.6%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d8"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (seidanpublicidad)</td><td><span class="b bfb">Facebook</span></td><td class="r">$283.87</td><td class="r">63</td><td class="r"><span class="b by">$4.51</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$97.08</td><td class="r">23</td><td class="r"><span class="b by">$4.22</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$380.95</td><td class="r">86</td><td class="r"><span class="b by">$4.43</span></td></tr>
+</table></div></td></tr>
+
+<!-- CAMARA ROBOCOT -->
+<tr class="pr" onclick="tp('d9',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#129302;</div>Camara Robocot</div>
+  <div class="pnum hs">$341.34</div><div class="pnum hm">82</div>
+  <div class="pnum"><span class="b by">$4.16</span></div>
+  <div class="ppct hm">2.3%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d9"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$149.18</td><td class="r">29</td><td class="r"><span class="b br">$5.14</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$140.92</td><td class="r">41</td><td class="r"><span class="b bg">$3.44</span></td></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$51.24</td><td class="r">12</td><td class="r"><span class="b by">$4.27</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$341.34</td><td class="r">82</td><td class="r"><span class="b by">$4.16</span></td></tr>
+</table></div></td></tr>
+
+<!-- MICRO STUDIO -->
+<tr class="pr" onclick="tp('d10',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#127897;</div>Micro Studio</div>
+  <div class="pnum hs">$306.37</div><div class="pnum hm">71</div>
+  <div class="pnum"><span class="b by">$4.32</span></div>
+  <div class="ppct hm">2.1%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d10"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$306.37</td><td class="r">71</td><td class="r"><span class="b by">$4.32</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$306.37</td><td class="r">71</td><td class="r"><span class="b by">$4.32</span></td></tr>
+</table></div></td></tr>
+
+<!-- CUCHILLO KAIZEN -->
+<tr class="pr" onclick="tp('d11',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#129413;</div>Cuchillo Kaizen</div>
+  <div class="pnum hs">$225.48</div><div class="pnum hm">83</div>
+  <div class="pnum"><span class="b bg">$2.72</span></div>
+  <div class="ppct hm">1.5%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d11"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT5 / CT6 / CT7 / CT8)</td><td><span class="b bfb">Facebook</span></td><td class="r">$225.48</td><td class="r">83</td><td class="r"><span class="b bg">$2.72</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$225.48</td><td class="r">83</td><td class="r"><span class="b bg">$2.72</span></td></tr>
+</table></div></td></tr>
+
+<!-- CUCHILLO MONGOL -->
+<tr class="pr" onclick="tp('d12',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#129395;</div>Cuchillo Mongol</div>
+  <div class="pnum hs">$234.69</div><div class="pnum hm">39</div>
+  <div class="pnum"><span class="b br">$6.02</span></div>
+  <div class="ppct hm">1.6%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d12"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT2 / CTs)</td><td><span class="b bfb">Facebook</span></td><td class="r">$203.51</td><td class="r">35</td><td class="r"><span class="b br">$5.81</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$31.18</td><td class="r">4</td><td class="r"><span class="b br">$7.80</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$234.69</td><td class="r">39</td><td class="r"><span class="b br">$6.02</span></td></tr>
+</table></div></td></tr>
+
+<!-- OJOS DEMON -->
+<tr class="pr" onclick="tp('d13',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128065;</div>Ojos Demon LED</div>
+  <div class="pnum hs">$179.77</div><div class="pnum hm">53</div>
+  <div class="pnum"><span class="b bg">$3.39</span></div>
+  <div class="ppct hm">1.2%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d13"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT2)</td><td><span class="b bfb">Facebook</span></td><td class="r">$179.77</td><td class="r">53</td><td class="r"><span class="b bg">$3.39</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$179.77</td><td class="r">53</td><td class="r"><span class="b bg">$3.39</span></td></tr>
+</table></div></td></tr>
+
+<!-- ROUTERPRO -->
+<tr class="pr" onclick="tp('d14',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128225;</div>RouterPro</div>
+  <div class="pnum hs">$124.27</div><div class="pnum hm">31</div>
+  <div class="pnum"><span class="b by">$4.01</span></div>
+  <div class="ppct hm">0.9%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d14"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT2)</td><td><span class="b bfb">Facebook</span></td><td class="r">$115.46</td><td class="r">31</td><td class="r"><span class="b by">$3.72</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$8.81</td><td class="r">0</td><td class="r"><span class="b br">S/C</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$124.27</td><td class="r">31</td><td class="r"><span class="b by">$4.01</span></td></tr>
+</table></div></td></tr>
+
+<!-- VAPORMAX -->
+<tr class="pr" onclick="tp('d15',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128609;</div>Vapormax</div>
+  <div class="pnum hs">$116.54</div><div class="pnum hm">30</div>
+  <div class="pnum"><span class="b by">$3.88</span></div>
+  <div class="ppct hm">0.8%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d15"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT2)</td><td><span class="b bfb">Facebook</span></td><td class="r">$37.69</td><td class="r">13</td><td class="r"><span class="b bg">$2.90</span></td></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$30.97</td><td class="r">6</td><td class="r"><span class="b br">$5.16</span></td></tr>
+<tr><td>SEIDAN (PUBLISEIDAN)</td><td><span class="b btt">TikTok</span></td><td class="r">$25.75</td><td class="r">8</td><td class="r"><span class="b bg">$3.22</span></td></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$22.13</td><td class="r">3</td><td class="r"><span class="b br">$7.38</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$116.54</td><td class="r">30</td><td class="r"><span class="b by">$3.88</span></td></tr>
+</table></div></td></tr>
+
+<!-- CARGADOR SOLAR -->
+<tr class="pr" onclick="tp('d16',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128267;</div>Cargador Solar</div>
+  <div class="pnum hs">$98.52</div><div class="pnum hm">16</div>
+  <div class="pnum"><span class="b br">$6.16</span></div>
+  <div class="ppct hm">0.7%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d16"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$72.57</td><td class="r">14</td><td class="r"><span class="b br">$5.18</span></td></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$18.78</td><td class="r">2</td><td class="r"><span class="b br">$9.39</span></td></tr>
+<tr><td>SEIDAN (PUBLISEIDAN)</td><td><span class="b btt">TikTok</span></td><td class="r">$7.18</td><td class="r">0</td><td class="r"><span class="b br">S/C</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$98.52</td><td class="r">16</td><td class="r"><span class="b br">$6.16</span></td></tr>
+</table></div></td></tr>
+
+<!-- CAMARA PULPO -->
+<tr class="pr" onclick="tp('d17',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128025;</div>Camara Pulpo</div>
+  <div class="pnum hs">$104.64</div><div class="pnum hm">23</div>
+  <div class="pnum"><span class="b by">$4.55</span></div>
+  <div class="ppct hm">0.7%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d17"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (T3cnostore)</td><td><span class="b bfb">Facebook</span></td><td class="r">$72.05</td><td class="r">20</td><td class="r"><span class="b bg">$3.60</span></td></tr>
+<tr><td>SEIKO PUBLICIDAD</td><td><span class="b btt">TikTok</span></td><td class="r">$32.59</td><td class="r">3</td><td class="r"><span class="b br">$10.86</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$104.64</td><td class="r">23</td><td class="r"><span class="b by">$4.55</span></td></tr>
+</table></div></td></tr>
+
+<!-- DRILLPRO -->
+<tr class="pr" onclick="tp('d18',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128295;</div>DrillPro / Mini Drill</div>
+  <div class="pnum hs">$57.36</div><div class="pnum hm">16</div>
+  <div class="pnum"><span class="b by">$3.59</span></div>
+  <div class="ppct hm">0.4%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d18"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>T3CNO (PUBLI2T3C)</td><td><span class="b btt">TikTok</span></td><td class="r">$32.61</td><td class="r">11</td><td class="r"><span class="b bg">$2.96</span></td></tr>
+<tr><td>SEIDAN (CT2)</td><td><span class="b bfb">Facebook</span></td><td class="r">$24.75</td><td class="r">5</td><td class="r"><span class="b by">$4.95</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$57.36</td><td class="r">16</td><td class="r"><span class="b by">$3.59</span></td></tr>
+</table></div></td></tr>
+
+<!-- PACK IMPACTO -->
+<tr class="pr" onclick="tp('d19',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128230;</div>Pack Impacto</div>
+  <div class="pnum hs">$55.19</div><div class="pnum hm">11</div>
+  <div class="pnum"><span class="b br">$5.02</span></div>
+  <div class="ppct hm">0.4%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d19"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (PUBLISEIDAN)</td><td><span class="b btt">TikTok</span></td><td class="r">$55.19</td><td class="r">11</td><td class="r"><span class="b br">$5.02</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$55.19</td><td class="r">11</td><td class="r"><span class="b br">$5.02</span></td></tr>
+</table></div></td></tr>
+
+<!-- TOTALTOOLS -->
+<tr class="pr" onclick="tp('d20',this)"><td><div class="pi">
+  <div class="pcn"><div class="pico">&#128736;</div>TotalTools</div>
+  <div class="pnum hs">$47.65</div><div class="pnum hm">6</div>
+  <div class="pnum"><span class="b br">$7.94</span></div>
+  <div class="ppct hm">0.3%</div><div class="chv">&#9658;</div>
+</div></td></tr>
+<tr class="pdr" id="d20"><td><div class="pdi"><div class="dsub">Desglose por cuenta y plataforma</div>
+<table class="dtbl"><tr><th>Cuenta</th><th>Plataforma</th><th class="r">Invertido</th><th class="r">Compras</th><th class="r">CPC</th></tr>
+<tr><td>SEIDAN (CT5 / seidanpublicidad)</td><td><span class="b bfb">Facebook</span></td><td class="r">$47.65</td><td class="r">6</td><td class="r"><span class="b br">$7.94</span></td></tr>
+<tr class="davg"><td colspan="2">Promedio consolidado</td><td class="r">$47.65</td><td class="r">6</td><td class="r"><span class="b br">$7.94</span></td></tr>
+</table></div></td></tr>
+
+<!-- TOTAL -->
+<tr class="pr tr-total" style="cursor:default;pointer-events:none"><td><div class="pi">
+  <div class="pcn">Total General</div>
+  <div class="pnum hs">$14,541.24</div><div class="pnum hm">4,180</div>
+  <div class="pnum"><span class="b" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent-bd)">$3.48</span></div>
+  <div class="ppct hm">100%</div>
+  <div class="chv" style="opacity:0">&#9658;</div>
+</div></td></tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--tx3);letter-spacing:.08em">
+    CRITERIO &nbsp;|&nbsp; <span style="color:var(--green)">OPTIMO</span> &lt;= $3.50 &nbsp;&#183;&nbsp; <span style="color:var(--yellow)">ACEPTABLE</span> $3.51 - $5.00 &nbsp;&#183;&nbsp; <span style="color:var(--red)">REVISAR</span> &gt; $5.00
+  </div>
+</section>
+
+<!-- ══ 04 · OBSERVACIONES EJECUTIVAS ══ -->
+<section class="section">
+  <div class="sec-hd">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Observaciones Ejecutivas</h2>
+    <span class="sec-rule"></span>
+  </div>
+  <div class="ins-grid">
+    <div class="ic pos">
+      <div class="ic-tag">Rendimiento Destacado</div>
+      <div class="ic-ttl">Ahorrador y Cuchillo Japones — Lideres en Eficiencia</div>
+      <div class="ic-body">El Ahorrador lidera con <strong>$2.33 CPC y 1,774 conversiones</strong> (28.4% del gasto total). El Cuchillo Japones registra <strong>$3.25 CPC</strong> con 317 compras. El Kaizen en Facebook alcanza $2.72 CPC, el segundo mejor ratio de toda la cartera.</div>
+    </div>
+    <div class="ic neu">
+      <div class="ic-tag">Hallazgo — Separacion Dash Cam</div>
+      <div class="ic-ttl">Dash Cam sin WIFI vs WIFI — Brecha significativa</div>
+      <div class="ic-body">La separacion revela una diferencia real: <strong>sin WIFI $3.31 CPC</strong> (eficiente en ambas plataformas) frente a <strong>WIFI $4.36 CPC</strong>. TikTok eleva el WIFI a $6.07, mientras Facebook lo mantiene en $3.74. TikTok no es la plataforma optima para el SKU con WIFI.</div>
+    </div>
+    <div class="ic wrn">
+      <div class="ic-tag">Area de Revision</div>
+      <div class="ic-ttl">Guardian, Mongol y Cargador Solar — CPC Critico</div>
+      <div class="ic-body"><strong>Camara Guardian ($5.49)</strong>, <strong>Cuchillo Mongol ($6.02)</strong> y <strong>Cargador Solar ($6.16)</strong> superan el umbral aceptable. El Mongol solo genera 39 conversiones en el mes. Se recomienda auditoria de creativos y evaluacion de continuidad presupuestaria.</div>
+    </div>
+    <div class="ic acc">
+      <div class="ic-tag">Eficiencia de Plataforma</div>
+      <div class="ic-ttl">SEIKO TikTok — Mejor ratio de la plataforma</div>
+      <div class="ic-body">Con <strong>$3.27 CPC</strong>, SEIKO PUBLICIDAD supera a T3CNO TikTok ($4.74) en 45%. Facebook cierra con $3.08 vs $3.99 de TikTok, generando 548 conversiones adicionales con inversion equivalente. La distribucion puede optimizarse en favor de Facebook para productos maduros.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-l">INFORME EJECUTIVO &nbsp;&#183;&nbsp; PAUTA DIGITAL &nbsp;&#183;&nbsp; ABRIL 2025 &nbsp;&#183;&nbsp; CIFRAS EN USD</div>
+  <div class="ft-r">
+    <span class="bp bp-seiko">SEIKO</span>
+    <span class="bp bp-seidan">SEIDAN</span>
+    <span class="bp bp-t3cno">T3CNO</span>
+  </div>
+</footer>
+
+</div>
+<script>
+function tp(id,row){
+  var d=document.getElementById(id);
+  var o=row.classList.contains('open');
+  document.querySelectorAll('.pdr').forEach(function(x){x.classList.remove('open')});
+  document.querySelectorAll('.pr').forEach(function(x){x.classList.remove('open')});
+  if(!o){d.classList.add('open');row.classList.add('open')}
+}
+</script>
+</body>
+</html>
