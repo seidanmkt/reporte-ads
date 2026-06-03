@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte Campañas Mayo 2026 — Corporación Seidan</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0c0e14;--bg2:#121520;--sf:#181c26;--sf2:#1e2330;--sf3:#242a38;--bdr:rgba(255,255,255,0.06);--bdr2:rgba(255,255,255,0.10);--tx:#dde3ee;--tx2:#a8b3c8;--tx3:#6b7a94;--blue:#4d79ff;--blue-d:rgba(77,121,255,0.12);--cyan:#38bdf8;--tt:#f72b55;--tt-d:rgba(247,43,85,0.10);--fb:#1877f2;--fb-d:rgba(24,119,242,0.10);--sd:#818cf8;--sd-d:rgba(129,140,248,0.10);--t3:#34d399;--t3-d:rgba(52,211,153,0.10);--gold:#fbbf24;--r:8px;--rsm:5px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.55;overflow-x:hidden;}
+/* NAV */
+nav{position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem);background:rgba(12,14,20,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--bdr2);}
+.nav-brand{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+.nav-brand span{color:var(--blue);}
+.nav-pill{font-size:.65rem;font-weight:600;background:var(--blue-d);color:var(--blue);padding:3px 9px;border-radius:100px;}
+.nav-links{display:flex;gap:2px;}
+.nav-links a{font-size:.76rem;font-weight:500;color:var(--tx3);padding:5px 12px;border-radius:var(--rsm);text-decoration:none;transition:color .15s,background .15s;}
+.nav-links a:hover{color:var(--tx);background:var(--sf2);}
+@media(max-width:600px){.nav-links{display:none;}}
+/* LAYOUT */
+main{max-width:1260px;margin:0 auto;padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem);display:flex;flex-direction:column;gap:2rem;}
+/* HERO */
+.hero{background:var(--sf);border:1px solid var(--bdr2);border-radius:var(--r);padding:clamp(1.5rem,4vw,2.25rem) clamp(1.5rem,4vw,2.5rem);display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:start;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));}
+.hero-eye{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.6rem;}
+.hero-title{font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;line-height:1.2;letter-spacing:-.01em;margin-bottom:.75rem;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:500;color:var(--tx2);background:var(--sf2);border:1px solid var(--bdr2);padding:3px 10px;border-radius:100px;}
+.tc-box{background:var(--sf2);border:1px solid var(--bdr2);border-radius:var(--rsm);padding:8px 14px;font-size:.78rem;color:var(--tx2);}
+.tc-box strong{display:block;color:var(--cyan);font-weight:600;margin-bottom:2px;}
+@media(max-width:520px){.hero{grid-template-columns:1fr;}}
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--bdr2);border:1px solid var(--bdr2);border-radius:var(--r);overflow:hidden;}
+.kpi-item{background:var(--sf);padding:1.25rem 1.5rem;position:relative;transition:background .15s;}
+.kpi-item:hover{background:var(--sf2);}
+.kpi-item.primary{background:var(--sf2);}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:2px;}
+.kpi-lbl{font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin-bottom:.4rem;}
+.kpi-val{font-family:'IBM Plex Mono',monospace;font-size:clamp(1.2rem,2.5vw,1.5rem);font-weight:600;letter-spacing:-.02em;line-height:1;margin-bottom:.3rem;}
+.kpi-val.big{font-size:clamp(1.5rem,3vw,1.95rem);}
+.kpi-sub{font-size:.71rem;color:var(--tx3);}
+.kpi-track{height:2px;background:var(--sf3);border-radius:2px;margin-top:.75rem;overflow:hidden;}
+.kpi-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1);width:0;}
+/* SECTION */
+.sec-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:1rem;}
+.sec-title{font-size:1rem;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;}
+.sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sec-total{font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;background:var(--sf2);border:1px solid var(--bdr2);padding:5px 12px;border-radius:var(--rsm);}
+/* CHARTS */
+.charts-row{display:grid;grid-template-columns:220px 1fr 1fr;gap:1px;background:var(--bdr2);border:1px solid var(--bdr2);border-radius:var(--r);overflow:hidden;}
+@media(max-width:900px){.charts-row{grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.charts-row{grid-template-columns:1fr;}}
+.chart-cell{background:var(--sf);padding:1.25rem 1.5rem;}
+.chart-lbl{font-size:.67rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin-bottom:1rem;}
+/* TABLE GENERIC */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tbl{width:100%;border-collapse:collapse;}
+.tbl thead th{background:var(--sf2);padding:8px 12px;font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);text-align:left;}
+.tbl thead th.r{text-align:right;}
+.tbl tbody tr{border-top:1px solid var(--bdr);transition:background .12s;}
+.tbl tbody tr:hover{background:var(--sf2);}
+.tbl tbody td{padding:7px 12px;font-size:.82rem;}
+.tbl tbody td.r{text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;}
+.tbl tbody td.muted{color:var(--tx3);font-size:.76rem;}
+.tbl tfoot tr{border-top:1px solid var(--bdr2);}
+.tbl tfoot td{padding:8px 12px;background:var(--sf2);font-size:.82rem;font-weight:700;}
+.tbl tfoot td.r{text-align:right;font-family:'IBM Plex Mono',monospace;color:var(--blue);}
+/* RESUMEN TABLE */
+.res-wrap{background:var(--sf);border:1px solid var(--bdr2);border-radius:var(--r);overflow:hidden;}
+.res-sub{background:var(--sf2);}
+.res-sub td{font-weight:700;}
+.res-total td{font-weight:700;background:linear-gradient(90deg,#1a2035,#151b2d);}
+.plat-badge{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:var(--rsm);}
+/* ACCORDION */
+.acc-card{background:var(--sf);border:1px solid var(--bdr2);border-radius:var(--r);overflow:hidden;margin-bottom:.75rem;}
+.acc-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;padding:.9rem 1.25rem;cursor:pointer;user-select:none;transition:background .15s;}
+.acc-head:hover{background:var(--sf2);}
+.acc-head-l{display:flex;align-items:center;gap:10px;}
+.acc-badge{font-size:.63rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:var(--rsm);}
+.acc-name{font-size:.9rem;font-weight:700;}
+.acc-sub{font-size:.71rem;color:var(--tx3);}
+.acc-total{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:600;}
+.chev{color:var(--tx3);font-size:.7rem;transition:transform .2s;}
+.acc-card.open .chev{transform:rotate(180deg);}
+.acc-body{display:none;border-top:1px solid var(--bdr);}
+.acc-card.open .acc-body{display:block;}
+/* BAR INLINE */
+.bi{display:flex;align-items:center;gap:8px;min-width:90px;}
+.bt{flex:1;height:4px;background:var(--sf3);border-radius:2px;overflow:hidden;}
+.bf{height:100%;border-radius:2px;transition:width .9s ease;width:0;}
+.bp{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--tx3);min-width:36px;text-align:right;}
+/* TABS */
+.tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem;}
+.tab-btn{font-family:'IBM Plex Sans',sans-serif;font-size:.78rem;font-weight:600;padding:6px 16px;border-radius:var(--rsm);border:1px solid var(--bdr2);background:var(--sf2);color:var(--tx3);cursor:pointer;transition:all .15s;}
+.tab-btn:hover{color:var(--tx);}
+.tab-btn.a-sd{background:var(--sd-d);border-color:var(--sd);color:var(--sd);}
+.tab-btn.a-t3{background:var(--t3-d);border-color:var(--t3);color:var(--t3);}
+.tc{display:none;}
+.tc.active{display:block;}
+/* ACC SUMMARY */
+.acc-sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--rsm);overflow:hidden;margin-top:1rem;}
+.acc-sum-item{background:var(--sf2);padding:.75rem 1rem;}
+.acc-sum-lbl{font-size:.65rem;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.25rem;}
+.acc-sum-val{font-family:'IBM Plex Mono',monospace;font-size:.9rem;font-weight:600;}
+/* CONS */
+.cons-wrap{background:var(--sf);border:1px solid var(--bdr2);border-radius:var(--r);overflow:hidden;}
+.cons-tbl thead th{position:sticky;top:52px;z-index:5;background:var(--sf2);}
+.rank{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:600;background:var(--sf3);color:var(--tx3);margin-right:2px;}
+.r1{background:rgba(251,191,36,.12);color:var(--gold);}
+.r2{background:rgba(168,179,200,.10);color:#a8b3c8;}
+.r3{background:rgba(180,120,100,.10);color:#b47864;}
+.pt{display:inline-block;font-size:.62rem;font-weight:600;letter-spacing:.04em;padding:2px 6px;border-radius:4px;margin:1px;}
+.pt-tt{background:var(--tt-d);color:var(--tt);}
+.pt-fb{background:var(--fb-d);color:#60a5fa;}
+/* FILTERS */
+.frow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem;}
+.sinput{font-family:'IBM Plex Sans',sans-serif;background:var(--sf2);border:1px solid var(--bdr2);color:var(--tx);padding:7px 13px;border-radius:var(--rsm);font-size:.82rem;min-width:200px;flex:1;max-width:300px;outline:none;transition:border-color .15s;}
+.sinput:focus{border-color:var(--blue);}
+.sselect{font-family:'IBM Plex Sans',sans-serif;background:var(--sf2);border:1px solid var(--bdr2);color:var(--tx);padding:7px 13px;border-radius:var(--rsm);font-size:.82rem;cursor:pointer;outline:none;transition:border-color .15s;}
+.sselect:focus{border-color:var(--blue);}
+.cnt-lbl{font-size:.74rem;color:var(--tx3);}
+/* FOOTER */
+footer{border-top:1px solid var(--bdr2);padding:1.25rem clamp(1rem,4vw,2rem);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-size:.72rem;color:var(--tx3);}
+footer strong{color:var(--tx2);}
+/* FADE */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+.fu{animation:fadeUp .45s ease both;}
+.d1{animation-delay:.05s;}.d2{animation-delay:.10s;}.d3{animation-delay:.15s;}.d4{animation-delay:.20s;}.d5{animation-delay:.25s;}
+/* CPP badge */
+.cpp-badge{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;color:var(--t3);background:var(--t3-d);padding:1px 7px;border-radius:4px;}
+.cpp-none{color:var(--tx3);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Corporación <span>Seidan</span><span class="nav-pill">Mayo 2026</span></div>
+  <div class="nav-links">
+    <a href="#resumen">Resumen</a>
+    <a href="#tiktok">TikTok</a>
+    <a href="#facebook">Facebook</a>
+    <a href="#productos">Productos</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<header class="hero fu d1" id="resumen">
+  <div>
+    <div class="hero-eye">Informe Ejecutivo de Inversión Publicitaria</div>
+    <h1 class="hero-title">Reporte de Campañas — Mayo 2026</h1>
+    <div class="hero-meta">
+      <span class="tag">📅 01/05/2026 – 31/05/2026</span>
+      <span class="tag">🎵 TikTok Ads</span>
+      <span class="tag">📘 Facebook Ads</span>
+      <span class="tag">16 cuentas publicitarias</span>
+    </div>
+  </div>
+  <div>
+    <div class="tc-box">
+      <strong>Tipo de cambio aplicado</strong>
+      S/. 3.40 = $1.00 USD
+      <div style="margin-top:4px;font-size:.69rem;color:var(--tx3);">Aplicado en CP1-2025 y CP2-2025 (originalmente PEN)</div>
+    </div>
+  </div>
+</header>
+
+<!-- KPIs -->
+<div class="kpi-strip fu d2">
+  <div class="kpi-item primary">
+    <div class="kpi-accent" style="background:linear-gradient(90deg,var(--blue),var(--cyan));"></div>
+    <div class="kpi-lbl">Inversión Total</div>
+    <div class="kpi-val big" style="color:var(--blue);">$13,620.51</div>
+    <div class="kpi-sub">Mayo 2026 · Todas las plataformas</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-accent" style="background:var(--tt);"></div>
+    <div class="kpi-lbl">TikTok Ads</div>
+    <div class="kpi-val" style="color:var(--tt);">$4,856.56</div>
+    <div class="kpi-sub">35.6% del total · 4 cuentas</div>
+    <div class="kpi-track"><div class="kpi-fill" style="background:var(--tt);" data-w="35.6"></div></div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-accent" style="background:var(--fb);"></div>
+    <div class="kpi-lbl">Facebook Ads</div>
+    <div class="kpi-val" style="color:#60a5fa;">$8,763.95</div>
+    <div class="kpi-sub">64.4% del total · 12 cuentas</div>
+    <div class="kpi-track"><div class="kpi-fill" style="background:var(--fb);" data-w="64.4"></div></div>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="charts-row fu d3">
+  <div class="chart-cell">
+    <div class="chart-lbl">Distribución por plataforma</div>
+    <canvas id="cDist"></canvas>
+  </div>
+  <div class="chart-cell">
+    <div class="chart-lbl">TikTok — inversión por cuenta</div>
+    <canvas id="cTT" style="max-height:180px;"></canvas>
+  </div>
+  <div class="chart-cell">
+    <div class="chart-lbl">Facebook — inversión por cuenta</div>
+    <canvas id="cFB" style="max-height:180px;"></canvas>
+  </div>
+</div>
+
+<!-- RESUMEN PLATAFORMAS -->
+<section class="fu d3">
+  <div class="sec-head">
+    <div class="sec-title">Inversión por Plataforma y Cuenta</div>
+  </div>
+  <div class="res-wrap">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Plataforma / Cuenta</th><th>Grupo</th>
+            <th class="r">Inversión (USD)</th><th class="r">Original (PEN)</th><th class="r">% Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="plat-badge" style="background:var(--tt-d);color:var(--tt);">🎵 PUBLI2T3C</span></td><td class="muted">TikTok</td><td class="r">$1,517.08</td><td class="r muted">S/. 5,158.06</td><td class="r">11.1%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--tt-d);color:var(--tt);">🎵 Seiko Publicidad</span></td><td class="muted">TikTok</td><td class="r">$2,165.06</td><td class="r muted">—</td><td class="r">15.9%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--tt-d);color:var(--tt);">🎵 CP1-2025</span></td><td class="muted">TikTok · PEN</td><td class="r">$1,034.29</td><td class="r muted">S/. 3,516.60</td><td class="r">7.6%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--tt-d);color:var(--tt);">🎵 CP2-2025</span></td><td class="muted">TikTok · PEN</td><td class="r">$140.13</td><td class="r muted">S/. 476.43</td><td class="r">1.0%</td></tr>
+          <tr class="res-sub"><td colspan="2" style="padding-left:1.5rem;font-size:.78rem;color:var(--tt);">SUBTOTAL TIKTOK ADS</td><td class="r" style="color:var(--tt);">$4,856.56</td><td class="r muted">—</td><td class="r" style="color:var(--tt);">35.7%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 CT2</span></td><td class="muted">SEIDAN</td><td class="r">$2,029.62</td><td class="r muted">—</td><td class="r">14.9%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 CT4</span></td><td class="muted">SEIDAN</td><td class="r">$366.03</td><td class="r muted">—</td><td class="r">2.7%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 CT5</span></td><td class="muted">SEIDAN</td><td class="r">$507.11</td><td class="r muted">—</td><td class="r">3.7%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 CT6</span></td><td class="muted">SEIDAN</td><td class="r">$229.64</td><td class="r muted">—</td><td class="r">1.7%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 CT7</span></td><td class="muted">SEIDAN</td><td class="r">$607.30</td><td class="r muted">—</td><td class="r">4.5%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 CT8</span></td><td class="muted">SEIDAN</td><td class="r">$82.23</td><td class="r muted">—</td><td class="r">0.6%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--sd-d);color:var(--sd);">📘 Seidan Publicidad</span></td><td class="muted">SEIDAN</td><td class="r">$453.22</td><td class="r muted">—</td><td class="r">3.3%</td></tr>
+          <tr class="res-sub"><td colspan="2" style="padding-left:1.5rem;font-size:.78rem;color:var(--sd);">SUBTOTAL GRUPO SEIDAN</td><td class="r" style="color:var(--sd);">$4,275.15</td><td class="r muted">—</td><td class="r" style="color:var(--sd);">31.4%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--t3-d);color:var(--t3);">📘 TC2</span></td><td class="muted">T3CNO</td><td class="r">$1,019.35</td><td class="r muted">—</td><td class="r">7.5%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--t3-d);color:var(--t3);">📘 TC3</span></td><td class="muted">T3CNO</td><td class="r">$19.20</td><td class="r muted">—</td><td class="r">0.1%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--t3-d);color:var(--t3);">📘 T3cnostore</span></td><td class="muted">T3CNO</td><td class="r">$3,011.20</td><td class="r muted">—</td><td class="r">22.1%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--t3-d);color:var(--t3);">📘 Seiko 2</span></td><td class="muted">T3CNO</td><td class="r">$73.66</td><td class="r muted">—</td><td class="r">0.5%</td></tr>
+          <tr><td><span class="plat-badge" style="background:var(--t3-d);color:var(--t3);">📘 Anuncios FB e IG</span></td><td class="muted">T3CNO</td><td class="r">$365.39</td><td class="r muted">—</td><td class="r">2.7%</td></tr>
+          <tr class="res-sub"><td colspan="2" style="padding-left:1.5rem;font-size:.78rem;color:var(--t3);">SUBTOTAL GRUPO T3CNO</td><td class="r" style="color:var(--t3);">$4,488.80</td><td class="r muted">—</td><td class="r" style="color:var(--t3);">32.9%</td></tr>
+        </tbody>
+        <tfoot><tr class="res-total"><td colspan="2" style="color:var(--blue);">TOTAL GENERAL — MAYO 2026</td><td class="r" style="color:var(--blue);font-family:'IBM Plex Mono',monospace;">$13,620.51</td><td class="r muted">—</td><td class="r" style="color:var(--blue);">100%</td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TIKTOK -->
+<section id="tiktok" class="fu d3">
+  <div class="sec-head">
+    <div class="sec-title"><span class="sec-dot" style="background:var(--tt);"></span>TikTok Ads — Detalle por Cuenta</div>
+    <div class="sec-total" style="color:var(--tt);border-color:rgba(247,43,85,.25);">$4,856.56 USD</div>
+  </div>
+  <!-- PUBLI2T3C -->
+  <div class="acc-card open">
+    <div class="acc-head" onclick="tog(this)">
+      <div class="acc-head-l">
+        <span class="acc-badge" style="background:var(--tt-d);color:var(--tt);">TikTok</span>
+        <div><div class="acc-name">PUBLI2T3C</div><div class="acc-sub">S/. 5,158.06 ÷ 3.40 = $1,517.08 · 210 conversiones</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="acc-total" style="color:var(--tt);">$1,517.08</span><span class="chev">▾</span></div>
+    </div>
+    <div class="acc-body"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Producto</th><th class="r">Inversión (USD)</th><th class="r">Compras</th><th class="r">CPP (USD)</th><th>% Cuenta</th></tr></thead><tbody id="tb-publi"></tbody><tfoot><tr><td>Total</td><td class="r">$1,517.08</td><td class="r">210</td><td class="r">$7.22</td><td></td></tr></tfoot></table></div></div>
+  </div>
+  <!-- SEIKO -->
+  <div class="acc-card open">
+    <div class="acc-head" onclick="tog(this)">
+      <div class="acc-head-l">
+        <span class="acc-badge" style="background:var(--tt-d);color:var(--tt);">TikTok</span>
+        <div><div class="acc-name">Seiko Publicidad</div><div class="acc-sub">Moneda original: USD · 567 compras</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="acc-total" style="color:var(--tt);">$2,165.06</span><span class="chev">▾</span></div>
+    </div>
+    <div class="acc-body"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Producto</th><th class="r">Inversión (USD)</th><th class="r">Compras</th><th class="r">CPP (USD)</th><th>% Cuenta</th></tr></thead><tbody id="tb-seiko"></tbody><tfoot><tr><td>Total</td><td class="r">$2,165.06</td><td class="r">567</td><td class="r">$3.82</td><td></td></tr></tfoot></table></div></div>
+  </div>
+  <!-- CP1 -->
+  <div class="acc-card open">
+    <div class="acc-head" onclick="tog(this)">
+      <div class="acc-head-l">
+        <span class="acc-badge" style="background:var(--tt-d);color:var(--tt);">TikTok · PEN</span>
+        <div><div class="acc-name">CP1-2025</div><div class="acc-sub">S/. 3,516.60 ÷ 3.40 = $1,034.29 · 223 compras</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="acc-total" style="color:var(--tt);">$1,034.29</span><span class="chev">▾</span></div>
+    </div>
+    <div class="acc-body"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Producto</th><th class="r">Inversión (USD)</th><th class="r">Compras</th><th class="r">CPP (USD)</th><th>% Cuenta</th></tr></thead><tbody id="tb-cp1"></tbody><tfoot><tr><td>Total</td><td class="r">$1,034.29</td><td class="r">223</td><td class="r">$4.64</td><td></td></tr></tfoot></table></div></div>
+  </div>
+  <!-- CP2 -->
+  <div class="acc-card open">
+    <div class="acc-head" onclick="tog(this)">
+      <div class="acc-head-l">
+        <span class="acc-badge" style="background:var(--tt-d);color:var(--tt);">TikTok · PEN</span>
+        <div><div class="acc-name">CP2-2025</div><div class="acc-sub">S/. 476.43 ÷ 3.40 = $140.13 · 18 compras</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="acc-total" style="color:var(--tt);">$140.13</span><span class="chev">▾</span></div>
+    </div>
+    <div class="acc-body"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Producto</th><th class="r">Inversión (USD)</th><th class="r">Compras</th><th class="r">CPP (USD)</th><th>% Cuenta</th></tr></thead><tbody id="tb-cp2"></tbody><tfoot><tr><td>Total</td><td class="r">$140.13</td><td class="r">18</td><td class="r">$7.79</td><td></td></tr></tfoot></table></div></div>
+  </div>
+</section>
+
+<!-- FACEBOOK -->
+<section id="facebook" class="fu d4">
+  <div class="sec-head">
+    <div class="sec-title"><span class="sec-dot" style="background:var(--fb);"></span>Facebook Ads — Detalle por Grupo y Cuenta</div>
+    <div class="sec-total" style="color:#60a5fa;border-color:rgba(24,119,242,.25);">$8,763.95 USD</div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn a-sd" id="btn-sd" onclick="swTab('sd')">Grupo SEIDAN — $4,275.15</button>
+    <button class="tab-btn" id="btn-t3" onclick="swTab('t3')">Grupo T3CNO — $4,488.80</button>
+  </div>
+  <div id="tab-sd" class="tc active"></div>
+  <div id="tab-t3" class="tc"></div>
+</section>
+
+<!-- PRODUCTOS CONSOLIDADOS -->
+<section id="productos" class="fu d5">
+  <div class="sec-head">
+    <div class="sec-title">
+      <span class="sec-dot" style="background:var(--gold);"></span>
+      Inversión Consolidada por Producto
+      <span style="font-size:.75rem;font-weight:400;color:var(--tx3);">sin duplicados · todas las plataformas</span>
+    </div>
+    <div class="sec-total" style="color:var(--gold);border-color:rgba(251,191,36,.25);">$13,620.51 · 3,497 compras</div>
+  </div>
+  <div class="frow">
+    <input class="sinput" id="q" type="text" placeholder="Buscar producto…" oninput="filt()">
+    <select class="sselect" id="fp" onchange="filt()">
+      <option value="">Todas las plataformas</option>
+      <option value="tiktok">Solo TikTok</option>
+      <option value="facebook">Solo Facebook</option>
+    </select>
+    <span class="cnt-lbl" id="cnt"></span>
+  </div>
+  <div class="cons-wrap">
+    <div class="tbl-wrap">
+      <table class="tbl cons-tbl">
+        <thead>
+          <tr>
+            <th>#</th><th>Producto</th><th>Plataforma(s)</th>
+            <th class="r">Inversión (USD)</th><th class="r">Compras</th><th class="r">CPP (USD)</th>
+            <th class="r">% Total</th><th>Barra</th>
+          </tr>
+        </thead>
+        <tbody id="cons-body"></tbody>
+        <tfoot><tr><td colspan="3">TOTAL GENERAL — MAYO 2026</td><td class="r">$13,620.51</td><td class="r">3,497</td><td class="r">$3.90</td><td class="r">100%</td><td></td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div><strong>Corporación Seidan</strong> · Reporte Campañas Publicitarias · Mayo 2026</div>
+  <div>Generado el 03/06/2026 · Documento Confidencial · TC: S/. 3.40 = $1.00 USD</div>
+</footer>
+
+<script>
+const TC=3.40, GT=13620.51;
+const fm=v=>'$'+v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+const pc=(v,t)=>((v/t)*100).toFixed(1)+'%';
+const bar=(v,tot,c)=>{const w=Math.min(100,(v/tot)*100).toFixed(1);return`<div class="bi"><div class="bt"><div class="bf" style="background:${c};" data-w="${w}"></div></div><span class="bp">${pc(v,tot)}</span></div>`;};
+const cppFmt=v=>v?`<span class="cpp-badge">${fm(v)}</span>`:`<span class="cpp-none">—</span>`;
+
+// ── TIKTOK DATA ───────────────────────────────────────────────────────────────
+const TT={
+  publi:{usd:5158.06/TC,pen:5158.06,rows:[
+    ["Dash Kraken (Dashcam WiFi)",(1886.93+72.70+63.31)/TC,65],
+    ["Cámara Robocot",(1192.95+226.03)/TC,70],
+    ["Cámara Cerberus",945.65/TC,44],
+    ["Cámara Quimera",(425.78+127.91)/TC,21],
+    ["Gata Hidráulica",(36.48+21.70)/TC,4],
+    ["Ahuyentador de Aves",33.03/TC,3],
+    ["Ahorrador Combustible",32.60/TC,0],
+    ["Luz Maletero",31.16/TC,1],
+    ["Cámara Triple IA / Megatron",(31.09+30.74)/TC,2],
+  ]},
+  seiko:{usd:2165.06,pen:null,rows:[
+    ["Ahorrador Energía Deluxe (109)",396.08+351.07+193.60+211.43,403],
+    ["Ahorrador Combustible",26.43+9.88,3],
+    ["Cámara Robocot (Manual)",255.95+16.22+10.50,44],
+    ["Cámara Megatron",142.40+141.90+13.03+13.22,52],
+    ["Cámara Triple IA",186.80+11.39+13.42+11.75,32],
+    ["Cuchillo Japonés Kaizen",61.42+10.08+10.56,25],
+    ["Set Luxury",31.33,4],
+    ["Panti Faja (testeo)",14.84,1],
+    ["Cámara Quimera",10.64,0],
+    ["Gata Hidráulica",10.77,0],
+    ["Ducha Aquapure 360",10.35,3],
+  ]},
+  cp1:{usd:((704.69+126.81+32.96+29.18)+(474.39+353.62)+(465.28+274.66+114.86+38.24+28.79+32.22)+(440.16+37.25+2.32)+87.94+80.55+62.40+49.15+35.98+(32.16+12.99))/TC,pen:3516.60,rows:[
+    ["Lentes Smart IA",(704.69+126.81+32.96+29.18)/TC,69],
+    ["Cámara Robocot",(474.39+353.62)/TC,51],
+    ["Cámara Proguard 360",(465.28+274.66+114.86+38.24+28.79+32.22)/TC,41],
+    ["Cámara Triple IA / Megatron",(440.16+37.25+2.32)/TC,51],
+    ["Localizador Smart Tag",87.94/TC,3],
+    ["Vaporizador 360",80.55/TC,3],
+    ["Pistola de Clavos",62.40/TC,3],
+    ["Proguard 360 (testeo)",49.15/TC,0],
+    ["Ahorrador Gasolina",35.98/TC,0],
+    ["Cámara Mini Espía",(32.16+12.99)/TC,2],
+  ]},
+  cp2:{usd:(276.67+47.55+40.27+39.83+39.42+32.69)/TC,pen:476.43,rows:[
+    ["Cámara Mini Espía",276.67/TC,17],
+    ["Cámara Proguard 360",47.55/TC,1],
+    ["Cámara Triple IA / Megatron",40.27/TC,0],
+    ["Proguard 360 (testeo)",39.83/TC,0],
+    ["Lentes Smart IA",39.42/TC,0],
+    ["Cámara Quimera",32.69/TC,0],
+  ]},
+};
+
+function renderTT(tbId,rows,total,color){
+  const s=[...rows].sort((a,b)=>b[1]-a[1]);
+  document.getElementById(tbId).innerHTML=s.map(([n,v,c])=>{
+    const cpp=c?v/c:null;
+    return`<tr><td>${n}</td><td class="r">${fm(v)}</td><td class="r">${c||'—'}</td><td class="r">${cppFmt(cpp)}</td><td>${bar(v,total,color)}</td></tr>`;
+  }).join('');
+}
+renderTT('tb-publi',TT.publi.rows,TT.publi.usd,'var(--tt)');
+renderTT('tb-seiko',TT.seiko.rows,TT.seiko.usd,'var(--tt)');
+renderTT('tb-cp1',TT.cp1.rows,TT.cp1.usd,'var(--tt)');
+renderTT('tb-cp2',TT.cp2.rows,TT.cp2.usd,'var(--tt)');
+
+// ── FACEBOOK DATA ─────────────────────────────────────────────────────────────
+const FB={
+  sd:{color:'var(--sd)',colorD:'var(--sd-d)',total:4275.15,accs:{
+    "CT2":{total:2029.62,rows:{
+      "Ahorrador Energía Deluxe":[613.67+504.97+107.46+78.16+26.57,301+180+92+68+33+42+6+5],
+      "Ducha Premium":[143.57,47],"Ahuyentador de Aves":[134.53,51],
+      "Cuchillo Japonés Kaizen":[94.58,12],"Ahorrador Combustible":[55.36,32],
+      "Trampa Ratas / Ratón":[57.51,12],"Lentes Smart IA":[50.63,10],
+      "Pistola de Clavos":[19.17,10],"Ahorrador Gasolina":[18.48,3],
+      "Manta Térmica":[15.81,3],"Calefactor Torre":[11.05,0],
+      "Tijera Marine":[10.13,0],"Vaporizador":[10.00,0],
+      "Cámara Espiacam":[9.55,1],"Luz Maletera":[9.26,1],
+      "Esmeril Procut":[8.64,0],"Vapormax 360":[8.50,0],
+      "Repelente Smart":[8.08,2],"Gata Hidráulica":[7.84,0],
+      "Soplador 13K Pro":[7.12,1],"Enchufe Smart":[6.70,1],
+      "Sleep (Sin Estrés)":[6.67,0],"Día de la Madre":[5.61,1],
+    }},
+    "CT4":{total:366.03,rows:{
+      "Ahorrador 109 / Energía Deluxe":[209.63,108],
+      "Repelente Smart":[105.75,30],"Cuchillo Japonés Kaizen":[42.30,5],"Día de la Madre":[8.35,0],
+    }},
+    "CT5":{total:507.11,rows:{
+      "Cuchillo Japonés Kaizen":[500.41,122],"Día de la Madre":[6.70,1],
+    }},
+    "CT6":{total:229.64,rows:{
+      "Ahorrador Energía Deluxe":[142.02,66],"Cuchillo Japonés Kaizen":[60.98,6],"Día de la Madre":[26.64,1],
+    }},
+    "CT7":{total:607.30,rows:{
+      "Cuchillo Japonés Kaizen":[486.78,121],"Ahorrador Energía Deluxe":[114.16,35],"Día de la Madre":[6.36,0],
+    }},
+    "CT8":{total:82.23,rows:{
+      "Cuchillo Japonés Kaizen":[75.57,12],"Día de la Madre":[6.66,0],
+    }},
+    "Seidan Publicidad":{total:453.22,rows:{
+      "Tijera CBO":[324.10,119],"Cuchillo Mongol":[129.12,38],
+    }},
+  }},
+  t3:{color:'var(--t3)',colorD:'var(--t3-d)',total:4488.80,accs:{
+    "TC2":{total:1019.35,rows:{
+      "Cámara Cerberus":[592.14,116],"Dashcam Kraken WiFi":[106.39,36],
+      "Cámara Megatron":[235.20,43],"Video Megatron":[75.09,4],"Cámara Robocot":[10.53,1],
+    }},
+    "TC3":{total:19.20,rows:{
+      "Cámara Robocot":[9.96,0],"Cámara Megatron":[9.24,0],
+    }},
+    "T3cnostore":{total:3011.20,rows:{
+      "Cámara Triple IA Solar":[506.55,100],"Cámara Megatron":[586.36,150],
+      "Cámara Pulpo":[523.11,106],"Cámara Triple Lente IA":[218.06,31],
+      "Dashcam Kraken WiFi":[221.20,60],"Cámara Espiacam":[122.65,27],
+      "Cámara Solar IA":[184.91,31],"GPS Smart Tag":[170.14,53],
+      "Cámara Robocot":[119.27,16],"Proguard 360":[108.61,12],
+      "Lentes Smart IA":[64.65,12],"Enchufe Smart":[43.86,7],
+      "Cámara Quimera":[24.09,1],"Vaporizador":[15.02,2],
+      "Pistola de Clavos":[13.01,4],"Vapormax Pro 360":[14.06,0],
+      "Trampa para Ratas":[13.98,0],"Cámara Cerberus":[16.92,1],
+      "Soplador 13K Pro":[9.24,0],"Ahorrador Gasolina":[8.88,2],"Mini Amoladora":[8.35,1],
+    }},
+    "Seiko 2":{total:73.66,rows:{
+      "Panti Faja":[67.63,18],"Día de la Madre":[6.03,0],
+    }},
+    "Anuncios FB e IG":{total:365.39,rows:{
+      "Panti Faja / Short Faja":[337.51,65],"Testeo Crucero":[17.70,0],"Día de la Madre":[10.18,1],
+    }},
+  }},
+};
+
+function renderFB(gk,cid){
+  const g=FB[gk];let html='';
+  for(const[accName,accData]of Object.entries(g.accs)){
+    const sorted=Object.entries(accData.rows).sort((a,b)=>b[1][0]-a[1][0]);
+    const totPurch=sorted.reduce((s,[,v])=>s+v[1],0);
+    const avgCpp=totPurch?accData.total/totPurch:null;
+    html+=`<div class="acc-card open" style="border-left:2px solid ${g.color};">
+      <div class="acc-head" onclick="tog(this)">
+        <div class="acc-head-l">
+          <span class="acc-badge" style="background:${g.colorD};color:${g.color};">${gk.toUpperCase()}</span>
+          <div><div class="acc-name">${accName}</div><div class="acc-sub">${pc(accData.total,g.total)} del grupo · ${totPurch} compras · CPP avg ${avgCpp?fm(avgCpp):'—'}</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;"><span class="acc-total" style="color:${g.color};">${fm(accData.total)}</span><span class="chev">▾</span></div>
+      </div>
+      <div class="acc-body"><div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Producto</th><th class="r">Inversión (USD)</th><th class="r">Compras</th><th class="r">CPP (USD)</th><th>Distrib.</th></tr></thead>
+        <tbody>${sorted.map(([n,[v,c]])=>{const cpp=c?v/c:null;return`<tr><td>${n}</td><td class="r">${fm(v)}</td><td class="r">${c||'—'}</td><td class="r">${cppFmt(cpp)}</td><td>${bar(v,accData.total,g.color)}</td></tr>`;}).join('')}</tbody>
+        <tfoot><tr><td>Total</td><td class="r">${fm(accData.total)}</td><td class="r">${totPurch}</td><td class="r">${avgCpp?`<span class="cpp-badge">${fm(avgCpp)}</span>`:'—'}</td><td></td></tr></tfoot>
+      </table></div></div>
+    </div>`;
+  }
+  const sumItems=Object.entries(g.accs).map(([n,d])=>`<div class="acc-sum-item"><div class="acc-sum-lbl">${n}</div><div class="acc-sum-val" style="color:${g.color};">${fm(d.total)}</div></div>`).join('');
+  html+=`<div class="acc-sum">${sumItems}</div>`;
+  document.getElementById(cid).innerHTML=html;
+}
+renderFB('sd','tab-sd');
+renderFB('t3','tab-t3');
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function swTab(g){
+  ['sd','t3'].forEach(k=>{
+    document.getElementById('tab-'+k).classList.toggle('active',k===g);
+    const b=document.getElementById('btn-'+k);
+    b.classList.remove('a-sd','a-t3');
+    if(k===g) b.classList.add('a-'+k);
+  });
+  animBars();
+}
+
+// ── CONSOLIDATED ──────────────────────────────────────────────────────────────
+const CONS=[
+  ["Ahorrador Energía Deluxe (109)",2948.82,1339,["tiktok","facebook"]],
+  ["Cuchillo Japonés Kaizen",1342.68,303,["tiktok","facebook"]],
+  ["Ahorrador Combustible / Gasolina",128.62,40,["tiktok","facebook"]],
+  ["Cámara Megatron",1216.44,245,["tiktok","facebook"]],
+  ["Cámara Triple IA / Megatron",1119.10,216,["tiktok","facebook"]],
+  ["Cámara Robocot",1101.59,182,["tiktok","facebook"]],
+  ["Dash Kraken (Dashcam WiFi)",922.57,161,["tiktok","facebook"]],
+  ["Cámara Cerberus",887.19,161,["tiktok","facebook"]],
+  ["Cámara Pulpo",523.11,106,["facebook"]],
+  ["Cámara Proguard 360",414.91,54,["tiktok","facebook"]],
+  ["Panti Faja / Short Faja",419.98,84,["tiktok","facebook"]],
+  ["Lentes Smart IA",389.71,91,["tiktok","facebook"]],
+  ["Tijera CBO",324.10,119,["facebook"]],
+  ["Cámara Quimera",207.19,22,["tiktok","facebook"]],
+  ["Cámara Solar IA",184.91,31,["facebook"]],
+  ["GPS Smart Tag",170.14,53,["facebook"]],
+  ["Ahuyentador de Aves",144.24,54,["tiktok","facebook"]],
+  ["Ducha Premium",143.57,47,["facebook"]],
+  ["Cámara Espiacam",122.65,27,["facebook"]],
+  ["Cuchillo Mongol",129.12,38,["facebook"]],
+  ["Repelente Smart",113.83,32,["facebook"]],
+  ["Cámara Mini Espía",94.65,19,["tiktok"]],
+  ["Campaña Día de la Madre",76.53,4,["facebook"]],
+  ["Trampa para Ratas",71.49,12,["facebook"]],
+  ["Enchufe Smart",50.56,8,["facebook"]],
+  ["Pistola de Clavos",50.53,17,["tiktok","facebook"]],
+  ["Vaporizador / Vaporizador 360",48.71,5,["tiktok","facebook"]],
+  ["Gata Hidráulica",35.72,4,["tiktok","facebook"]],
+  ["Set Luxury",31.33,4,["tiktok"]],
+  ["Ahorrador Gasolina",27.36,5,["facebook"]],
+  ["Localizador Smart Tag",25.86,3,["tiktok"]],
+  ["Vapormax 360 / Pro",22.56,0,["facebook"]],
+  ["Luz Maletera",18.42,2,["tiktok","facebook"]],
+  ["Testeo Crucero",17.70,0,["facebook"]],
+  ["Soplador 13K Pro",16.36,1,["facebook"]],
+  ["Manta Térmica",15.81,3,["facebook"]],
+  ["Calefactor Torre",11.05,0,["facebook"]],
+  ["Mini Amoladora",10.81,2,["facebook"]],
+  ["Ducha Aquapure 360",10.35,3,["tiktok"]],
+  ["Tijera Marine",10.13,0,["facebook"]],
+  ["Esmeril Procut",8.64,0,["facebook"]],
+  ["Sleep (Sin Estrés)",6.67,0,["facebook"]],
+];
+
+function platTags(ps){return ps.map(p=>p==='tiktok'?'<span class="pt pt-tt">TikTok</span>':'<span class="pt pt-fb">Facebook</span>').join('');}
+function buildCons(data){
+  return data.map(([name,val,purch,plats],i)=>{
+    const rc=i===0?'r1':i===1?'r2':i===2?'r3':'';
+    const cpp=purch?val/purch:null;
+    return`<tr data-name="${name.toLowerCase()}" data-plat="${plats.join(' ')}">
+      <td><span class="rank ${rc}">${i+1}</span></td>
+      <td>${name}</td>
+      <td>${platTags(plats)}</td>
+      <td class="r">${fm(val)}</td>
+      <td class="r">${purch||'—'}</td>
+      <td class="r">${cppFmt(cpp)}</td>
+      <td class="r muted">${pc(val,GT)}</td>
+      <td>${bar(val,GT,'var(--blue)')}</td>
+    </tr>`;
+  }).join('');
+}
+document.getElementById('cons-body').innerHTML=buildCons(CONS);
+document.getElementById('cnt').textContent=CONS.length+' productos';
+
+function filt(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const fp=document.getElementById('fp').value;
+  const f=CONS.filter(([n,,, ps])=>(!q||n.toLowerCase().includes(q))&&(!fp||ps.includes(fp)));
+  document.getElementById('cons-body').innerHTML=buildCons(f);
+  document.getElementById('cnt').textContent=f.length+' producto'+(f.length!==1?'s':'');
+  animBars();
+}
+
+// ── ACCORDION ─────────────────────────────────────────────────────────────────
+function tog(h){h.closest('.acc-card').classList.toggle('open');}
+
+// ── ANIMATE BARS ──────────────────────────────────────────────────────────────
+function animBars(){requestAnimationFrame(()=>{document.querySelectorAll('[data-w]').forEach(el=>el.style.width=el.dataset.w+'%');});}
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)animBars();});},{threshold:.05});
+document.querySelectorAll('section,.kpi-strip').forEach(el=>io.observe(el));
+window.addEventListener('load',()=>setTimeout(animBars,250));
+
+// ── CHARTS ────────────────────────────────────────────────────────────────────
+Chart.defaults.color='#6b7a94';
+Chart.defaults.font.family="'IBM Plex Sans',sans-serif";
+Chart.defaults.font.size=11;
+
+new Chart(document.getElementById('cDist'),{
+  type:'doughnut',
+  data:{labels:['TikTok Ads','Facebook SEIDAN','Facebook T3CNO'],
+    datasets:[{data:[4856.56,4275.15,4488.80],backgroundColor:['#f72b55','#818cf8','#34d399'],borderColor:'#181c26',borderWidth:3,hoverOffset:5}]},
+  options:{cutout:'62%',responsive:true,plugins:{legend:{position:'bottom',labels:{padding:10,boxWidth:10}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: $${c.parsed.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}`}}}}
+});
+
+new Chart(document.getElementById('cTT'),{
+  type:'bar',
+  data:{labels:['Seiko Pub.','PUBLI2T3C','CP1-2025','CP2-2025'],
+    datasets:[{data:[2165.06,1517.08,1034.29,140.13],backgroundColor:['rgba(247,43,85,.85)','rgba(247,43,85,.65)','rgba(247,43,85,.45)','rgba(247,43,85,.25)'],borderRadius:4,borderSkipped:false}]},
+  options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},
+    tooltip:{callbacks:{label:c=>` $${c.parsed.x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}`}}},
+    scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>'$'+v}},y:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('cFB'),{
+  type:'bar',
+  data:{labels:['CT2','CT4','CT5','CT7','Seidan P.','TC2','T3cnostore','FB e IG','CT6','CT8','Seiko 2','TC3'],
+    datasets:[
+      {label:'SEIDAN',data:[2029.62,366.03,507.11,607.30,453.22,0,0,0,229.64,82.23,0,0],backgroundColor:'rgba(129,140,248,.75)',borderRadius:3},
+      {label:'T3CNO',data:[0,0,0,0,0,1019.35,3011.20,365.39,0,0,73.66,19.20],backgroundColor:'rgba(52,211,153,.75)',borderRadius:3},
+    ]},
+  options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:10,padding:8}},
+    tooltip:{callbacks:{label:c=>` ${c.dataset.label}: $${c.parsed.y.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}`}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{callback:v=>'$'+v}}}}
+});
+</script>
+</body>
+</html>
