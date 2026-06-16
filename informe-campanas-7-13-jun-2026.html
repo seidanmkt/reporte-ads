@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Campañas | 7–13 Jun 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+:root {
+  --bg:#0d0f14; --surface:#151820; --card:#1c2030; --border:#252a3a;
+  --meta:#1877F2; --meta-soft:#1877F212; --tiktok:#ff2d55; --tiktok-soft:#ff2d5512;
+  --accent:#6c63ff; --green:#22d3a5; --amber:#f59e0b; --red:#f43f5e;
+  --text:#e8eaf0; --muted:#8892a4; --subtle:#3a4155;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6}
+
+/* HEADER */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100}
+.logo{background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;padding:5px 11px;border-radius:6px;letter-spacing:.5px}
+.h-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600}
+.h-sub{font-size:12px;color:var(--muted)}
+.date-pill{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;color:var(--muted);white-space:nowrap}
+.date-pill b{color:var(--text)}
+
+/* LAYOUT */
+.wrap{max-width:1160px;margin:0 auto;padding:24px 18px 60px}
+.sec{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin:28px 0 14px;display:flex;align-items:center;gap:10px}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin-bottom:8px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 15px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--c,var(--accent))}
+.kpi-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.kpi-v{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;line-height:1}
+.kpi-s{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* PLATFORM */
+.plat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;position:relative;overflow:hidden}
+.pc::before{content:'';position:absolute;inset:0;pointer-events:none}
+.pc.meta::before{background:var(--meta-soft)}
+.pc.tiktok::before{background:var(--tiktok-soft)}
+.pc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.pc.meta::after{background:var(--meta)}
+.pc.tiktok::after{background:var(--tiktok)}
+.pn{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.pd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.pc.meta .pn{color:var(--meta)}.pc.meta .pd{background:var(--meta)}
+.pc.tiktok .pn{color:var(--tiktok)}.pc.tiktok .pd{background:var(--tiktok)}
+.pm{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.pm-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.pm-v{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700}
+.pm-v.g{color:var(--green)}.pm-v.r{color:var(--red)}
+
+/* ACCORDION */
+.acc-list{display:flex;flex-direction:column;gap:5px}
+.acc{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.acc-h{display:flex;align-items:center;gap:10px;padding:13px 15px;cursor:pointer;user-select:none;transition:background .12s;min-height:52px}
+.acc-h:hover{background:#1f2435}
+.acc-ttl{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;flex:1;min-width:0}
+.acc-meta{display:flex;gap:14px;flex-shrink:0}
+.acc-meta span{font-size:12px;color:var(--muted);white-space:nowrap}
+.acc-meta span b{color:var(--text)}
+.acc-meta span.cg b{color:var(--green)}
+.acc-meta span.ca b{color:var(--amber)}
+.acc-meta span.cr b{color:var(--red)}
+.arr{font-size:10px;color:var(--muted);transition:transform .22s;flex-shrink:0;margin-left:6px}
+.acc.open .arr{transform:rotate(180deg)}
+.acc-b{display:none;border-top:1px solid var(--border)}
+.acc.open .acc-b{display:block}
+
+/* BADGES */
+.tags{display:flex;gap:5px;flex-shrink:0}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:4px;padding:2px 7px;font-size:11px;font-weight:600;white-space:nowrap}
+.tag.meta{background:var(--meta-soft);color:var(--meta);border:1px solid #1877F228}
+.tag.tiktok{background:var(--tiktok-soft);color:var(--tiktok);border:1px solid #ff2d5528}
+.tag.testeo{background:#6c63ff15;color:var(--accent);border:1px solid #6c63ff28}
+.td{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* PLAT SUMMARY STRIP */
+.plat-strip{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border)}
+.ps{padding:12px 15px}
+.ps+.ps{border-left:1px solid var(--border)}
+.ps-name{font-size:11px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ps.meta .ps-name{color:var(--meta)}
+.ps.tiktok .ps-name{color:var(--tiktok)}
+.ps-dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+.ps-vals{display:flex;gap:18px;flex-wrap:wrap}
+.psv-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px}
+.psv-v{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700}
+
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{background:var(--surface);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;padding:9px 13px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+th.r{text-align:right}
+td{padding:9px 13px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+td.r{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface)}
+tr.tot td{background:var(--surface);font-weight:700;border-top:2px solid var(--border)}
+
+/* CPA colors */
+.cg{color:var(--green);font-weight:700;font-family:'Space Grotesk',sans-serif}
+.ca{color:var(--amber);font-weight:700;font-family:'Space Grotesk',sans-serif}
+.cr{color:var(--red);font-weight:700;font-family:'Space Grotesk',sans-serif}
+.cn{color:var(--subtle);font-style:italic;font-size:11px}
+
+/* bar */
+.bw{display:flex;align-items:center;gap:7px}
+.bt{flex:1;height:4px;background:var(--border);border-radius:2px;min-width:50px}
+.bf{height:100%;border-radius:2px}
+.bf.g{background:var(--green)}.bf.a{background:var(--amber)}.bf.r{background:var(--red)}
+
+/* rank */
+.rk{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);width:26px}
+.rk.gold{color:#f59e0b}.rk.silver{color:#94a3b8}.rk.bronze{color:#cd7f32}
+.ev{font-size:11px}
+.ev.ok{color:var(--green)}.ev.warn{color:var(--amber)}.ev.bad{color:var(--red)}
+
+/* AHORRADOR plat cards inside acc */
+.ah-plats{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border)}
+.ah-p{padding:14px 15px}
+.ah-p+.ah-p{border-left:1px solid var(--border)}
+.ah-pn{font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ah-p.meta .ah-pn{color:var(--meta)}
+.ah-p.tiktok .ah-pn{color:var(--tiktok)}
+.ah-vals{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.ah-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.ah-v{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+
+/* FOOTER */
+.footer{text-align:center;color:var(--subtle);font-size:11px;padding-top:14px;border-top:1px solid var(--border);margin-top:10px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+@media(max-width:640px){
+  .plat-row,.plat-strip,.ah-plats{grid-template-columns:1fr}
+  .ps+.ps,.ah-p+.ah-p{border-left:none;border-top:1px solid var(--border)}
+  .acc-meta{display:none}
+  .tags{display:none}
+  .kpi-v{font-size:20px}
+  .pm{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="logo">SEIDAN</div>
+    <div><div class="h-title">Informe de Campañas Publicitarias</div><div class="h-sub">Meta Ads · TikTok Ads</div></div>
+  </div>
+  <div class="date-pill">Semana <b>7 al 13 de junio 2026</b></div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPIs -->
+  <div class="sec">Resumen Ejecutivo</div>
+  <div class="kpi-row">
+    <div class="kpi" style="--c:var(--accent)">
+      <div class="kpi-l">💰 Inversión Total</div>
+      <div class="kpi-v">$3,941</div>
+      <div class="kpi-s">USD · ambas plataformas</div>
+    </div>
+    <div class="kpi" style="--c:var(--green)">
+      <div class="kpi-l">🛒 Leads Totales</div>
+      <div class="kpi-v">973</div>
+      <div class="kpi-s">compras / conversiones</div>
+    </div>
+    <div class="kpi" style="--c:var(--amber)">
+      <div class="kpi-l">📊 CPA Promedio</div>
+      <div class="kpi-v">$4.05</div>
+      <div class="kpi-s">costo por lead · global</div>
+    </div>
+    <div class="kpi" style="--c:var(--meta)">
+      <div class="kpi-l">📘 Meta Ads</div>
+      <div class="kpi-v">778</div>
+      <div class="kpi-s">leads · $2,630 · CPA $3.38</div>
+    </div>
+    <div class="kpi" style="--c:var(--tiktok)">
+      <div class="kpi-l">🎵 TikTok Ads</div>
+      <div class="kpi-v">195</div>
+      <div class="kpi-s">leads · $1,312 · CPA $6.73</div>
+    </div>
+  </div>
+
+  <!-- Plataformas -->
+  <div class="sec">Por Plataforma</div>
+  <div class="plat-row">
+    <div class="pc meta">
+      <div class="pn"><div class="pd"></div>Meta Ads</div>
+      <div class="pm">
+        <div><div class="pm-l">Inversión</div><div class="pm-v">$2,630</div></div>
+        <div><div class="pm-l">Leads</div><div class="pm-v">778</div></div>
+        <div><div class="pm-l">CPA</div><div class="pm-v g">$3.38</div></div>
+      </div>
+    </div>
+    <div class="pc tiktok">
+      <div class="pn"><div class="pd"></div>TikTok Ads</div>
+      <div class="pm">
+        <div><div class="pm-l">Inversión</div><div class="pm-v">$1,312</div></div>
+        <div><div class="pm-l">Leads</div><div class="pm-v">195</div></div>
+        <div><div class="pm-l">CPA</div><div class="pm-v r">$6.73</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAMPAÑAS ══ -->
+  <div class="sec">Campañas por Producto</div>
+  <div class="acc-list">
+
+    <!-- AHORRADOR -->
+    <div class="acc" id="a0">
+      <div class="acc-h" onclick="T('a0')">
+        <div class="acc-ttl">Ahorrador de Energía / Deluxe</div>
+        <div class="tags">
+          <span class="tag meta"><span class="td"></span>Meta</span>
+          <span class="tag tiktok"><span class="td"></span>TikTok</span>
+        </div>
+        <div class="acc-meta">
+          <span><b>692</b> leads</span>
+          <span class="cg"><b>$3.02</b> CPA</span>
+          <span><b>$2,092</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="ah-plats">
+          <div class="ah-p meta">
+            <div class="ah-pn"><span class="ps-dot" style="background:var(--meta)"></span>Meta Ads</div>
+            <div class="ah-vals">
+              <div><div class="ah-l">Inversión</div><div class="ah-v">$2,034</div></div>
+              <div><div class="ah-l">Leads</div><div class="ah-v">686</div></div>
+              <div><div class="ah-l">CPA</div><div class="ah-v" style="color:var(--green)">$2.97</div></div>
+            </div>
+          </div>
+          <div class="ah-p tiktok">
+            <div class="ah-pn"><span class="ps-dot" style="background:var(--tiktok)"></span>TikTok Ads</div>
+            <div class="ah-vals">
+              <div><div class="ah-l">Inversión</div><div class="ah-v">$58</div></div>
+              <div><div class="ah-l">Leads</div><div class="ah-v">6</div></div>
+              <div><div class="ah-l">CPA</div><div class="ah-v" style="color:var(--red)">$9.63</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="tw">
+          <table>
+            <thead><tr><th>#</th><th>Cuenta</th><th>Plataforma</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th><th>Estado</th></tr></thead>
+            <tbody>
+              <tr><td class="rk gold">🥇</td><td><b>CT2</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$997.32</td><td class="r"><b>400</b></td><td class="r"><span class="cg">$2.49</span></td><td style="width:80px"><div class="bw"><div class="bt"><div class="bf g" style="width:20%"></div></div></div></td><td class="ev ok">✅ Mejor cuenta</td></tr>
+              <tr><td class="rk silver">🥈</td><td><b>CT4</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$384.63</td><td class="r"><b>126</b></td><td class="r"><span class="cg">$3.05</span></td><td><div class="bw"><div class="bt"><div class="bf g" style="width:25%"></div></div></div></td><td class="ev ok">✅ Muy eficiente</td></tr>
+              <tr><td class="rk bronze">🥉</td><td><b>CT5</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$164.92</td><td class="r"><b>49</b></td><td class="r"><span class="cg">$3.37</span></td><td><div class="bw"><div class="bt"><div class="bf g" style="width:27%"></div></div></div></td><td class="ev ok">✅ Buen resultado</td></tr>
+              <tr><td class="rk">4</td><td><b>SEIKO 2</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$158.52</td><td class="r"><b>39</b></td><td class="r"><span class="ca">$4.06</span></td><td><div class="bw"><div class="bt"><div class="bf a" style="width:33%"></div></div></div></td><td class="ev warn">⚠️ Aceptable</td></tr>
+              <tr><td class="rk">5</td><td><b>CT7</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$157.72</td><td class="r"><b>36</b></td><td class="r"><span class="ca">$4.38</span></td><td><div class="bw"><div class="bt"><div class="bf a" style="width:35%"></div></div></div></td><td class="ev warn">⚠️ Revisar</td></tr>
+              <tr><td class="rk">6</td><td><b>CT6</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$161.66</td><td class="r"><b>35</b></td><td class="r"><span class="ca">$4.62</span></td><td><div class="bw"><div class="bt"><div class="bf a" style="width:37%"></div></div></div></td><td class="ev warn">⚠️ Revisar</td></tr>
+              <tr><td class="rk">7</td><td><b>T3CNO 2 TKTK</b></td><td><span class="tag tiktok"><span class="td"></span>TikTok</span></td><td class="r">$57.76</td><td class="r"><b>6</b></td><td class="r"><span class="cr">$9.63</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:78%"></div></div></div></td><td class="ev bad">❌ No escalar</td></tr>
+              <tr><td class="rk">8</td><td><b>ANUNCIOS FB e IG</b></td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td class="r">$9.59</td><td class="r"><b>1</b></td><td class="r"><span class="cr">$9.59</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:78%"></div></div></div></td><td class="ev bad">❌ Solo testeo</td></tr>
+              <tr class="tot"><td colspan="3" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$2,092.12</td><td class="r">692</td><td class="r"><span style="color:var(--accent);font-weight:700;font-family:'Space Grotesk',sans-serif">$3.02</span></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- LENTES SMART IA -->
+    <div class="acc" id="a1">
+      <div class="acc-h" onclick="T('a1')">
+        <div class="acc-ttl">Lentes Smart IA</div>
+        <div class="tags"><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>64</b> leads</span>
+          <span class="ca"><b>$7.13</b> CPA</span>
+          <span><b>$456</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="plat-strip">
+          <div class="ps meta"><div class="ps-name"><span class="ps-dot" style="background:var(--meta)"></span>Meta Ads</div><div class="ps-vals"><div><div class="psv-l">Inversión</div><div class="psv-v">$83.53</div></div><div><div class="psv-l">Leads</div><div class="psv-v">9</div></div><div><div class="psv-l">CPA</div><div class="psv-v" style="color:var(--red)">$9.28</div></div></div></div>
+          <div class="ps tiktok"><div class="ps-name"><span class="ps-dot" style="background:var(--tiktok)"></span>TikTok Ads</div><div class="ps-vals"><div><div class="psv-l">Inversión</div><div class="psv-v">$372.82</div></div><div><div class="psv-l">Leads</div><div class="psv-v">55</div></div><div><div class="psv-l">CPA</div><div class="psv-v" style="color:var(--amber)">$6.78</div></div></div></div>
+        </div>
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$372.82</td><td class="r"><b>55</b></td><td class="r"><span class="ca">$6.78</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf a" style="width:55%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>T3cnostore</td><td class="r">$83.53</td><td class="r"><b>9</b></td><td class="r"><span class="cr">$9.28</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:75%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$456.35</td><td class="r">64</td><td class="r"><span class="ca">$7.13</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- CÁMARA ROBOCOT 4G -->
+    <div class="acc" id="a2">
+      <div class="acc-h" onclick="T('a2')">
+        <div class="acc-ttl">Cámara Robocot 4G</div>
+        <div class="tags"><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>29</b> leads</span>
+          <span class="cr"><b>$8.81</b> CPA</span>
+          <span><b>$255</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="plat-strip">
+          <div class="ps meta"><div class="ps-name"><span class="ps-dot" style="background:var(--meta)"></span>Meta Ads</div><div class="ps-vals"><div><div class="psv-l">Inversión</div><div class="psv-v">$14.10</div></div><div><div class="psv-l">Leads</div><div class="psv-v">2</div></div><div><div class="psv-l">CPA</div><div class="psv-v" style="color:var(--amber)">$7.05</div></div></div></div>
+          <div class="ps tiktok"><div class="ps-name"><span class="ps-dot" style="background:var(--tiktok)"></span>TikTok Ads</div><div class="ps-vals"><div><div class="psv-l">Inversión</div><div class="psv-v">$241.31</div></div><div><div class="psv-l">Leads</div><div class="psv-v">27</div></div><div><div class="psv-l">CPA</div><div class="psv-v" style="color:var(--red)">$8.94</div></div></div></div>
+        </div>
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>T3cnostore</td><td class="r">$14.10</td><td class="r"><b>2</b></td><td class="r"><span class="ca">$7.05</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf a" style="width:57%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO 2 TKTK</td><td class="r">$241.31</td><td class="r"><b>27</b></td><td class="r"><span class="cr">$8.94</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:72%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$255.41</td><td class="r">29</td><td class="r"><span class="cr">$8.81</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- CÁMARA OJO DE DIOS PRO -->
+    <div class="acc" id="a3">
+      <div class="acc-h" onclick="T('a3')">
+        <div class="acc-ttl">Cámara Ojo de Dios Pro</div>
+        <div class="tags"><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>35</b> leads</span>
+          <span class="cg"><b>$4.71</b> CPA</span>
+          <span><b>$175</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>T3cnostore</td><td class="r">$164.84</td><td class="r"><b>35</b></td><td class="r"><span class="cg">$4.71</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf g" style="width:38%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$10.51</td><td class="r"><b>0</b></td><td class="r"><span class="cn">Sin leads</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:0%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$175.35</td><td class="r">35</td><td class="r"><span class="cg">$4.71</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- CÁMARA PROGUARD 360 -->
+    <div class="acc" id="a4">
+      <div class="acc-h" onclick="T('a4')">
+        <div class="acc-ttl">Cámara ProGuard 360</div>
+        <div class="tags"><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>18</b> leads</span>
+          <span class="cr"><b>$8.67</b> CPA</span>
+          <span><b>$156</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$156.00</td><td class="r"><b>18</b></td><td class="r"><span class="cr">$8.67</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf r" style="width:70%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- PACK MONGOL -->
+    <div class="acc" id="a5">
+      <div class="acc-h" onclick="T('a5')">
+        <div class="acc-ttl">Pack Mongol</div>
+        <div class="tags"><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>22</b> leads</span>
+          <span class="ca"><b>$6.87</b> CPA</span>
+          <span><b>$153</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>seidanpublicidad</td><td class="r">$29.17</td><td class="r"><b>8</b></td><td class="r"><span class="cg">$3.65</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf g" style="width:29%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT4</td><td class="r">$5.18</td><td class="r"><b>2</b></td><td class="r"><span class="cg">$2.59</span></td><td><div class="bw"><div class="bt"><div class="bf g" style="width:21%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$50.29</td><td class="r"><b>6</b></td><td class="r"><span class="cr">$8.38</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:67%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$51.99</td><td class="r"><b>6</b></td><td class="r"><span class="cr">$8.66</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:70%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$152.63</td><td class="r">22</td><td class="r"><span class="ca">$6.94</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- CUCHILLO JAPONÉS KAIZEN -->
+    <div class="acc" id="a6">
+      <div class="acc-h" onclick="T('a6')">
+        <div class="acc-ttl">Cuchillo Japonés Kaizen</div>
+        <div class="tags"><span class="tag meta"><span class="td"></span>Meta</span></div>
+        <div class="acc-meta">
+          <span><b>13</b> leads</span>
+          <span class="ca"><b>$7.42</b> CPA</span>
+          <span><b>$96</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT7</td><td class="r">$36.82</td><td class="r"><b>6</b></td><td class="r"><span class="ca">$6.14</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf a" style="width:49%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT5</td><td class="r">$15.77</td><td class="r"><b>2</b></td><td class="r"><span class="ca">$7.89</span></td><td><div class="bw"><div class="bt"><div class="bf a" style="width:63%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$43.82</td><td class="r"><b>5</b></td><td class="r"><span class="cr">$8.76</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:70%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$96.41</td><td class="r">13</td><td class="r"><span class="ca">$7.42</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+  </div><!-- /campañas -->
+
+  <!-- ══ TESTEOS ══ -->
+  <div class="sec">Productos en Testeo</div>
+  <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Productos evaluados durante la semana — volumen de inversión reducido, sin escala asignada.</div>
+  <div class="acc-list">
+
+    <!-- IMPRESORA TÉRMICA A4 -->
+    <div class="acc" id="t0">
+      <div class="acc-h" onclick="T('t0')">
+        <div class="acc-ttl">Impresora Térmica A4</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>35</b> leads</span>
+          <span class="cg"><b>$2.77</b> CPA</span>
+          <span><b>$97</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$73.54</td><td class="r"><b>28</b></td><td class="r"><span class="cg">$2.63</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf g" style="width:21%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$23.44</td><td class="r"><b>7</b></td><td class="r"><span class="cg">$3.35</span></td><td><div class="bw"><div class="bt"><div class="bf g" style="width:27%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$96.98</td><td class="r">35</td><td class="r"><span class="cg">$2.77</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- CAÑO / GRIFO CALENTADOR -->
+    <div class="acc" id="t1">
+      <div class="acc-h" onclick="T('t1')">
+        <div class="acc-ttl">Caño / Grifo Calentador</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>41</b> leads</span>
+          <span class="cg"><b>$5.01</b> CPA</span>
+          <span><b>$205</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$170.20</td><td class="r"><b>35</b></td><td class="r"><span class="cg">$4.86</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf g" style="width:39%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$35.20</td><td class="r"><b>6</b></td><td class="r"><span class="ca">$5.87</span></td><td><div class="bw"><div class="bt"><div class="bf a" style="width:47%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$205.40</td><td class="r">41</td><td class="r"><span class="cg">$5.01</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SIERRA CIRCULAR -->
+    <div class="acc" id="t2">
+      <div class="acc-h" onclick="T('t2')">
+        <div class="acc-ttl">Sierra Circular</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>15</b> leads</span>
+          <span class="cg"><b>$5.70</b> CPA</span>
+          <span><b>$85</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$76.54</td><td class="r"><b>15</b></td><td class="r"><span class="cg">$5.10</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf g" style="width:41%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$8.93</td><td class="r"><b>0</b></td><td class="r"><span class="cn">Sin leads</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:0%"></div></div></div></td></tr>
+            <tr class="tot"><td colspan="2" style="font-size:11px;text-transform:uppercase;color:var(--muted)">Total</td><td class="r">$85.46</td><td class="r">15</td><td class="r"><span class="cg">$5.70</span></td><td></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- PROYECTOR SMART -->
+    <div class="acc" id="t3">
+      <div class="acc-h" onclick="T('t3')">
+        <div class="acc-ttl">Proyector Smart</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>3</b> leads</span>
+          <span class="ca"><b>$6.54</b> CPA</span>
+          <span><b>$34</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$19.62</td><td class="r"><b>3</b></td><td class="r"><span class="ca">$6.54</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf a" style="width:52%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$14.09</td><td class="r"><b>0</b></td><td class="r"><span class="cn">Sin leads</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:0%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- PIRÓGRAFO -->
+    <div class="acc" id="t4">
+      <div class="acc-h" onclick="T('t4')">
+        <div class="acc-ttl">Pirógrafo</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>2</b> leads</span>
+          <span class="ca"><b>$6.59</b> CPA</span>
+          <span><b>$13</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$6.58</td><td class="r"><b>1</b></td><td class="r"><span class="ca">$6.58</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf a" style="width:53%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$6.60</td><td class="r"><b>1</b></td><td class="r"><span class="ca">$6.60</span></td><td><div class="bw"><div class="bt"><div class="bf a" style="width:53%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- AFEITADOR 3 EN 1 -->
+    <div class="acc" id="t5">
+      <div class="acc-h" onclick="T('t5')">
+        <div class="acc-ttl">Afeitador 3 en 1</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>2</b> leads</span>
+          <span class="cr"><b>$12.22</b> CPA</span>
+          <span><b>$24</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$12.00</td><td class="r"><b>1</b></td><td class="r"><span class="cr">$12.00</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf r" style="width:97%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$12.43</td><td class="r"><b>1</b></td><td class="r"><span class="cr">$12.43</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:100%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- LUZ MALETERO -->
+    <div class="acc" id="t6">
+      <div class="acc-h" onclick="T('t6')">
+        <div class="acc-ttl">Luz Maletero</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>2</b> leads</span>
+          <span class="cr"><b>$7.97</b> CPA</span>
+          <span><b>$16</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$6.01</td><td class="r"><b>1</b></td><td class="r"><span class="ca">$6.01</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf a" style="width:48%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$9.93</td><td class="r"><b>1</b></td><td class="r"><span class="cr">$9.93</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:80%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SOFÁ CAMA -->
+    <div class="acc" id="t7">
+      <div class="acc-h" onclick="T('t7')">
+        <div class="acc-ttl">Sofá Cama</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>1</b> lead</span>
+          <span class="cr"><b>$8.46</b> CPA</span>
+          <span><b>$19</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$8.46</td><td class="r"><b>1</b></td><td class="r"><span class="cr">$8.46</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf r" style="width:68%"></div></div></div></td></tr>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$10.46</td><td class="r"><b>0</b></td><td class="r"><span class="cn">Sin leads</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:0%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SET / BOX PREMIUM PAPÁ -->
+    <div class="acc" id="t8">
+      <div class="acc-h" onclick="T('t8')">
+        <div class="acc-ttl">Set / Box Premium Papá</div>
+        <div class="tags"><span class="tag testeo">Testeo</span><span class="tag meta"><span class="td"></span>Meta</span><span class="tag tiktok"><span class="td"></span>TikTok</span></div>
+        <div class="acc-meta">
+          <span><b>1</b> lead</span>
+          <span class="cr"><b>$10.78</b> CPA</span>
+          <span><b>$38</b></span>
+        </div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th><th class="r" colspan="2">CPA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tiktok"><span class="td"></span>TikTok Ads</span></td><td>T3CNO TKTK</td><td class="r">$10.78</td><td class="r"><b>1</b></td><td class="r"><span class="cr">$10.78</span></td><td style="width:90px"><div class="bw"><div class="bt"><div class="bf r" style="width:87%"></div></div></div></td></tr>
+            <tr><td><span class="tag meta"><span class="td"></span>Meta Ads</span></td><td>CT2</td><td class="r">$27.20</td><td class="r"><b>0</b></td><td class="r"><span class="cn">Sin leads</span></td><td><div class="bw"><div class="bt"><div class="bf r" style="width:0%"></div></div></div></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- SIN LEADS AGRUPADOS -->
+    <div class="acc" id="t9">
+      <div class="acc-h" onclick="T('t9')">
+        <div class="acc-ttl" style="color:var(--muted)">Mini Grapadora · Mini Amoladora · Kit Sujetador · Micrófono QY99</div>
+        <div class="tags"><span class="tag testeo">Testeo</span></div>
+        <div class="acc-meta"><span style="color:var(--red)"><b>0</b> leads · $64 invertidos</span></div>
+        <div class="arr">▼</div>
+      </div>
+      <div class="acc-b">
+        <div class="tw"><table>
+          <thead><tr><th>Producto</th><th>Plataforma</th><th>Cuenta</th><th class="r">Inversión</th><th class="r">Leads</th></tr></thead>
+          <tbody>
+            <tr><td>Mini Grapadora</td><td><span class="tag tiktok"><span class="td"></span>TikTok</span></td><td>T3CNO TKTK</td><td class="r">$12.63</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Mini Grapadora</td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td>CT2</td><td class="r">$7.88</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Mini Amoladora</td><td><span class="tag tiktok"><span class="td"></span>TikTok</span></td><td>T3CNO TKTK</td><td class="r">$10.40</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Mini Amoladora</td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td>CT2</td><td class="r">$8.08</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Kit Sujetador Auto</td><td><span class="tag tiktok"><span class="td"></span>TikTok</span></td><td>T3CNO TKTK</td><td class="r">$14.08</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Kit Sujetador Auto</td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td>CT2</td><td class="r">$7.13</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Micrófono QY99</td><td><span class="tag tiktok"><span class="td"></span>TikTok</span></td><td>T3CNO TKTK</td><td class="r">$0.21</td><td class="r"><span class="cn">0</span></td></tr>
+            <tr><td>Micrófono QY99</td><td><span class="tag meta"><span class="td"></span>Meta</span></td><td>CT2</td><td class="r">$5.61</td><td class="r"><span class="cn">0</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+  </div><!-- /testeos -->
+
+  <div class="footer">Generado para Seidan · Semana 7 al 13 de junio 2026 · Meta Ads + TikTok Ads</div>
+</div>
+
+<script>
+function T(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
