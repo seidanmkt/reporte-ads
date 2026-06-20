@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía — Búsqueda de Productos Winner</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-2: #f7f6f3;
+    --bg-3: #f0efe9;
+    --text-1: #1a1a18;
+    --text-2: #5a5a55;
+    --text-3: #9a9990;
+    --border: rgba(0,0,0,0.1);
+    --border-2: rgba(0,0,0,0.18);
+    --blue: #1e6fc2;
+    --blue-bg: #e8f1fb;
+    --blue-text: #1a5ba8;
+    --green: #1a8a5e;
+    --green-bg: #e4f5ec;
+    --green-text: #136646;
+    --amber: #b86c10;
+    --amber-bg: #fdf0dc;
+    --amber-text: #9a570c;
+    --pink: #b03870;
+    --pink-bg: #fce9f2;
+    --pink-text: #8f2a5a;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a;
+      --bg-2: #242422;
+      --bg-3: #2c2c28;
+      --text-1: #eeeee8;
+      --text-2: #9a9990;
+      --text-3: #6a6a60;
+      --border: rgba(255,255,255,0.1);
+      --border-2: rgba(255,255,255,0.18);
+      --blue-bg: #0e2d52;
+      --blue-text: #7ab3e8;
+      --green-bg: #0a2e1e;
+      --green-text: #6acca0;
+      --amber-bg: #2e1e08;
+      --amber-text: #e8a84a;
+      --pink-bg: #2e0e1e;
+      --pink-text: #e88ab8;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg-3);
+    color: var(--text-1);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .container { max-width: 820px; margin: 0 auto; }
+
+  /* ---- HEADER ---- */
+  .header {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--pink) 50%, var(--amber) 100%);
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    margin-bottom: 0.75rem;
+  }
+  .header h1 { font-size: 26px; font-weight: 600; color: var(--text-1); margin-bottom: 0.5rem; }
+  .header p { font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: 520px; }
+  .header-meta {
+    display: flex; gap: 1.5rem; margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-3); }
+  .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+  /* ---- SECTION ---- */
+  .section {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.25rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .section-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: 0.5px solid var(--border);
+    font-size: 12px; font-weight: 600;
+    color: var(--text-2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 15px; font-weight: 600; color: var(--text-1); }
+  .section-sub { font-size: 12px; color: var(--text-2); }
+  .section-note {
+    font-size: 13px; color: var(--text-2); line-height: 1.6;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-2);
+    border-radius: var(--radius-sm);
+    border-left: 2.5px solid var(--blue);
+  }
+
+  /* ---- CRITERIOS ---- */
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .crit-card {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: var(--bg);
+  }
+  .crit-card:hover { border-color: var(--border-2); }
+  .crit-card.active { border: 1.5px solid var(--blue); }
+  .crit-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 0.65rem;
+  }
+  .crit-name { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 3px; }
+  .crit-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; }
+  .crit-detail {
+    display: none;
+    margin-top: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--blue-bg);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--blue-text);
+    line-height: 1.6;
+  }
+  .crit-card.active .crit-detail { display: block; }
+  .crit-hint {
+    font-size: 11px;
+    color: var(--text-3);
+    text-align: center;
+    margin-top: 0.75rem;
+  }
+
+  /* ---- PLATAFORMAS ---- */
+  .tab-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .tab {
+    font-size: 12px; font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 99px;
+    border: 0.5px solid var(--border-2);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: var(--bg-2); }
+  .tab.active { background: var(--blue-bg); color: var(--blue-text); border-color: transparent; }
+
+  .plat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px;
+  }
+  .plat-card {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+    background: var(--bg);
+    display: none;
+  }
+  .plat-card.on { display: block; }
+  .plat-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .plat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .plat-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+  .plat-cat { font-size: 11px; color: var(--text-3); margin-bottom: 6px; }
+  .plat-tips { font-size: 12px; color: var(--text-2); line-height: 1.55; }
+  .new-pill {
+    font-size: 10px; font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 99px;
+    background: var(--green-bg);
+    color: var(--green-text);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ---- PROCESO ---- */
+  .flow { display: flex; flex-direction: column; }
+  .flow-step { display: flex; gap: 16px; }
+  .flow-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .flow-num {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .flow-line { width: 1px; flex: 1; min-height: 20px; background: var(--border); margin: 4px 0; }
+  .flow-body { padding-bottom: 1.5rem; flex: 1; padding-top: 4px; }
+  .flow-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+  .flow-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .flow-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .flow-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    border: 0.5px solid var(--border-2);
+    color: var(--text-3);
+  }
+
+  /* ---- CHECKLIST ---- */
+  .check-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.5;
+    padding: 0.7rem 0.5rem;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+  .check-item:hover { background: var(--bg-2); border-radius: var(--radius-sm); }
+  .chk {
+    width: 17px; height: 17px;
+    border: 0.5px solid var(--border-2);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    background: var(--bg);
+  }
+  .chk.done { background: var(--blue); border-color: var(--blue); }
+  .chk.done::after {
+    content: '';
+    width: 9px; height: 5.5px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+    display: block;
+  }
+  .chk-label.done { text-decoration: line-through; opacity: 0.45; }
+  .check-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+    font-size: 12px;
+    color: var(--text-2);
+  }
+  .prog-track {
+    flex: 1; height: 5px;
+    background: var(--bg-2);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 99px;
+    transition: width 0.3s ease;
+  }
+
+  /* ---- MARGEN ---- */
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 520px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+  .calc-field input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 0.5px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text-1);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .calc-field input:focus { border-color: var(--blue); }
+  .calc-result {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+    background: var(--bg-2);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .calc-stat { flex: 1; min-width: 100px; }
+  .calc-stat-label { font-size: 11px; color: var(--text-3); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .calc-stat-value { font-size: 20px; font-weight: 600; color: var(--text-1); }
+  .verdict {
+    margin-top: 0.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .verdict.ok { background: var(--green-bg); color: var(--green-text); }
+  .verdict.warn { background: var(--amber-bg); color: var(--amber-text); }
+  .verdict.bad { background: var(--pink-bg); color: var(--pink-text); }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 12px;
+    color: var(--text-3);
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 1rem 0.75rem 3rem; }
+    .header { padding: 1.5rem; }
+    .section { padding: 1.25rem; }
+    .header h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">Guía Operativa</div>
+    <h1>Búsqueda de Productos Winner</h1>
+    <p>Manual de incorporación para investigación de productos en ecommerce. Sigue cada sección en orden para identificar, validar y seleccionar productos con alto potencial de venta.</p>
+    <div class="header-meta">
+      <div class="meta-item"><div class="meta-dot"></div>4 criterios de selección</div>
+      <div class="meta-item"><div class="meta-dot" style="background:var(--green);"></div>12 plataformas</div>
+      <div class="meta-item"><div class="meta-dot" style="background:var(--amber);"></div>Proceso de 6 pasos</div>
+      <div class="meta-item"><div class="meta-dot" style="background:var(--pink);"></div>Checklist + Calculadora</div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: CRITERIOS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Criterios de selección</div>
+        <div class="section-sub">Evaluación inicial de candidatos</div>
+      </div>
+    </div>
+    <div class="section-note">
+      Un producto es candidato a testear si cumple con <strong>al menos 3 de estos 4 criterios</strong>. Haz clic en cada tarjeta para ver cómo evaluarlo en la práctica.
+    </div>
+    <div class="criteria-grid">
+      <div class="crit-card" onclick="toggleCrit(this)">
+        <div class="crit-icon" style="background:var(--blue-bg);">🔧</div>
+        <div class="crit-name">Resuelve un problema</div>
+        <div class="crit-desc">Existe una necesidad real y específica detrás del producto</div>
+        <div class="crit-detail">¿La gente ya busca una solución para esto? Si hay volumen de búsqueda o comentarios en redes pidiendo una solución, es señal positiva. Busca frases como "cómo evitar que..." o "qué usar para..." en Google y TikTok.</div>
+      </div>
+      <div class="crit-card" onclick="toggleCrit(this)">
+        <div class="crit-icon" style="background:var(--green-bg);">📈</div>
+        <div class="crit-name">Innovador o en tendencia</div>
+        <div class="crit-desc">Tiene tracción reciente o es diferente a lo que ya existe</div>
+        <div class="crit-detail">Valida en Google Trends que la curva sube o está estable. En TikTok, busca el hashtag del producto y filtra por "Este mes". Si hay más de 5M de vistas, es una señal fuerte de tendencia activa.</div>
+      </div>
+      <div class="crit-card" onclick="toggleCrit(this)">
+        <div class="crit-icon" style="background:var(--amber-bg);">⚡</div>
+        <div class="crit-name">Solución inmediata</div>
+        <div class="crit-desc">El beneficio se percibe de forma casi instantánea</div>
+        <div class="crit-detail">El cliente debe entender el beneficio en menos de 5 segundos al ver el producto en video. Si necesitas mucho texto para explicarlo, es señal de que el producto no tiene el "wow effect" necesario para convertir.</div>
+      </div>
+      <div class="crit-card" onclick="toggleCrit(this)">
+        <div class="crit-icon" style="background:var(--pink-bg);">🎯</div>
+        <div class="crit-name">Ataca dolores del día a día</div>
+        <div class="crit-desc">El problema ocurre con frecuencia alta en la vida cotidiana</div>
+        <div class="crit-detail">Dolores recurrentes = alta frecuencia de recomendación y recompra. Ejemplos clásicos: dolor de espalda, organización del hogar, productividad, cuidado personal. Evita necesidades muy esporádicas o estacionales.</div>
+      </div>
+    </div>
+    <div class="crit-hint">↑ Haz clic en cada criterio para ver cómo evaluarlo</div>
+  </div>
+
+  <!-- SECCIÓN 2: PLATAFORMAS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Plataformas de investigación</div>
+        <div class="section-sub">Fuentes para detectar y validar productos</div>
+      </div>
+    </div>
+    <div class="tab-row">
+      <button class="tab active" onclick="filterPlat('todas',this)">Todas</button>
+      <button class="tab" onclick="filterPlat('spy',this)">Espionaje de anuncios</button>
+      <button class="tab" onclick="filterPlat('proveedor',this)">Proveedores</button>
+      <button class="tab" onclick="filterPlat('tendencia',this)">Tendencias</button>
+      <button class="tab" onclick="filterPlat('nuevo',this)">Sugeridas ✦</button>
+    </div>
+    <div class="plat-grid" id="platGrid">
+      <div class="plat-card on" data-c="spy">
+        <div class="plat-top"><div class="plat-dot" style="background:#378ADD;"></div><span class="plat-name">Meta Ad Library</span></div>
+        <div class="plat-cat">Espionaje de anuncios</div>
+        <div class="plat-tips">Filtra por categoría, país y fecha. Anuncios activos hace más de 30 días son señal de que convierte. Analiza copy, formato y comentarios del público.</div>
+      </div>
+      <div class="plat-card on" data-c="spy">
+        <div class="plat-top"><div class="plat-dot" style="background:#378ADD;"></div><span class="plat-name">Minea</span></div>
+        <div class="plat-cat">Espionaje de anuncios</div>
+        <div class="plat-tips">Cubre Facebook, TikTok y Pinterest. Ordena por "likes" o fecha reciente. El score propio indica potencial. Guarda en colecciones para comparar candidatos.</div>
+      </div>
+      <div class="plat-card on" data-c="spy">
+        <div class="plat-top"><div class="plat-dot" style="background:#378ADD;"></div><span class="plat-name">TikTok Creative Center</span></div>
+        <div class="plat-cat">Espionaje de anuncios</div>
+        <div class="plat-tips">Sección "Top Ads". Filtra por industria y región. Ver qué creativos tienen mayor CTR. Gratis y con datos en tiempo real desde la plataforma oficial.</div>
+      </div>
+      <div class="plat-card on" data-c="spy">
+        <div class="plat-top"><div class="plat-dot" style="background:#378ADD;"></div><span class="plat-name">AdSpy / Dropispy</span><span class="new-pill">Sugerida</span></div>
+        <div class="plat-cat">Espionaje de anuncios</div>
+        <div class="plat-tips">Alternativas a Minea con filtros por tienda Shopify y afiliados. Dropispy tiene plan gratuito. Útil para cruzar datos y confirmar oportunidades entre herramientas.</div>
+      </div>
+      <div class="plat-card on" data-c="proveedor">
+        <div class="plat-top"><div class="plat-dot" style="background:#1D9E75;"></div><span class="plat-name">AliExpress</span></div>
+        <div class="plat-cat">Proveedor / Validación</div>
+        <div class="plat-tips">Filtra por más de 100 pedidos y revisa reseñas con foto. Ordena por "Más vendidos". Muchas reseñas orgánicas = demanda real ya probada en el mercado.</div>
+      </div>
+      <div class="plat-card on" data-c="proveedor">
+        <div class="plat-top"><div class="plat-dot" style="background:#1D9E75;"></div><span class="plat-name">Alibaba</span></div>
+        <div class="plat-cat">Proveedor / Mayorista</div>
+        <div class="plat-tips">Para escalar o marca propia. Solicita muestra antes de pedido grande. Verifica Trade Assurance y nivel del proveedor. Ideal para negociar exclusividad o packaging propio.</div>
+      </div>
+      <div class="plat-card on" data-c="proveedor">
+        <div class="plat-top"><div class="plat-dot" style="background:#1D9E75;"></div><span class="plat-name">CJDropshipping</span><span class="new-pill">Sugerida</span></div>
+        <div class="plat-cat">Proveedor con fulfillment</div>
+        <div class="plat-tips">Mejores tiempos de envío que AliExpress. Integra directo con Shopify/WooCommerce. Permite procesado en menos de 3 días en muchos productos. Buen backup de proveedor.</div>
+      </div>
+      <div class="plat-card on" data-c="tendencia">
+        <div class="plat-top"><div class="plat-dot" style="background:#EF9F27;"></div><span class="plat-name">TikTok orgánico</span></div>
+        <div class="plat-cat">Tendencias</div>
+        <div class="plat-tips">Busca el nombre del producto + #tiktokmademebuyit. Muchas vistas + comentarios "¿dónde lo compro?" = señal de intención de compra activa y urgente.</div>
+      </div>
+      <div class="plat-card on" data-c="tendencia">
+        <div class="plat-top"><div class="plat-dot" style="background:#EF9F27;"></div><span class="plat-name">Google Imagen</span></div>
+        <div class="plat-cat">Tendencias / Búsqueda visual</div>
+        <div class="plat-tips">Sube captura de un producto visto en redes para encontrar el nombre exacto o variantes similares. Útil para localizar proveedores rápido sin saber el nombre del producto.</div>
+      </div>
+      <div class="plat-card on" data-c="nuevo">
+        <div class="plat-top"><div class="plat-dot" style="background:#D4537E;"></div><span class="plat-name">Google Trends</span><span class="new-pill">Sugerida</span></div>
+        <div class="plat-cat">Tendencias</div>
+        <div class="plat-tips">Compara hasta 5 términos. Valida estacionalidad. Si la curva lleva 3+ meses subiendo hay ventana de oportunidad. Usa antes de invertir en test para evitar productos en caída.</div>
+      </div>
+      <div class="plat-card on" data-c="nuevo">
+        <div class="plat-top"><div class="plat-dot" style="background:#D4537E;"></div><span class="plat-name">Amazon Best Sellers</span><span class="new-pill">Sugerida</span></div>
+        <div class="plat-cat">Validación de demanda</div>
+        <div class="plat-tips">Top 100 de categoría = demanda real. Lee reseñas de 1-2 estrellas: ahí están los dolores no resueltos y oportunidades de diferenciación para tu oferta.</div>
+      </div>
+      <div class="plat-card on" data-c="nuevo">
+        <div class="plat-top"><div class="plat-dot" style="background:#D4537E;"></div><span class="plat-name">Pinterest Trends</span><span class="new-pill">Sugerida</span></div>
+        <div class="plat-cat">Tendencias futuras</div>
+        <div class="plat-tips">Anticipa tendencias con 2-6 meses de adelanto vs otras redes. Excelente para lifestyle, hogar y belleza. Búsquedas pico en Pinterest = demanda real en 3-4 meses.</div>
+      </div>
+      <div class="plat-card on" data-c="nuevo">
+        <div class="plat-top"><div class="plat-dot" style="background:#D4537E;"></div><span class="plat-name">Reddit</span><span class="new-pill">Sugerida</span></div>
+        <div class="plat-cat">Inteligencia de consumidor</div>
+        <div class="plat-tips">Busca en subreddits del nicho (r/BuyItForLife, r/malelivingspace, etc.). Posts de "¿qué recomiendan para X?" son minas de oro para identificar dolores reales sin filtros de marketing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: PROCESO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Proceso de validación paso a paso</div>
+        <div class="section-sub">Sigue este orden para cada candidato</div>
+      </div>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-left"><div class="flow-num">1</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <div class="flow-title">Detectar candidatos</div>
+          <div class="flow-desc">Recolecta mínimo 5 productos de tus fuentes antes de filtrar. No te enamores del primero que encuentras — la comparación entre candidatos es clave para tomar buenas decisiones.</div>
+          <div class="flow-tags"><span class="flow-tag">Minea</span><span class="flow-tag">TikTok</span><span class="flow-tag">Meta Ads</span><span class="flow-tag">Amazon</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left"><div class="flow-num">2</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <div class="flow-title">Aplicar los 4 criterios</div>
+          <div class="flow-desc">Puntúa cada candidato del 1 al 4 según cuántos criterios cumple. Solo pasan a la siguiente etapa los que cumplan 3 o más. Los que cumplan los 4 son prioridad máxima.</div>
+          <div class="flow-tags"><span class="flow-tag">Sección 1 de esta guía</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left"><div class="flow-num">3</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <div class="flow-title">Validar tendencia y demanda</div>
+          <div class="flow-desc">Google Trends + volumen de búsqueda. Confirmar que no está en caída. Revisar si hay estacionalidad que afecte los tiempos de lanzamiento del test.</div>
+          <div class="flow-tags"><span class="flow-tag">Google Trends</span><span class="flow-tag">Pinterest Trends</span><span class="flow-tag">Amazon BSR</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left"><div class="flow-num">4</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <div class="flow-title">Revisar competencia y precio</div>
+          <div class="flow-desc">¿Cuántos anuncios activos hay? ¿Qué ángulos están usando? ¿Hay espacio para entrar con un precio competitivo manteniendo un margen mínimo de 3x el costo?</div>
+          <div class="flow-tags"><span class="flow-tag">Meta Ads Library</span><span class="flow-tag">AliExpress</span><span class="flow-tag">Calculadora abajo</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left"><div class="flow-num">5</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <div class="flow-title">Verificar proveedor y logística</div>
+          <div class="flow-desc">¿Tiene más de 50 reseñas positivas? ¿Envío en menos de 15 días? ¿Acepta muestra? ¿Tiene stock suficiente? Sin proveedor confiable no hay producto winner viable.</div>
+          <div class="flow-tags"><span class="flow-tag">AliExpress</span><span class="flow-tag">Alibaba</span><span class="flow-tag">CJDropshipping</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left"><div class="flow-num">6</div></div>
+        <div class="flow-body">
+          <div class="flow-title">Aprobar para test</div>
+          <div class="flow-desc">Máximo 2-3 productos en test simultáneamente. Antes de presentarlo al equipo, completa el checklist de la siguiente sección. Define presupuesto, KPIs y fecha de evaluación.</div>
+          <div class="flow-tags"><span class="flow-tag">Decisión de equipo</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: CALCULADORA -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Calculadora de margen</div>
+        <div class="section-sub">Regla mínima: precio de venta = 3x el costo del producto</div>
+      </div>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>Costo del producto (USD)</label>
+        <input type="number" id="cost" placeholder="Ej: 8" oninput="calcMargin()">
+      </div>
+      <div class="calc-field">
+        <label>Precio de venta (USD)</label>
+        <input type="number" id="price" placeholder="Ej: 29.99" oninput="calcMargin()">
+      </div>
+      <div class="calc-field">
+        <label>Costo de envío (USD)</label>
+        <input type="number" id="ship" placeholder="Ej: 4" oninput="calcMargin()">
+      </div>
+      <div class="calc-field">
+        <label>Costo de ads estimado (USD)</label>
+        <input type="number" id="ads" placeholder="Ej: 8" oninput="calcMargin()">
+      </div>
+    </div>
+    <div class="calc-result" id="calcResult" style="display:none;">
+      <div class="calc-stat">
+        <div class="calc-stat-label">Ganancia neta</div>
+        <div class="calc-stat-value" id="profit">—</div>
+      </div>
+      <div class="calc-stat">
+        <div class="calc-stat-label">Margen neto</div>
+        <div class="calc-stat-value" id="margin">—</div>
+      </div>
+      <div class="calc-stat">
+        <div class="calc-stat-label">Multiplicador</div>
+        <div class="calc-stat-value" id="mult">—</div>
+      </div>
+    </div>
+    <div class="verdict" id="verdict" style="display:none;"></div>
+  </div>
+
+  <!-- SECCIÓN 5: CHECKLIST -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Checklist antes de proponer un producto</div>
+        <div class="section-sub">Marca cada punto antes de presentar al equipo</div>
+      </div>
+    </div>
+    <div class="check-grid" id="checkGrid"></div>
+    <div class="check-progress">
+      <span id="progLabel">0 / 10 completados</span>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%;"></div></div>
+    </div>
+  </div>
+
+  <div class="footer">Guía de productos winner · Uso interno de equipo · Actualiza según evolucione tu proceso</div>
+
+</div>
+
+<script>
+  // CRITERIOS
+  function toggleCrit(el) {
+    const was = el.classList.contains('active');
+    document.querySelectorAll('.crit-card').forEach(c => c.classList.remove('active'));
+    if (!was) el.classList.add('active');
+  }
+
+  // PLATAFORMAS
+  function filterPlat(cat, btn) {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.plat-card').forEach(c => {
+      const match = cat === 'todas' || c.dataset.c === cat;
+      c.classList.toggle('on', match);
+    });
+  }
+
+  // CALCULADORA
+  function calcMargin() {
+    const cost = parseFloat(document.getElementById('cost').value) || 0;
+    const price = parseFloat(document.getElementById('price').value) || 0;
+    const ship = parseFloat(document.getElementById('ship').value) || 0;
+    const ads = parseFloat(document.getElementById('ads').value) || 0;
+    if (!cost || !price) { document.getElementById('calcResult').style.display='none'; document.getElementById('verdict').style.display='none'; return; }
+    const totalCost = cost + ship + ads;
+    const profit = price - totalCost;
+    const marginPct = ((profit / price) * 100).toFixed(1);
+    const mult = (price / cost).toFixed(2);
+    document.getElementById('profit').textContent = '$' + profit.toFixed(2);
+    document.getElementById('margin').textContent = marginPct + '%';
+    document.getElementById('mult').textContent = mult + 'x';
+    document.getElementById('calcResult').style.display = 'flex';
+    const v = document.getElementById('verdict');
+    v.style.display = 'block';
+    const m = parseFloat(mult);
+    if (m >= 3) { v.className = 'verdict ok'; v.textContent = '✓ El multiplicador es ' + mult + 'x — cumple la regla mínima de 3x. Viable para testear.'; }
+    else if (m >= 2) { v.className = 'verdict warn'; v.textContent = '⚠ El multiplicador es ' + mult + 'x — está por debajo del mínimo de 3x. Considera negociar el costo o ajustar el precio de venta.'; }
+    else { v.className = 'verdict bad'; v.textContent = '✕ El multiplicador es ' + mult + 'x — no cumple el mínimo. Este producto no es viable con los números actuales.'; }
+  }
+
+  // CHECKLIST
+  const items = [
+    "Cumple 3 o más de los 4 criterios de selección",
+    "La tendencia no está en caída (verificado en Google Trends)",
+    "Hay anuncios activos de competidores corriendo más de 30 días",
+    "Existe demanda real (Amazon, TikTok o volumen de búsqueda)",
+    "El margen es mínimo 3x el costo del producto",
+    "El proveedor tiene más de 50 reseñas positivas",
+    "El tiempo de envío es aceptable para el mercado objetivo",
+    "El producto se puede explicar en video en menos de 30 segundos",
+    "No tiene restricción legal o de importación en el mercado destino",
+    "Hay un ángulo de diferenciación claro vs la competencia activa"
+  ];
+  const grid = document.getElementById('checkGrid');
+  const state = new Array(items.length).fill(false);
+  items.forEach((text, i) => {
+    const div = document.createElement('div');
+    div.className = 'check-item';
+    div.onclick = () => toggleCheck(i);
+    div.innerHTML = `<div class="chk" id="chk${i}"></div><span class="chk-label" id="cht${i}">${text}</span>`;
+    grid.appendChild(div);
+  });
+  function toggleCheck(i) {
+    state[i] = !state[i];
+    document.getElementById('chk'+i).classList.toggle('done', state[i]);
+    document.getElementById('cht'+i).classList.toggle('done', state[i]);
+    const done = state.filter(Boolean).length;
+    document.getElementById('progLabel').textContent = done + ' / ' + items.length + ' completados';
+    document.getElementById('progFill').style.width = (done / items.length * 100) + '%';
+  }
+</script>
+</body>
+</html>
