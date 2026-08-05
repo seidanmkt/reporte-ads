@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte de Publicidad — Julio 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --bg: #12151A;
+    --bg-soft: #181C23;
+    --card: #1D222B;
+    --card-hover: #232935;
+    --border: #2A303C;
+    --text: #ECEEF1;
+    --text-dim: #9CA3AF;
+    --text-faint: #6B7280;
+    --tiktok: #FF3C6E;
+    --tiktok-soft: rgba(255,60,110,0.14);
+    --meta: #4C8DFF;
+    --meta-soft: rgba(76,141,255,0.14);
+    --good: #2FD9A8;
+    --warn: #F5A623;
+    --bad: #FF6B6B;
+    --radius: 14px;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: radial-gradient(1200px 600px at 15% -10%, #1B2130 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.4;
+    min-height: 100vh;
+    padding: 32px 20px 80px;
+  }
+
+  .wrap{ max-width: 1080px; margin: 0 auto; }
+
+  .top{
+    display:flex; flex-direction: column; gap: 6px;
+    margin-bottom: 28px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(26px, 4.5vw, 38px);
+    margin: 2px 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .subtitle{ color: var(--text-dim); font-size: 14px; }
+
+  /* Totals strip */
+  .totals{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 26px 0 22px;
+  }
+  .stat{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat .label{
+    font-size: 12px; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: 0.06em; font-weight: 600; margin-bottom: 8px;
+  }
+  .stat .value{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 600;
+    color: var(--text);
+  }
+  .stat.total{ border-color: rgba(255,255,255,0.18); }
+  .stat.total::before{
+    content:''; position:absolute; inset:0 auto 0 0; width:4px;
+    background: linear-gradient(var(--tiktok), var(--meta));
+  }
+
+  /* Platform split bar */
+  .split{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 26px;
+  }
+  .split-head{ display:flex; justify-content: space-between; align-items:baseline; margin-bottom:10px; }
+  .split-head span{ font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em; font-weight:600; }
+  .bar{ display:flex; height: 10px; border-radius: 6px; overflow:hidden; background: var(--bg-soft); }
+  .bar .seg-tiktok{ background: var(--tiktok); }
+  .bar .seg-meta{ background: var(--meta); }
+  .legend{ display:flex; gap:18px; margin-top:10px; font-size: 13px; color: var(--text-dim); flex-wrap: wrap; }
+  .legend .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .dot.tiktok{ background: var(--tiktok); }
+  .dot.meta{ background: var(--meta); }
+
+  /* Filters */
+  .controls{
+    display:flex; align-items:center; justify-content: space-between; gap: 12px;
+    margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .controls h2{
+    font-family:'Space Grotesk', sans-serif; font-size: 18px; font-weight:600; margin:0;
+  }
+  .chips{ display:flex; gap:8px; }
+  .chip{
+    font-family:'Inter'; font-size: 13px; font-weight: 600;
+    padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text-dim); cursor: pointer;
+    transition: all .15s ease; user-select:none;
+  }
+  .chip:hover{ color: var(--text); border-color: #3A4150; }
+  .chip.active{ color: var(--bg); background: var(--text); border-color: var(--text); }
+  .chip.active.f-tiktok{ background: var(--tiktok); color:#fff; border-color: var(--tiktok); }
+  .chip.active.f-meta{ background: var(--meta); color:#fff; border-color: var(--meta); }
+
+  /* Product list */
+  .list{ display:flex; flex-direction:column; gap:8px; }
+  .row{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .15s ease;
+  }
+  .row.open{ border-color: #3A4150; }
+  .row-head{
+    display:grid;
+    grid-template-columns: 22px 1.6fr 90px 1fr 110px;
+    gap: 14px;
+    align-items:center;
+    padding: 13px 16px;
+    cursor:pointer;
+  }
+  .row-head:hover{ background: var(--card-hover); }
+  .chevron{
+    width:16px; height:16px; color: var(--text-faint);
+    transition: transform .2s ease;
+    flex-shrink:0;
+  }
+  .row.open .chevron{ transform: rotate(90deg); color: var(--text); }
+  .p-name{ font-weight:600; font-size: 14.5px; letter-spacing: -0.01em; }
+  .p-name .rank{ color: var(--text-faint); font-family:'IBM Plex Mono',monospace; font-size:12px; margin-right:8px; }
+  .p-num{ font-family:'IBM Plex Mono', monospace; font-size: 13.5px; text-align:right; color: var(--text); }
+  .p-num.leads{ text-align:center; color: var(--text-dim); }
+  .p-num .u{ color:var(--text-faint); font-size:11px; margin-left:2px;}
+  .mini-bar{ display:flex; height:6px; border-radius:4px; overflow:hidden; background: var(--bg-soft); }
+  .mini-bar .seg-tiktok{ background: var(--tiktok); }
+  .mini-bar .seg-meta{ background: var(--meta); }
+  .cpl-badge{
+    font-family:'IBM Plex Mono', monospace; font-size: 13px; font-weight:600;
+    text-align:right; padding: 3px 9px; border-radius: 7px; justify-self:end;
+  }
+  .cpl-good{ color: var(--good); background: rgba(47,217,168,0.12); }
+  .cpl-mid{ color: var(--warn); background: rgba(245,166,35,0.12); }
+  .cpl-bad{ color: var(--bad); background: rgba(255,107,107,0.12); }
+  .cpl-none{ color: var(--text-faint); background: transparent; }
+
+  .row-body{
+    max-height:0; overflow:hidden; transition: max-height .25s ease;
+    border-top: 1px solid transparent;
+  }
+  .row.open .row-body{ border-top-color: var(--border); }
+  .platform-detail{
+    display:flex; flex-direction:column; gap:0;
+    padding: 4px 16px 12px;
+  }
+  .pf-row{
+    display:grid;
+    grid-template-columns: 22px 1.6fr 90px 1fr 110px;
+    gap:14px; align-items:center; padding: 9px 0 9px 0;
+    font-size: 13.5px;
+  }
+  .pf-tag{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size: 12.5px; font-weight:600; color: var(--text-dim);
+  }
+  .pf-tag .dot{ width:8px; height:8px; border-radius:50%; }
+
+  .head-labels{
+    display:grid;
+    grid-template-columns: 22px 1.6fr 90px 1fr 110px;
+    gap:14px; padding: 0 16px 8px;
+    font-size: 11px; color: var(--text-faint); text-transform:uppercase; letter-spacing:.05em;
+  }
+  .head-labels .a-r{ text-align:right; }
+  .head-labels .a-c{ text-align:center; }
+
+  footer{
+    margin-top: 34px; padding-top:18px; border-top: 1px solid var(--border);
+    font-size: 12.5px; color: var(--text-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width: 620px){
+    .row-head{ grid-template-columns: 18px 1fr 78px; }
+    .row-head .p-mini, .row-head .cpl-badge{ display:none; }
+    .head-labels{ display:none; }
+    .pf-row{ grid-template-columns: 18px 1fr 70px; }
+    .pf-row .pf-mini, .pf-row .cpl-badge{ display:none; }
+    .totals{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="eyebrow">Reporte mensual · publicidad</div>
+    <h1>TikTok Ads + Meta Ads — Julio 2026</h1>
+    <div class="subtitle" id="periodo-line"></div>
+  </div>
+
+  <div class="totals">
+    <div class="stat">
+      <div class="label">Gasto TikTok Ads</div>
+      <div class="value" id="stat-tiktok-gasto"></div>
+    </div>
+    <div class="stat">
+      <div class="label">Gasto Meta Ads</div>
+      <div class="value" id="stat-meta-gasto"></div>
+    </div>
+    <div class="stat total">
+      <div class="label">Gasto total (USD)</div>
+      <div class="value" id="stat-total-gasto"></div>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="split-head">
+      <span>Distribución del gasto por plataforma</span>
+      <span id="split-total"></span>
+    </div>
+    <div class="bar">
+      <div class="seg-tiktok" id="seg-tiktok"></div>
+      <div class="seg-meta" id="seg-meta"></div>
+    </div>
+    <div class="legend">
+      <span><span class="dot tiktok"></span>TikTok Ads — <b id="leg-tiktok"></b></span>
+      <span><span class="dot meta"></span>Meta Ads — <b id="leg-meta"></b></span>
+      <span>Total leads: <b id="leg-total-leads"></b> · Costo por lead promedio: <b id="leg-total-cpl"></b></span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <h2>Por producto</h2>
+    <div class="chips" id="chips">
+      <div class="chip active" data-f="all">Todas</div>
+      <div class="chip f-tiktok" data-f="TikTok Ads">TikTok</div>
+      <div class="chip f-meta" data-f="Meta Ads">Meta</div>
+    </div>
+  </div>
+
+  <div class="head-labels">
+    <span></span>
+    <span>Producto</span>
+    <span class="a-c">Leads</span>
+    <span>Mix TikTok / Meta</span>
+    <span class="a-r">Costo / lead</span>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <footer>
+    <span id="foot-tc"></span>
+    <span id="foot-excl"></span>
+  </footer>
+</div>
+
+<script>
+const DATA = {"meta": {"tc": 3.4, "periodo": "01/07/2026 - 31/07/2026", "excluidos": 32}, "totals": {"tiktok": {"gasto": 4865.65, "leads": 1048, "cpl": 4.64}, "meta": {"gasto": 13529.06, "leads": 2698, "cpl": 5.01}, "total": {"gasto": 18394.71, "leads": 3746, "cpl": 4.91}}, "products": [{"name": "CÁMARA PROGUARD", "gasto": 5075.12, "leads": 591, "cpl": 8.59, "platforms": [{"platform": "Meta Ads", "gasto": 3834.88, "leads": 433, "cpl": 8.86}, {"platform": "TikTok Ads", "gasto": 1240.24, "leads": 158, "cpl": 7.85}]}, {"name": "CARPLAY", "gasto": 2225.79, "leads": 462, "cpl": 4.82, "platforms": [{"platform": "Meta Ads", "gasto": 1501.55, "leads": 288, "cpl": 5.21}, {"platform": "TikTok Ads", "gasto": 724.24, "leads": 174, "cpl": 4.16}]}, {"name": "CÁMARA GUARDIAN 4G", "gasto": 2212.73, "leads": 405, "cpl": 5.46, "platforms": [{"platform": "Meta Ads", "gasto": 2212.73, "leads": 405, "cpl": 5.46}]}, {"name": "AHORRADOR (DELUXE/ENERGÍA)", "gasto": 1883.41, "leads": 510, "cpl": 3.69, "platforms": [{"platform": "Meta Ads", "gasto": 1497.95, "leads": 420, "cpl": 3.57}, {"platform": "TikTok Ads", "gasto": 385.46, "leads": 90, "cpl": 4.28}]}, {"name": "CÁMARA ROBOCOT", "gasto": 1277.0, "leads": 195, "cpl": 6.55, "platforms": [{"platform": "Meta Ads", "gasto": 709.14, "leads": 98, "cpl": 7.24}, {"platform": "TikTok Ads", "gasto": 567.86, "leads": 97, "cpl": 5.85}]}, {"name": "INVERSOR/CONVERSOR BATERÍA", "gasto": 1193.67, "leads": 606, "cpl": 1.97, "platforms": [{"platform": "Meta Ads", "gasto": 733.6, "leads": 365, "cpl": 2.01}, {"platform": "TikTok Ads", "gasto": 460.07, "leads": 241, "cpl": 1.91}]}, {"name": "LENTES SMART IA", "gasto": 1096.13, "leads": 209, "cpl": 5.24, "platforms": [{"platform": "TikTok Ads", "gasto": 1096.13, "leads": 209, "cpl": 5.24}]}, {"name": "LOCALIZADOR GPS / SMART TAG", "gasto": 918.81, "leads": 239, "cpl": 3.84, "platforms": [{"platform": "Meta Ads", "gasto": 733.51, "leads": 204, "cpl": 3.6}, {"platform": "TikTok Ads", "gasto": 185.3, "leads": 35, "cpl": 5.29}]}, {"name": "SHOTPRO", "gasto": 852.93, "leads": 182, "cpl": 4.69, "platforms": [{"platform": "Meta Ads", "gasto": 852.93, "leads": 182, "cpl": 4.69}]}, {"name": "CUCHILLO MONGOL", "gasto": 358.67, "leads": 39, "cpl": 9.2, "platforms": [{"platform": "Meta Ads", "gasto": 358.67, "leads": 39, "cpl": 9.2}]}, {"name": "LÁMPARA MANDALA", "gasto": 343.71, "leads": 96, "cpl": 3.58, "platforms": [{"platform": "Meta Ads", "gasto": 224.02, "leads": 63, "cpl": 3.56}, {"platform": "TikTok Ads", "gasto": 119.69, "leads": 33, "cpl": 3.63}]}, {"name": "DASH CAM (T3CNO)", "gasto": 193.35, "leads": 71, "cpl": 2.72, "platforms": [{"platform": "Meta Ads", "gasto": 193.35, "leads": 71, "cpl": 2.72}]}, {"name": "KIT MAGNÉTICO", "gasto": 143.86, "leads": 45, "cpl": 3.2, "platforms": [{"platform": "Meta Ads", "gasto": 143.86, "leads": 45, "cpl": 3.2}]}, {"name": "PISTOLA DE PINTURA", "gasto": 129.07, "leads": 25, "cpl": 5.16, "platforms": [{"platform": "Meta Ads", "gasto": 129.07, "leads": 25, "cpl": 5.16}]}, {"name": "CÁMARA MINI ESPÍA", "gasto": 119.59, "leads": 26, "cpl": 4.6, "platforms": [{"platform": "Meta Ads", "gasto": 111.08, "leads": 25, "cpl": 4.44}, {"platform": "TikTok Ads", "gasto": 8.51, "leads": 1, "cpl": 8.51}]}, {"name": "CÁMARA PULPO", "gasto": 115.19, "leads": 26, "cpl": 4.43, "platforms": [{"platform": "Meta Ads", "gasto": 115.19, "leads": 26, "cpl": 4.43}]}, {"name": "OLLA MULTIFUNCIÓN", "gasto": 55.04, "leads": 8, "cpl": 6.88, "platforms": [{"platform": "Meta Ads", "gasto": 11.48, "leads": 1, "cpl": 11.48}, {"platform": "TikTok Ads", "gasto": 43.56, "leads": 7, "cpl": 6.22}]}, {"name": "DR MELAXIN", "gasto": 54.16, "leads": 4, "cpl": 13.54, "platforms": [{"platform": "Meta Ads", "gasto": 54.16, "leads": 4, "cpl": 13.54}]}, {"name": "CÁMARA CERBERUS", "gasto": 50.54, "leads": 2, "cpl": 25.27, "platforms": [{"platform": "Meta Ads", "gasto": 50.54, "leads": 2, "cpl": 25.27}]}, {"name": "CÁMARA MEGATRÓN", "gasto": 35.69, "leads": 1, "cpl": 35.69, "platforms": [{"platform": "Meta Ads", "gasto": 26.76, "leads": 1, "cpl": 26.76}, {"platform": "TikTok Ads", "gasto": 8.93, "leads": 0, "cpl": null}]}, {"name": "MASAJEADOR CERVICAL 6D", "gasto": 19.37, "leads": 1, "cpl": 19.37, "platforms": [{"platform": "Meta Ads", "gasto": 8.91, "leads": 0, "cpl": null}, {"platform": "TikTok Ads", "gasto": 10.46, "leads": 1, "cpl": 10.46}]}, {"name": "DASHCAM KRAKEN", "gasto": 15.83, "leads": 1, "cpl": 15.83, "platforms": [{"platform": "Meta Ads", "gasto": 15.83, "leads": 1, "cpl": 15.83}]}, {"name": "ENCHUFE SMART", "gasto": 15.2, "leads": 2, "cpl": 7.6, "platforms": [{"platform": "TikTok Ads", "gasto": 15.2, "leads": 2, "cpl": 7.6}]}, {"name": "CÁMARA VISIONPRO", "gasto": 9.85, "leads": 0, "cpl": null, "platforms": [{"platform": "Meta Ads", "gasto": 9.85, "leads": 0, "cpl": null}]}]};
+
+function fmtUSD(n){
+  if(n === null || n === undefined) return '—';
+  return '$' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function fmtNum(n){ return n.toLocaleString('en-US'); }
+
+function cplClass(cpl, all){
+  if(cpl === null) return 'cpl-none';
+  const sorted = all.filter(v=>v!==null).sort((a,b)=>a-b);
+  if(sorted.length < 3) return 'cpl-mid';
+  const lowCut = sorted[Math.floor(sorted.length*0.33)];
+  const highCut = sorted[Math.floor(sorted.length*0.66)];
+  if(cpl <= lowCut) return 'cpl-good';
+  if(cpl >= highCut) return 'cpl-bad';
+  return 'cpl-mid';
+}
+
+const allCpls = DATA.products.map(p=>p.cpl);
+
+function chevronSVG(){
+  return '<svg class="chevron" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function platformDot(name){
+  return name === 'TikTok Ads' ? '<span class="dot" style="background:var(--tiktok)"></span>' : '<span class="dot" style="background:var(--meta)"></span>';
+}
+
+let currentFilter = 'all';
+
+function computeForFilter(p, filter){
+  if(filter === 'all') return {gasto: p.gasto, leads: p.leads, cpl: p.cpl};
+  const pf = p.platforms.find(x=>x.platform===filter);
+  if(!pf) return null;
+  return {gasto: pf.gasto, leads: pf.leads, cpl: pf.cpl};
+}
+
+function render(){
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+
+  let visible = DATA.products.map(p => ({p, agg: computeForFilter(p, currentFilter)}))
+                              .filter(x => x.agg !== null)
+                              .sort((a,b)=> b.agg.gasto - a.agg.gasto);
+
+  const visibleCpls = visible.map(x=>x.agg.cpl);
+
+  visible.forEach((item, idx) => {
+    const p = item.p;
+    const agg = item.agg;
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    const tk = p.platforms.find(x=>x.platform==='TikTok Ads');
+    const mt = p.platforms.find(x=>x.platform==='Meta Ads');
+    const tkPct = tk ? Math.round((tk.gasto / p.gasto) * 100) : 0;
+    const mtPct = 100 - tkPct;
+
+    const cplCls = cplClass(agg.cpl, visibleCpls);
+
+    row.innerHTML = `
+      <div class="row-head">
+        ${chevronSVG()}
+        <div class="p-name"><span class="rank">${String(idx+1).padStart(2,'0')}</span>${p.name}</div>
+        <div class="p-num leads">${fmtNum(agg.leads)}</div>
+        <div class="p-mini">
+          <div class="mini-bar">
+            ${tk ? `<div class="seg-tiktok" style="width:${tkPct}%"></div>` : ''}
+            ${mt ? `<div class="seg-meta" style="width:${mtPct}%"></div>` : ''}
+          </div>
+        </div>
+        <div class="cpl-badge ${cplCls}">${agg.cpl !== null ? fmtUSD(agg.cpl) : '—'}</div>
+      </div>
+      <div class="row-body">
+        <div class="platform-detail">
+          ${p.platforms.filter(pf => currentFilter==='all' || pf.platform===currentFilter).map(pf => `
+            <div class="pf-row">
+              <span></span>
+              <span class="pf-tag">${platformDot(pf.platform)}${pf.platform} · gasto ${fmtUSD(pf.gasto)}</span>
+              <span class="p-num leads">${fmtNum(pf.leads)}</span>
+              <span></span>
+              <span class="cpl-badge ${cplClass(pf.cpl, p.platforms.map(x=>x.cpl))}">${pf.cpl !== null ? fmtUSD(pf.cpl) : '—'}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    row.querySelector('.row-head').addEventListener('click', () => {
+      const body = row.querySelector('.row-body');
+      const isOpen = row.classList.contains('open');
+      if(isOpen){
+        body.style.maxHeight = null;
+        row.classList.remove('open');
+      } else {
+        row.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+
+    list.appendChild(row);
+  });
+}
+
+document.getElementById('chips').addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  currentFilter = chip.dataset.f;
+  render();
+});
+
+// Header stats
+document.getElementById('periodo-line').textContent = `Periodo ${DATA.meta.periodo} · montos en USD (TikTok convertido a tipo de cambio ${DATA.meta.tc})`;
+document.getElementById('stat-tiktok-gasto').textContent = fmtUSD(DATA.totals.tiktok.gasto);
+document.getElementById('stat-meta-gasto').textContent = fmtUSD(DATA.totals.meta.gasto);
+document.getElementById('stat-total-gasto').textContent = fmtUSD(DATA.totals.total.gasto);
+
+const tkPctTotal = Math.round((DATA.totals.tiktok.gasto / DATA.totals.total.gasto) * 100);
+document.getElementById('seg-tiktok').style.width = tkPctTotal + '%';
+document.getElementById('seg-meta').style.width = (100 - tkPctTotal) + '%';
+document.getElementById('split-total').textContent = fmtUSD(DATA.totals.total.gasto) + ' total';
+document.getElementById('leg-tiktok').textContent = `${fmtUSD(DATA.totals.tiktok.gasto)} · ${fmtNum(DATA.totals.tiktok.leads)} leads · ${fmtUSD(DATA.totals.tiktok.cpl)}/lead`;
+document.getElementById('leg-meta').textContent = `${fmtUSD(DATA.totals.meta.gasto)} · ${fmtNum(DATA.totals.meta.leads)} leads · ${fmtUSD(DATA.totals.meta.cpl)}/lead`;
+document.getElementById('leg-total-leads').textContent = fmtNum(DATA.totals.total.leads);
+document.getElementById('leg-total-cpl').textContent = fmtUSD(DATA.totals.total.cpl);
+
+document.getElementById('foot-tc').textContent = `Tipo de cambio TikTok (PEN→USD): ${DATA.meta.tc}`;
+document.getElementById('foot-excl').textContent = `${DATA.meta.excluidos} campañas sin gasto ni leads fueron excluidas del reporte`;
+
+render();
+</script>
+</body>
+</html>
