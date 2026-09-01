@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Publicidad — Agosto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg: #F5F6F4;
+    --surface: #FFFFFF;
+    --ink: #1A1D2B;
+    --ink-soft: #5B6270;
+    --line: #E3E4E0;
+    --meta: #3B5FE0;
+    --meta-soft: #EAEEFC;
+    --tiktok: #0E1420;
+    --tiktok-accent: #12B8A6;
+    --tiktok-soft: #E7F8F6;
+    --good: #1F9D63;
+    --warn: #C4501E;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-feature-settings:'tnum' 1, 'lnum' 1;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{ font-family:'Fraunces', serif; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- HEADER ---------- */
+  header{
+    padding:56px 0 32px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow-row{
+    display:flex; align-items:baseline; justify-content:space-between;
+    flex-wrap:wrap; gap:12px; margin-bottom:18px;
+  }
+  .period{
+    font-size:14px; color:var(--ink-soft);
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(32px, 5vw, 52px);
+    line-height:1.05;
+    margin:0 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .subhead{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:640px;
+    line-height:1.5;
+    margin:0;
+  }
+
+  /* ---------- KPI STRIP ---------- */
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    margin-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .kpi{
+    padding:22px 24px 22px 0;
+    border-right:1px solid var(--line);
+  }
+  .kpi:last-child{ border-right:none; }
+  .kpi-label{
+    font-size:13px; color:var(--ink-soft); margin-bottom:6px;
+  }
+  .kpi-value{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(22px, 2.6vw, 32px);
+    line-height:1;
+  }
+  .kpi-sub{
+    font-size:12.5px; color:var(--ink-soft); margin-top:6px;
+  }
+  .dot{ display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+  .dot.meta{ background:var(--meta); }
+  .dot.tiktok{ background:var(--tiktok-accent); }
+
+  /* ---------- TABS ---------- */
+  nav.tabs{
+    position:sticky; top:0; z-index:10;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    margin-top:8px;
+  }
+  nav.tabs .wrap{ display:flex; gap:4px; overflow-x:auto; }
+  .tab-btn{
+    appearance:none; border:none; background:none; cursor:pointer;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14.5px; font-weight:500;
+    color:var(--ink-soft);
+    padding:16px 18px 14px;
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+  }
+  .tab-btn:hover{ color:var(--ink); }
+  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--ink); }
+  .tab-btn .count{
+    display:inline-block; margin-left:6px; font-size:11.5px;
+    color:var(--ink-soft); font-weight:400;
+  }
+
+  main{ padding:36px 0 80px; }
+  .panel{ display:none; }
+  .panel.active{ display:block; animation:fadein .25s ease; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  section.block{ margin-bottom:44px; }
+  .block-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:16px; margin-bottom:16px; flex-wrap:wrap;
+  }
+  h2{
+    font-family:'Fraunces', serif; font-weight:600;
+    font-size:22px; margin:0;
+  }
+  .note{ font-size:13px; color:var(--ink-soft); }
+
+  .grid-2{ display:grid; grid-template-columns:1.3fr 1fr; gap:28px; align-items:start; }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+  }
+  .chart-card canvas{ max-width:100%; }
+
+  /* ---------- TABLE ---------- */
+  table{ width:100%; border-collapse:collapse; font-size:14px; }
+  thead th{
+    text-align:left; font-weight:500; font-size:12.5px;
+    color:var(--ink-soft); padding:0 12px 10px; border-bottom:1px solid var(--ink);
+    white-space:nowrap;
+  }
+  thead th.num, td.num{ text-align:right; }
+  tbody td{ padding:13px 12px; border-bottom:1px solid var(--line); }
+  tbody tr:hover{ background:rgba(0,0,0,0.015); }
+  tbody tr:last-child td{ border-bottom:none; }
+  td.prod{ font-weight:500; }
+  .platform-pill{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:12px; padding:2px 8px; border-radius:20px;
+    background:var(--meta-soft); color:var(--meta); font-weight:500;
+  }
+  .platform-pill.tiktok{ background:var(--tiktok-soft); color:#0B7A6E; }
+  .testeo-pill{
+    display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px;
+    background:#FBEEE6; color:var(--warn); font-weight:500; margin-left:8px;
+  }
+
+  .store-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .store-card h3{
+    font-family:'Fraunces', serif; font-size:19px; margin:0 0 14px; font-weight:600;
+  }
+  .store-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:7px 0; border-bottom:1px solid var(--line); }
+  .store-row:last-child{ border-bottom:none; }
+  .store-row .lbl{ color:var(--ink-soft); }
+  .store-row .val{ font-weight:500; }
+
+  details.expand{
+    border:1px solid var(--line); border-radius:var(--radius);
+    margin-bottom:10px; overflow:hidden; background:var(--surface);
+  }
+  details.expand summary{
+    cursor:pointer; list-style:none; padding:16px 18px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-weight:500; font-size:14.5px;
+  }
+  details.expand summary::-webkit-details-marker{ display:none; }
+  details.expand summary .arrow{ transition:transform .2s ease; color:var(--ink-soft); }
+  details.expand[open] summary .arrow{ transform:rotate(180deg); }
+  .expand-body{ padding:0 18px 18px; }
+  .mini-row{ display:flex; justify-content:space-between; padding:8px 0; font-size:13.5px; border-top:1px solid var(--line); }
+  .mini-row .lbl{ color:var(--ink-soft); }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:24px 0 48px;
+    font-size:12.5px; color:var(--ink-soft);
+  }
+
+  @media (max-width:860px){
+    .kpis{ grid-template-columns:repeat(2,1fr); }
+    .kpi:nth-child(2n){ border-right:none; }
+    .kpi:nth-child(-n+2){ border-bottom:1px solid var(--line); padding-bottom:22px; }
+    .kpi:nth-child(n+3){ padding-top:22px; }
+    .grid-2{ grid-template-columns:1fr; }
+    .store-cards{ grid-template-columns:1fr; }
+    table{ font-size:12.5px; }
+    thead th, tbody td{ padding:10px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow-row">
+      <div class="period">1 – 31 de agosto de 2026 · Meta Ads &amp; TikTok Ads · valores en USD, TC 3.40</div>
+    </div>
+    <h1>Publicidad de agosto</h1>
+    <p class="subhead">Gasto, compras y CPA por producto, comparando Meta y TikTok en las tres tiendas — Seidan, T3cno y Seiko.</p>
+
+    <div class="kpis" id="kpiStrip"></div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap">
+    <button class="tab-btn active" data-tab="resumen">Resumen</button>
+    <button class="tab-btn" data-tab="productos">Por producto</button>
+    <button class="tab-btn" data-tab="plataformas">Meta vs TikTok</button>
+    <button class="tab-btn" data-tab="tiendas">Por tienda</button>
+    <button class="tab-btn" data-tab="testeo">En testeo</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ===== RESUMEN ===== -->
+  <div class="panel active" id="panel-resumen">
+    <section class="block">
+      <div class="block-head">
+        <h2>Gasto por producto</h2>
+        <span class="note">Top 12 productos establecidos, ordenados por gasto</span>
+      </div>
+      <div class="card chart-card">
+        <canvas id="chartTopProducts" height="90"></canvas>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="grid-2">
+        <div class="card chart-card">
+          <h2 style="margin-bottom:16px;">Gasto por plataforma</h2>
+          <canvas id="chartPlatformSplit" height="220"></canvas>
+        </div>
+        <div class="card chart-card">
+          <h2 style="margin-bottom:16px;">CPA por plataforma</h2>
+          <canvas id="chartPlatformCPA" height="220"></canvas>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== POR PRODUCTO ===== -->
+  <div class="panel" id="panel-productos">
+    <section class="block">
+      <div class="block-head">
+        <h2>Los 19 productos de agosto</h2>
+        <span class="note">Gasto, compras y CPA combinados. Despliega cada fila para ver el detalle Meta / TikTok.</span>
+      </div>
+      <div id="productAccordion"></div>
+    </section>
+  </div>
+
+  <!-- ===== META VS TIKTOK ===== -->
+  <div class="panel" id="panel-plataformas">
+    <section class="block">
+      <div class="block-head">
+        <h2>Comparativo por producto</h2>
+        <span class="note">Gasto en Meta vs. TikTok, solo productos con presencia en ambas plataformas</span>
+      </div>
+      <div class="card chart-card">
+        <canvas id="chartCompareProducts" height="140"></canvas>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head"><h2>Tabla comparativa completa</h2></div>
+      <div class="card" style="overflow-x:auto;">
+        <table id="compareTable">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="num">Gasto Meta</th><th class="num">CPA Meta</th>
+              <th class="num">Gasto TikTok</th><th class="num">CPA TikTok</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== POR TIENDA ===== -->
+  <div class="panel" id="panel-tiendas">
+    <section class="block">
+      <div class="block-head"><h2>Seidan, T3cno y Seiko</h2></div>
+      <div class="store-cards" id="storeCards"></div>
+    </section>
+    <section class="block">
+      <div class="card chart-card">
+        <h2 style="margin-bottom:16px;">Gasto por tienda y plataforma</h2>
+        <canvas id="chartStores" height="160"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== EN TESTEO ===== -->
+  <div class="panel" id="panel-testeo">
+    <section class="block">
+      <div class="block-head">
+        <h2>Productos en testeo</h2>
+        <span class="note">Nombrados así por el equipo — aún no forman parte del catálogo confirmado</span>
+      </div>
+      <div class="card" style="overflow-x:auto;">
+        <table id="testeoTable">
+          <thead>
+            <tr>
+              <th>Producto</th><th class="num">Gasto</th><th class="num">Compras</th><th class="num">CPA</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Fuentes: CP1, AB_CORP, AB_CORP_3 y Shopify0519 (TikTok Ads) · SEIDAN y T3CNO (Meta Ads, Raw Data Report). Montos en soles convertidos a USD con tipo de cambio 3.40. Productos agrupados por nombre de campaña; los marcados "en testeo" quedaron sin fusionar a la espera de confirmación.
+  </div>
+</footer>
+
+<script id="report-data" type="application/json">
+{
+  "kpi": {
+    "total": {
+      "gasto": 19204.03,
+      "compras": 4336,
+      "cpa": 4.43
+    },
+    "meta": {
+      "gasto": 14396.77,
+      "compras": 3110,
+      "cpa": 4.63
+    },
+    "tiktok": {
+      "gasto": 4807.26,
+      "compras": 1226,
+      "cpa": 3.92
+    }
+  },
+  "tiendas": {
+    "Seidan": {
+      "total": {
+        "gasto": 7315.42,
+        "compras": 1552,
+        "cpa": 4.71
+      },
+      "meta": {
+        "gasto": 7315.42,
+        "compras": 1552,
+        "cpa": 4.71
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    "T3cno": {
+      "total": {
+        "gasto": 9904.74,
+        "compras": 2387,
+        "cpa": 4.15
+      },
+      "meta": {
+        "gasto": 6095.56,
+        "compras": 1361,
+        "cpa": 4.48
+      },
+      "tiktok": {
+        "gasto": 3809.18,
+        "compras": 1026,
+        "cpa": 3.71
+      }
+    },
+    "Seiko": {
+      "total": {
+        "gasto": 1983.88,
+        "compras": 397,
+        "cpa": 5.0
+      },
+      "meta": {
+        "gasto": 985.79,
+        "compras": 197,
+        "cpa": 5.0
+      },
+      "tiktok": {
+        "gasto": 998.09,
+        "compras": 200,
+        "cpa": 4.99
+      }
+    }
+  },
+  "established": [
+    {
+      "producto": "AHORRADOR DE ENERGÍA",
+      "gasto": 7155.84,
+      "compras": 1646,
+      "cpa": 4.35,
+      "meta": {
+        "gasto": 5264.85,
+        "compras": 1137,
+        "cpa": 4.63
+      },
+      "tiktok": {
+        "gasto": 1890.99,
+        "compras": 509,
+        "cpa": 3.72
+      }
+    },
+    {
+      "producto": "CÁMARA TRIPLE LENTE DELUXE",
+      "gasto": 2453.34,
+      "compras": 367,
+      "cpa": 6.68,
+      "meta": {
+        "gasto": 1857.45,
+        "compras": 277,
+        "cpa": 6.71
+      },
+      "tiktok": {
+        "gasto": 595.89,
+        "compras": 90,
+        "cpa": 6.62
+      }
+    },
+    {
+      "producto": "LOCALIZADOR SMART TAG PRO",
+      "gasto": 2101.47,
+      "compras": 453,
+      "cpa": 4.64,
+      "meta": {
+        "gasto": 1812.64,
+        "compras": 392,
+        "cpa": 4.62
+      },
+      "tiktok": {
+        "gasto": 288.83,
+        "compras": 61,
+        "cpa": 4.73
+      }
+    },
+    {
+      "producto": "POWERVOLT - Inversor de batería",
+      "gasto": 2003.21,
+      "compras": 701,
+      "cpa": 2.86,
+      "meta": {
+        "gasto": 1356.8,
+        "compras": 447,
+        "cpa": 3.04
+      },
+      "tiktok": {
+        "gasto": 646.41,
+        "compras": 254,
+        "cpa": 2.54
+      }
+    },
+    {
+      "producto": "DASH CAM KRAKEN PROCAR",
+      "gasto": 1852.04,
+      "compras": 513,
+      "cpa": 3.61,
+      "meta": {
+        "gasto": 1617.55,
+        "compras": 429,
+        "cpa": 3.77
+      },
+      "tiktok": {
+        "gasto": 234.49,
+        "compras": 84,
+        "cpa": 2.79
+      }
+    },
+    {
+      "producto": "LAMPARA MANDALA",
+      "gasto": 1343.49,
+      "compras": 287,
+      "cpa": 4.68,
+      "meta": {
+        "gasto": 934.03,
+        "compras": 184,
+        "cpa": 5.08
+      },
+      "tiktok": {
+        "gasto": 409.46,
+        "compras": 103,
+        "cpa": 3.98
+      }
+    },
+    {
+      "producto": "CÁMARA PROGUARD 4 LENTES OJO DE DIOS 4G",
+      "gasto": 431.83,
+      "compras": 78,
+      "cpa": 5.54,
+      "meta": {
+        "gasto": 250.14,
+        "compras": 45,
+        "cpa": 5.56
+      },
+      "tiktok": {
+        "gasto": 181.69,
+        "compras": 33,
+        "cpa": 5.51
+      }
+    },
+    {
+      "producto": "LENTES VISIONPRO IA 4K",
+      "gasto": 409.22,
+      "compras": 67,
+      "cpa": 6.11,
+      "meta": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      },
+      "tiktok": {
+        "gasto": 409.22,
+        "compras": 67,
+        "cpa": 6.11
+      }
+    },
+    {
+      "producto": "CAMARA GUARDIAN",
+      "gasto": 361.45,
+      "compras": 49,
+      "cpa": 7.38,
+      "meta": {
+        "gasto": 361.45,
+        "compras": 49,
+        "cpa": 7.38
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "CÁMARA ROBOCOT 360°",
+      "gasto": 256.51,
+      "compras": 30,
+      "cpa": 8.55,
+      "meta": {
+        "gasto": 187.43,
+        "compras": 20,
+        "cpa": 9.37
+      },
+      "tiktok": {
+        "gasto": 69.08,
+        "compras": 10,
+        "cpa": 6.91
+      }
+    },
+    {
+      "producto": "KIT SHOTPRO 2 PROFESSIONAL",
+      "gasto": 237.16,
+      "compras": 37,
+      "cpa": 6.41,
+      "meta": {
+        "gasto": 237.16,
+        "compras": 37,
+        "cpa": 6.41
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "CUCHILLO MONGOL",
+      "gasto": 145.29,
+      "compras": 0,
+      "cpa": null,
+      "meta": {
+        "gasto": 145.29,
+        "compras": 0,
+        "cpa": null
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    }
+  ],
+  "testeo": [
+    {
+      "producto": "POCKET CAMERA X1",
+      "gasto": 180.59,
+      "compras": 51,
+      "cpa": 3.54,
+      "meta": {
+        "gasto": 109.28,
+        "compras": 36,
+        "cpa": 3.04
+      },
+      "tiktok": {
+        "gasto": 71.31,
+        "compras": 15,
+        "cpa": 4.75
+      }
+    },
+    {
+      "producto": "STUDIOPRO / PROSTUDIO SOUNDPRO",
+      "gasto": 111.14,
+      "compras": 28,
+      "cpa": 3.97,
+      "meta": {
+        "gasto": 101.24,
+        "compras": 28,
+        "cpa": 3.62
+      },
+      "tiktok": {
+        "gasto": 9.9,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "CARPLAY MAGICBOX",
+      "gasto": 55.38,
+      "compras": 15,
+      "cpa": 3.69,
+      "meta": {
+        "gasto": 55.38,
+        "compras": 15,
+        "cpa": 3.69
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "CEPILLO ELECTRICO",
+      "gasto": 41.54,
+      "compras": 8,
+      "cpa": 5.19,
+      "meta": {
+        "gasto": 41.54,
+        "compras": 8,
+        "cpa": 5.19
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "DR MELAXIN",
+      "gasto": 33.04,
+      "compras": 2,
+      "cpa": 16.52,
+      "meta": {
+        "gasto": 33.04,
+        "compras": 2,
+        "cpa": 16.52
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "IMPRESORA IA KIDSONE",
+      "gasto": 21.12,
+      "compras": 3,
+      "cpa": 7.04,
+      "meta": {
+        "gasto": 21.12,
+        "compras": 3,
+        "cpa": 7.04
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    },
+    {
+      "producto": "CORREA TACTICA",
+      "gasto": 10.38,
+      "compras": 1,
+      "cpa": 10.38,
+      "meta": {
+        "gasto": 10.38,
+        "compras": 1,
+        "cpa": 10.38
+      },
+      "tiktok": {
+        "gasto": 0.0,
+        "compras": 0,
+        "cpa": null
+      }
+    }
+  ],
+  "periodo": "1 - 31 de agosto de 2026",
+  "tc": 3.4
+}
+</script>
+<script>
+const DATA = JSON.parse(document.getElementById('report-data').textContent);
+
+const fmtUSD = n => n == null ? '—' : '$' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+const fmtInt = n => n == null ? '—' : n.toLocaleString('en-US');
+const fmtCPA = n => n == null ? '—' : '$' + n.toFixed(2);
+
+const COLOR_META = '#3B5FE0';
+const COLOR_META_SOFT = 'rgba(59,95,224,0.14)';
+const COLOR_TIKTOK = '#12B8A6';
+const COLOR_TIKTOK_SOFT = 'rgba(18,184,166,0.16)';
+const COLOR_INK = '#1A1D2B';
+const COLOR_LINE = '#E3E4E0';
+
+Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
+Chart.defaults.color = '#5B6270';
+Chart.defaults.font.size = 12.5;
+
+/* ---------------- TABS ---------------- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ---------------- KPI STRIP ---------------- */
+function renderKPIs(){
+  const k = DATA.kpi;
+  const items = [
+    {label:'Gasto total agosto', value: fmtUSD(k.total.gasto), sub: fmtInt(k.total.compras)+' compras · CPA '+fmtCPA(k.total.cpa)},
+    {label:'Gasto en Meta', value: fmtUSD(k.meta.gasto), sub: '<span class="dot meta"></span>'+fmtInt(k.meta.compras)+' compras · CPA '+fmtCPA(k.meta.cpa)},
+    {label:'Gasto en TikTok', value: fmtUSD(k.tiktok.gasto), sub: '<span class="dot tiktok"></span>'+fmtInt(k.tiktok.compras)+' compras · CPA '+fmtCPA(k.tiktok.cpa)},
+    {label:'Productos activos', value: (DATA.established.length + DATA.testeo.length), sub: DATA.established.length+' establecidos · '+DATA.testeo.length+' en testeo'},
+  ];
+  document.getElementById('kpiStrip').innerHTML = items.map(i=>`
+    <div class="kpi">
+      <div class="kpi-label">${i.label}</div>
+      <div class="kpi-value">${i.value}</div>
+      <div class="kpi-sub">${i.sub}</div>
+    </div>`).join('');
+}
+
+/* ---------------- TOP PRODUCTS CHART ---------------- */
+function renderTopProducts(){
+  const top = DATA.established.slice(0,12);
+  new Chart(document.getElementById('chartTopProducts'), {
+    type:'bar',
+    data:{
+      labels: top.map(p=>p.producto),
+      datasets:[{
+        data: top.map(p=>p.gasto),
+        backgroundColor: COLOR_INK,
+        borderRadius: 3,
+        maxBarThickness: 34,
+      }]
+    },
+    options:{
+      indexAxis:'y',
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{ label: c => fmtUSD(c.raw) } } },
+      scales:{
+        x:{ grid:{color:COLOR_LINE}, ticks:{ callback:v=>'$'+v } },
+        y:{ grid:{display:false}, ticks:{ font:{size:12} } }
+      }
+    }
+  });
+}
+
+/* ---------------- PLATFORM SPLIT (donut) ---------------- */
+function renderPlatformSplit(){
+  new Chart(document.getElementById('chartPlatformSplit'), {
+    type:'doughnut',
+    data:{
+      labels:['Meta','TikTok'],
+      datasets:[{
+        data:[DATA.kpi.meta.gasto, DATA.kpi.tiktok.gasto],
+        backgroundColor:[COLOR_META, COLOR_TIKTOK],
+        borderWidth:0,
+      }]
+    },
+    options:{
+      cutout:'68%',
+      plugins:{
+        legend:{ position:'bottom', labels:{ usePointStyle:true, pointStyle:'circle', padding:18 } },
+        tooltip:{ callbacks:{ label: c => c.label+': '+fmtUSD(c.raw) } }
+      }
+    }
+  });
+}
+
+/* ---------------- PLATFORM CPA (bar) ---------------- */
+function renderPlatformCPA(){
+  new Chart(document.getElementById('chartPlatformCPA'), {
+    type:'bar',
+    data:{
+      labels:['Meta','TikTok'],
+      datasets:[{
+        data:[DATA.kpi.meta.cpa, DATA.kpi.tiktok.cpa],
+        backgroundColor:[COLOR_META, COLOR_TIKTOK],
+        borderRadius:6,
+        maxBarThickness: 70,
+      }]
+    },
+    options:{
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => 'CPA '+fmtCPA(c.raw) } } },
+      scales:{
+        y:{ grid:{color:COLOR_LINE}, ticks:{ callback:v=>'$'+v } },
+        x:{ grid:{display:false} }
+      }
+    }
+  });
+}
+
+/* ---------------- PRODUCT ACCORDION ---------------- */
+function renderProductAccordion(){
+  const html = DATA.established.map(p=>`
+    <details class="expand">
+      <summary>
+        <span>${p.producto}</span>
+        <span style="display:flex; align-items:center; gap:18px;">
+          <span style="color:var(--ink-soft); font-weight:400; font-size:13px;">${fmtUSD(p.gasto)} · ${fmtInt(p.compras)} compras · CPA ${fmtCPA(p.cpa)}</span>
+          <span class="arrow">⌄</span>
+        </span>
+      </summary>
+      <div class="expand-body">
+        <div class="mini-row">
+          <span class="lbl"><span class="platform-pill">Meta</span></span>
+          <span class="val">${fmtUSD(p.meta.gasto)} · ${fmtInt(p.meta.compras)} compras · CPA ${fmtCPA(p.meta.cpa)}</span>
+        </div>
+        <div class="mini-row">
+          <span class="lbl"><span class="platform-pill tiktok">TikTok</span></span>
+          <span class="val">${fmtUSD(p.tiktok.gasto)} · ${fmtInt(p.tiktok.compras)} compras · CPA ${fmtCPA(p.tiktok.cpa)}</span>
+        </div>
+      </div>
+    </details>`).join('');
+  document.getElementById('productAccordion').innerHTML = html;
+}
+
+/* ---------------- COMPARE PRODUCTS CHART (Meta vs TikTok) ---------------- */
+function renderCompareChart(){
+  const both = DATA.established.filter(p => p.meta.gasto>0 && p.tiktok.gasto>0);
+  new Chart(document.getElementById('chartCompareProducts'), {
+    type:'bar',
+    data:{
+      labels: both.map(p=>p.producto),
+      datasets:[
+        {label:'Meta', data: both.map(p=>p.meta.gasto), backgroundColor:COLOR_META, borderRadius:3, maxBarThickness:22},
+        {label:'TikTok', data: both.map(p=>p.tiktok.gasto), backgroundColor:COLOR_TIKTOK, borderRadius:3, maxBarThickness:22},
+      ]
+    },
+    options:{
+      indexAxis:'y',
+      plugins:{
+        legend:{ position:'top', align:'start', labels:{ usePointStyle:true, pointStyle:'circle' } },
+        tooltip:{ callbacks:{ label: c => c.dataset.label+': '+fmtUSD(c.raw) } }
+      },
+      scales:{
+        x:{ grid:{color:COLOR_LINE}, ticks:{ callback:v=>'$'+v } },
+        y:{ grid:{display:false}, ticks:{ font:{size:12} } }
+      }
+    }
+  });
+}
+
+function renderCompareTable(){
+  const rows = DATA.established.map(p=>`
+    <tr>
+      <td class="prod">${p.producto}</td>
+      <td class="num">${fmtUSD(p.meta.gasto)}</td>
+      <td class="num">${fmtCPA(p.meta.cpa)}</td>
+      <td class="num">${fmtUSD(p.tiktok.gasto)}</td>
+      <td class="num">${fmtCPA(p.tiktok.cpa)}</td>
+    </tr>`).join('');
+  document.querySelector('#compareTable tbody').innerHTML = rows;
+}
+
+/* ---------------- STORE CARDS + CHART ---------------- */
+function renderStores(){
+  const names = {Seidan:'Seidan', T3cno:'T3cno', Seiko:'Seiko'};
+  const html = Object.entries(DATA.tiendas).map(([key,t])=>`
+    <div class="card store-card">
+      <h3>${names[key]}</h3>
+      <div class="store-row"><span class="lbl">Gasto total</span><span class="val">${fmtUSD(t.total.gasto)}</span></div>
+      <div class="store-row"><span class="lbl">Compras</span><span class="val">${fmtInt(t.total.compras)}</span></div>
+      <div class="store-row"><span class="lbl">CPA general</span><span class="val">${fmtCPA(t.total.cpa)}</span></div>
+      <div class="store-row"><span class="lbl"><span class="dot meta"></span>Meta</span><span class="val">${fmtUSD(t.meta.gasto)}</span></div>
+      <div class="store-row"><span class="lbl"><span class="dot tiktok"></span>TikTok</span><span class="val">${fmtUSD(t.tiktok.gasto)}</span></div>
+    </div>`).join('');
+  document.getElementById('storeCards').innerHTML = html;
+
+  const keys = Object.keys(DATA.tiendas);
+  new Chart(document.getElementById('chartStores'), {
+    type:'bar',
+    data:{
+      labels: keys.map(k=>names[k]),
+      datasets:[
+        {label:'Meta', data: keys.map(k=>DATA.tiendas[k].meta.gasto), backgroundColor:COLOR_META, borderRadius:4, maxBarThickness:46},
+        {label:'TikTok', data: keys.map(k=>DATA.tiendas[k].tiktok.gasto), backgroundColor:COLOR_TIKTOK, borderRadius:4, maxBarThickness:46},
+      ]
+    },
+    options:{
+      plugins:{
+        legend:{ position:'top', align:'start', labels:{ usePointStyle:true, pointStyle:'circle' } },
+        tooltip:{ callbacks:{ label: c => c.dataset.label+': '+fmtUSD(c.raw) } }
+      },
+      scales:{
+        y:{ grid:{color:COLOR_LINE}, ticks:{ callback:v=>'$'+v } },
+        x:{ grid:{display:false} }
+      }
+    }
+  });
+}
+
+/* ---------------- TESTEO TABLE ---------------- */
+function renderTesteo(){
+  const rows = DATA.testeo.map(p=>`
+    <tr>
+      <td class="prod">${p.producto}<span class="testeo-pill">testeo</span></td>
+      <td class="num">${fmtUSD(p.gasto)}</td>
+      <td class="num">${fmtInt(p.compras)}</td>
+      <td class="num">${fmtCPA(p.cpa)}</td>
+    </tr>`).join('');
+  document.querySelector('#testeoTable tbody').innerHTML = rows;
+}
+
+renderKPIs();
+renderTopProducts();
+renderPlatformSplit();
+renderPlatformCPA();
+renderProductAccordion();
+renderCompareChart();
+renderCompareTable();
+renderStores();
+renderTesteo();
+
+</script>
+</body>
+</html>
